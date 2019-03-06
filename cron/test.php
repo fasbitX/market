@@ -11,11 +11,12 @@ $decoded = json_decode($api_core_data);
 
 
 foreach ($decoded->Data as $key => $value) {
-		//var_dump($value->NAME);
-		$list = array(1182,3808,7605,1182,24854,3808,7605,4432,4322,4327,4332,4333,4334, 
-		4335,4336,4338,4321,4340,3744,4339,5039,4342,4430,4343,4400,4345,4425,4346);
+		
+		$list = $_POST["data"] ;
+		
 		if (in_array($value->Id, $list))
 		{
+			
 		  	//
 			$coin_name = $value->Name;
 			$chart_image = "https://images.cryptocompare.com/sparkchart/".$value->Name."/USD/latest.png?ts=".microtime(true);
@@ -40,7 +41,7 @@ foreach ($decoded->Data as $key => $value) {
 				'".$chart_image."')";
 				$insert=mysqli_query($con,$sql) or die(mysqli_error());
 			}else{
-
+				
 				$sql=" UPDATE live_data set  name='".$coin_name."', 
 						price='".$coin_details->DISPLAY->$coin_name->USD->PRICE."', 
 						percent_change_24h='".$coin_details->DISPLAY->$coin_name->USD->CHANGEPCT24HOUR."', 

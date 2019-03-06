@@ -181,15 +181,28 @@ function ajaxFunction() {
         url: api_url + '?page=' + page_number,
         dataType: 'json',
         success: function(data) {
-            start = data.start;
+           start = data.start;
+
+            //Fix data
             data.data.forEach(function(element){
-                element.price = element.price.replace('$', '');
-                element.price = element.price.replace(',', '');
-                element.volume_24h = element.volume_24h.replace(/,/g, '');
-                element.market_cap = parseFloat(element.market_cap);
-                element.market_cap = element.market_cap.toFixed(2);
+                if(element.price){
+                    element.price = element.price.replace('$', '');
+                    element.price = element.price.replace(',', '');
+                }
+                else element.price = "0.00";
+
+                if(element.volume_24h) element.volume_24h = element.volume_24h.replace(/,/g, '');
+                else element.volume_24h = "0.00";
+
+                if(element.market_cap){
+                    element.market_cap = parseFloat(element.market_cap);
+                    element.market_cap = element.market_cap.toFixed(2);
+                } else{
+                    element.market_cap = 0.00;
+                }
             });
-            //console.log(data.data);
+            
+            //Order
             switch(saveOrder){
                 case "name": {
                     if(orderAscDesc[0]) data.data.sort((a, b) => (a.name > b.name) ? 1 : -1);
@@ -250,6 +263,8 @@ function ajaxFunction() {
                 }
             }
             
+
+            //Map
             var temp = '<div class="table-responsive"><table id="example1" class="table"> <thead class="flip-content"> <tr> <th onclick=orderBy("name") style="cursor: pointer">Cryptocurrency</th> <th onclick=orderBy("price") style="cursor: pointer">Price</th> <th onclick=orderBy("percent_change_24h") style="cursor: pointer" class="numeric">24h % change</th> <th class="numeric" onclick=orderBy("volume_24h") style="cursor: pointer">Volume</th> <th class="numeric" onclick=orderBy("market_cap") style="cursor: pointer">Market cap</th> <th class="numeric">24h performence</th> </tr></thead> <tbody>';
             data.data.forEach(function(element) {
 
@@ -317,7 +332,7 @@ function ajaxFunction() {
 }
 
 /***********************************************/
-/*     Events on table  (Create by Brayan)     */
+/*               Events on table               */
 /***********************************************/
 function orderBy(order){
     //alert(order);
@@ -359,9 +374,16 @@ function orderBy(order){
 setInterval(function() {
     var cron_url = "https://market.fasbit.com/cron/test.php";
     //var cron_url = "http://cryptocompare.local/cron/test.php";
+    let data = [];
+    $("#table_body").find("td[id]").each(function(){data.push(parseInt($(this).attr("id")))});
+ 
+    let paramns = {
+        data: data
+    }
     $.ajax({
-        type: "GET",
+        type: "POST",
         url: cron_url,
+        data: paramns,
         success: function(data) {
             //console.log(data);
         }
@@ -381,10 +403,13 @@ $.ajax({
 
         var temp = '<table id="example1" class="table"> <thead class="flip-content"> <tr> <th>Cryptocurrency</th> <th>Price</th> <th class="numeric">24h % change</th> <th class="numeric">Volume</th> <th class="numeric">Market cap</th> <th class="numeric">24h performence</th> </tr></thead> <tbody>';
         data.data.forEach(function(element) {
-            element.price = element.price.replace(',', '');
-            element.volume_24h = element.volume_24h.replace(/,/g, '');
-            element.market_cap = parseFloat(element.market_cap);
-            element.market_cap = element.market_cap.toFixed(2);
+            
+            if(element.price) element.price = element.price.replace(',', '');
+            if(element.volume_24h) element.volume_24h = element.volume_24h.replace(/,/g, '');
+            if(element.market_cap){ 
+                element.market_cap = parseFloat(element.market_cap);
+                element.market_cap = element.market_cap.toFixed(2);
+            }
             
             var t_tt = '<input type="hidden" id="R' + element.id + '" value="' + element.name + '" >';
             temp += t_tt;
