@@ -383,6 +383,8 @@ $.ajax({
         data.data.forEach(function(element) {
             element.price = element.price.replace(',', '');
             element.volume_24h = element.volume_24h.replace(/,/g, '');
+            element.market_cap = parseFloat(element.market_cap);
+            element.market_cap = element.market_cap.toFixed(2);
             
             var t_tt = '<input type="hidden" id="R' + element.id + '" value="' + element.name + '" >';
             temp += t_tt;
