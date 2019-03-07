@@ -6,7 +6,7 @@
     <title>@yield('title')</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="img/logo1.ico"/>
+    <link rel="shortcut icon" href="{{asset('resources/assets/logo.png')}}"/>
     @yield('meta')
     <!-- global styles-->
     <!-- <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/components.css") }}" /> -->
