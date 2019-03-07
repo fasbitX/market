@@ -1,2 +1,5 @@
 .htaccess
-.env2
+.env
+storage/framework/sessions/*
+storage/logs/laravel.log
+
