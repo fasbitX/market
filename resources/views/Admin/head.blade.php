@@ -14,8 +14,9 @@
                     <div class="btn-group">
                         <div class="user-settings no-bg">
                             <button type="button" class="btn btn-default no-bg micheal_btn" data-toggle="dropdown">
-                                <img src="{{url('/')}}/public/img/admin.jpg" class="admin_img2 img-thumbnail rounded-circle avatar-img"
-                                     alt="avatar"> <strong>Admin</strong>
+                                <!--img src="{{url('/')}}/public/img/admin.jpg" class="admin_img2 img-thumbnail rounded-circle avatar-img" alt="avatar"-->
+                                <img src="{{$global_logo}}" class="admin_img2 img-thumbnail rounded-circle avatar-img" alt="avatar"> 
+                                <strong>Admin</strong>
                                 <span class="fa fa-sort-down white_bg"></span>
                             </button>
                             <div class="dropdown-menu admire_admin">

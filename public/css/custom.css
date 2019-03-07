@@ -19,7 +19,9 @@
 
 
 /* ================ 1.Reset css========================== */
-
+body{
+    font-family: Helvetica, Arial, sans-serif;
+}
 .card-header {
     font-family: "Hind", sans-serif;
     font-size: 16px;
@@ -182,8 +184,8 @@ button,
 }
 
 .admin_img2 {
-    width: 30px;
-    height: 30px;
+    width: 50px;
+    height: 50px;
 }
 
 .navbar-brand h4 {
@@ -202,9 +204,43 @@ button,
     border-bottom: none;
 }
 
+#top .navbar-brand{
+    height: auto;
+}
+.content-image-header{
+    display: flex;
+    align-items: center;
+    font-family: 'Concert One', cursive;
+    font-size: 28px;
+    color: black;
+}
+.content-image-header:hover{
+    color: black;
+}
+.content-image-header p{
+    margin-bottom: 5px;
+    margin-left: 10px;
+}
+
+.navbar-collapse{
+    border-top: none !important;
+    box-shadow: none !important;
+}
+#top .navbar>.container .navbar-brand,#top .navbar>.container-fluid .navbar-brand{
+    margin-left: 0 !important;
+}
+#top .container:after, #top .container:before{
+    display: none !important;
+}
+#top .navbar-toggler{
+    padding: 5px 15px !important;
+    align-self: center !important;
+    outline: 0 !important;
+}
 #top .user-settings .btn {
     outline: none !important;
     box-shadow: none;
+    padding: 15px !important;
 }
 
 #top .user-settings .micheal_btn {
@@ -216,15 +252,26 @@ button,
 }
 
 #top .navbar-brand {
-    padding: 12px 0px;
+    padding: 15px 15px;
 }
-
+.navbar-brand{
+    margin: 0 !important;
+}
+.navbar-nav{
+    margin: 0 !important;
+}
+.mr-auto{
+    margin-right: auto !important;
+}
+.ml{
+    margin-left: auto !important;
+}
 #top .navbar-brand h4 {
     margin: 0;
 }
 
 #top .navbar-brand img {
-    height: 30px;
+    height: 50px;
 }
 
 .user-info li {
@@ -415,7 +462,7 @@ button,
 .user-settings .dropdown-menu {
     width: 167px;
     left: -63px;
-    top: 33px;
+    top: 50px;
 }
 
 .notifications .data {
@@ -2134,7 +2181,7 @@ table.dataTable thead .sorting_desc:after {
         border-radius: 3px;
     }
     #top .topnav {
-        margin: 4px 0;
+        margin: 0;
     }
     .top_menu {
         margin-top: 1px;
@@ -2326,6 +2373,11 @@ table.dataTable thead .sorting_desc:after {
     .vector_maps {
         height: 250px;
     }
+
+    .content-image-header{
+        font-size: 17px;
+    }
+
 }
 
 
@@ -2340,8 +2392,9 @@ table.dataTable thead .sorting_desc:after {
 .navbar-nav .nav-link {
     font-weight: 400;
     color: #fff;
-    font-size: 13px;
-    padding: 18px 15px!important
+    font-size: 15px !important;
+    padding: 18px 15px!important;
+    font-family: Helvetica, Arial, sans-serif
 }
 
 .navbar-nav .nav-link:hover,
@@ -2862,8 +2915,8 @@ footer h3 {
     background-image: url(../img/menu.svg)!important;
     background-color: #fff!important;
     background-size: 50%!important;
-    width: 2em!important;
-    height: 2em!important;
+    width: 40px!important;
+    height: 40px!important;
     border-radius: 2px!important;
 }
 body{

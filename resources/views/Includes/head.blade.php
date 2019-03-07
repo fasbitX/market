@@ -1,19 +1,24 @@
 
+<link href="https://fonts.googleapis.com/css?family=Concert+One" rel="stylesheet">
 <nav class="navbar navbar-expand-lg navbar-static-top">
   <div class="container">
   
 
    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <a class="navbar-brand" href="{{url('/')}}/"><img src="{{$global_logo}}" alt="logo"></a>
-            <div class="collapse navbar-collapse justify-content-md-center" id="navbarToggler">
-<!-- 
+      <span class="navbar-toggler-icon"></span>
+   </button>
+
+   <a class="navbar-brand content-image-header" href="{{url('/')}}/">
+      <img src="{{$global_logo}}" alt="logo">
+      <p>Fasbit Market Watch</p>
+   </a>
+   <div class="collapse navbar-collapse justify-content-md-center" id="navbarToggler">
+    <!-- 
               
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarText"> -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    <div class="collapse navbar-collapse" id="navbarText"> -->
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <a class="nav-link" href="{{url('/')}}/">Coins</a>
@@ -65,7 +70,7 @@
 
 
 </div>
-</nav>
+</nav >
 
 
 <div class="scroller">
