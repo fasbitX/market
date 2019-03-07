@@ -208,18 +208,18 @@ button,
     height: auto;
 }
 .content-image-header{
-    display: flex;
-    align-items: center;
-    font-family: 'Concert One', cursive;
-    font-size: 28px;
-    color: black;
+    display: flex !important;
+    align-items: center !important;
+    font-family: 'Concert One', cursive !important;
+    font-size: 28px !important;
+    color: black !important;
 }
 .content-image-header:hover{
-    color: black;
+    color: black !important;
 }
 .content-image-header p{
-    margin-bottom: 5px;
-    margin-left: 10px;
+    margin-bottom: 5px !important;
+    margin-left: 10px !important;
 }
 
 .navbar-collapse{
