@@ -70,8 +70,8 @@ z-index: 999999">
     @yield('content')
    <div>
     <h4 style="text-align:center">
-    Copyright &copy; BitExchange 2018 . All rights
-    reserved.</h4> <a href="http://www.sparkouttech.com" target="_blank" style="text-align:center">Copyright &copy; BitExchange 2018 . All rights
+    Copyright &copy; Fasbit Market Watch 2018 . All rights
+    reserved.</h4> <a href="http://www.sparkouttech.com" target="_blank" style="text-align:center">Copyright &copy; Fasbit Market Watch 2018 . All rights
     reserved.</a>
   </div>
     </div>

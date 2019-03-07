@@ -216,7 +216,7 @@ a.social-stats-btn1 {
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
                         <div class="ico-right-widget text-center">
-                            <h5>BITEXCHANGE RATING</h5>
+                            <h5>Fasbit Market Watch RATING</h5>
                             <p>{{$data->rating}}</p>
                             <span class="col-12 ion_icon">
                                 @php

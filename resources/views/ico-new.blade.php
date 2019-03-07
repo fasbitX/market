@@ -69,7 +69,7 @@
                     </div>
                     <div class="col-md-3 col-sm-4 col-xs-12">
                         <div class="ico-right-widget text-center">
-                            <h5>BITEXCHANGE RATING</h5>
+                            <h5>Fasbit Market Watch RATING</h5>
                             <p>5.00</p>
                             <span class="col-12 ion_icon">
                               <i class="fa fa-star " style="color:#f39c12;font-size: 18px"></i>

@@ -214,6 +214,11 @@ button,
     font-size: 28px !important;
     color: black !important;
 }
+.login-text{
+    font-family: 'Concert One', cursive !important;
+    font-size: 40px !important;
+    color: #8DC647 !important;
+}
 .content-image-header:hover{
     color: black !important;
 }

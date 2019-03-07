@@ -35,9 +35,10 @@
                 @endif
                     <div class="login_logo login_border_radius1">
                         <h3 class="text-center">
-                            <img src="https://www.bitexchange.cash/images/logo1.png" alt="josh logo" class="Logo"><span class=""> &nbsp;<br/>
-                                <br>
-                                Sign Up</span>
+                            <!--img src="https://www.bitexchange.cash/images/logo1.png" alt="josh logo" class="Logo"><span class=""> &nbsp;<br/>
+                                <br-->
+                                <div class="login-text"><p>Fasbit Market Watch</p></div>
+                                <span>Sign Up</span>
                         </h3>
                     </div>
                     <div class="bg-white login_content login_border_radius">
