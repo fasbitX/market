@@ -4,7 +4,7 @@
 <head>
     <title>{{$title->value}} | Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="shortcut icon" href="img/logo1.ico"/>
+    <link rel="shortcut icon" href="{{asset('resources/assets/logo.png')}}/>
     <!--Global styles -->
     <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/components.css") }}" />
     <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/custom.css") }}" />
