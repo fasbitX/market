@@ -77,6 +77,7 @@ Route::GET('/news','DashboardController@news');
 Route::GET('/admin/coins','AdminController@coins');
 Route::GET('/admin/coins/activate/{id}','AdminController@activate_coins');
 Route::GET('/admin/coins/deactivate/{id}','AdminController@deactivate_coins');
+Route::GET('/admin/coins/delete/{id}', 'AdminController@delete_coin');
 
 Route::GET('/admin/ads','AdminController@ads');
 Route::GET('/admin/ads/activate/{id}','AdminController@activate_ads');

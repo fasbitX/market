@@ -30,13 +30,14 @@ Coins
                                       <thead>
                                         <tr> 
                                           <th>Name</th> 
-                                          <th>Price</th> 
-                                          <th>% change 24th</th> 
+                                          <th>Price</th>             
+                                          <!--th>% change 24th</th> 
                                           <th>Volume 24th</th> 
-                                          <th>Market Cap</th> 
-                                          <th>Image</th> 
-                                          <th>Chart</th> 
-                                          <th>Action</th> 
+                                          <th>Market Cap</th--> 
+                                          <th>Image</th>                          
+                                          <!--th>Chart</th--> 
+                                          <th>Activate/deactivate</th> 
+                                          <th>Delete</td>
                                         </tr>
                                       </thead> 
                                       <tbody>
@@ -44,25 +45,31 @@ Coins
                                         <tr>
                                           <td>{{$d->name}}</td>
                                           <td>{{$d->price}}</td>
-                                          <td>{{$d->percent_change_24h}}</td>
+                                          <!--td>{{$d->percent_change_24h}}</td>
                                           <td>{{$d->volume_24h}}</td>
-                                          <td>{{$d->market_cap}}</td>
-                                          <td><img src="{{$d->image_url}}" height="100" width="100"></td>
-                                          <td><img src="{{$d->chart_image}}" height="100" width="100"></td>
+                                          <td>{{$d->market_cap}}</td-->
+                                          <td><img src="{{$d->image_url}}" height="60" width="60"></td>
+                                          <!--td><img src="{{$d->chart_image}}" height="100" width="100"></td-->
                                           @if($d->status==1)
                                           <td>
                                             <button type="button" class="btn btn-info " data-toggle="modal" data-target="#{{$d->id}}">
-                                             <i class="fa  fa-times" aria-hidden="true"></i>
+                                                <i class="fa  fa-times" aria-hidden="true"></i>
                                             </button>
                                           </td>
                                           @endif
                                           @if($d->status==0)
                                           <td>
                                             <button type="button" class="btn btn-danger " data-toggle="modal" data-target="#d{{$d->id}}">
-                                           <i class="fa  fa-check-square" aria-hidden="true"></i>
+                                                <i class="fa  fa-check-square" aria-hidden="true"></i>
                                             </button>
                                           </td>
                                           @endif
+                                          <td class="sorting_1">
+                                              <form action="/admin/coins/delete/{{$d->id}}" method="GET">
+                                                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                  <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                              </form>
+                                          </td>
                                         </tr>
 
                                          <div id="{{$d->id}}" class="modal fade" role="dialog">

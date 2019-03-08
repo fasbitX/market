@@ -2958,3 +2958,16 @@ body{
 .amcharts-stock-div{
     width: 100%;
 }
+
+/* Custom styles 08/03/2019 */
+#example1_filter{
+    display: flex !important;
+    flex-direction: row-reverse !important;
+    align-items: center !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+td.sorting_1{
+    text-align: center;
+	vertical-align: middle;
+}

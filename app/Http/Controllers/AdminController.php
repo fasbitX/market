@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\LiveData;
 use DB;
 
 class AdminController extends BaseController
@@ -178,9 +179,14 @@ class AdminController extends BaseController
 
     public static function coins(Request $request)
     {
-        $data = DB::table('live_data')->get();
-
+        //$data = DB::table('live_data')->get();
+        $data = LiveData::all();
         return view('Admin.coins',['data'=>$data]);
+    }
+    public function delete_coin($id){
+        LiveData::find($id)->delete();
+        $data = LiveData::all();
+        return redirect('/admin/coins');
     }
 
      public static function activate_coins($id)
