@@ -44,7 +44,7 @@ class LoginController extends BaseController
                         ->first();
             
 
-        if (count($check_login) == 0) {
+        if ($check_login == NULL) {
             echo $email;
             echo $password;
             return back()->with('error','Please check username or password');
