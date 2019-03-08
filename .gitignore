@@ -2,4 +2,5 @@
 .env
 storage/framework/sessions/*
 storage/logs/laravel.log
-
+storage/framework/views/*
+cron/test.php
