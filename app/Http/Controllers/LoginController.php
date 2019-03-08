@@ -18,9 +18,9 @@ class LoginController extends BaseController
 
          $check_login = DB::table('user')
                         ->where('email',$email)
-                        ->first();
+                        ->first();   
 
-        if (count($check_login) == 0) {
+        if ($check_login == NULL) {
              DB::table('user')->insert(['username'=>$userName,'email'=>$email,'password'=>$password]);
           
               $url='/sign_in';

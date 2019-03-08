@@ -2460,7 +2460,7 @@ table.dataTable thead .sorting_desc:after {
 }
 
 .home-table a.coin-name:hover,
-.home-table a.coin-name:focus..home-table a.coin-name:active {
+.home-table a.coin-name:focus,.home-table a.coin-name:active {
     color: #3576af;
 }
 
@@ -2956,5 +2956,5 @@ body{
 }
 
 .amcharts-stock-div{
-    width: 100%;s
+    width: 100%;
 }
