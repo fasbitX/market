@@ -21,6 +21,7 @@
 /* ================ 1.Reset css========================== */
 body{
     font-family: Helvetica, Arial, sans-serif;
+    color: white;
 }
 .card-header {
     font-family: "Hind", sans-serif;
@@ -217,7 +218,8 @@ button,
 .login-text{
     font-family: 'Concert One', cursive !important;
     font-size: 40px !important;
-    color: #8DC647 !important;
+    /*color: #8DC647 !important;*/
+    color: white !important;
 }
 .content-image-header:hover{
     color: white !important;
@@ -326,7 +328,8 @@ button,
 #top .navbar {
     padding: 0;
     margin-bottom: 0;
-    background: #8dc647;
+    /*background: #8dc647;*/
+    background: #626b7f !important;
     color: #fff;
 }
 
@@ -790,13 +793,15 @@ button,
 }
 
 #menu li a {
-    color: #8dc647;
+    /*color: #8dc647;*/
+    color: #626b7f !important;
     padding: 15px 8px 15px 15px;
     border-bottom: none;
 }
 
 #menu li.active>ul {
-    background-color: #8dc647;
+    /*background-color: #8dc647;*/
+    background-color: #626b7f;
     color: #343434;
 }
 
@@ -809,7 +814,8 @@ button,
 }
 
 #menu>li.active {
-    background-color: #8dc647;
+    /*background-color: #8dc647;*/
+    background-color: #626b7f;
     color: #fff;
 }
 
@@ -2432,8 +2438,9 @@ table.dataTable thead .sorting_desc:after {
 }
 
 .btn-success {
-    background: #8dc647;
-    border: 1px solid #8dc647;
+    /*background: #8dc647;*/
+    background: #626b7f;
+    border: 1px solid #626b7f;
     cursor: pointer;
 }
 
@@ -2551,6 +2558,7 @@ footer h3 {
 
 .link_coin {
     color: #8dc647;
+    color: #626b7f;
 }
 
 #pagination {
@@ -2620,6 +2628,7 @@ footer h3 {
 .tabs-single .nav-item a {
     border: 0;
     color: #8dc647;
+    color:#626b7f;
     font-size: 12px;
 }
 #show .ccc-widget{
@@ -2643,6 +2652,7 @@ footer h3 {
 }
 .news-box .right h5 a:hover,.news-box .right h5 a:focus,.news-box .right h5 a:active{
     color: #8dc647;
+    color:#626b7f;
 }
 
 .news-box .right .newsDiv {
@@ -2659,6 +2669,7 @@ footer h3 {
 
 .ico-table thead th {
     color: #8dc647;
+    color:#626b7f;
 }
 
 .ico-table .ion_icon {
@@ -2832,6 +2843,7 @@ footer h3 {
 .ico-right-widget .social a{
     font-size: 18px;
     color: #8dc647;
+    color:#626b7f;
     margin-top:5px;
     margin-left: 5px;
     margin-right: 5px;
@@ -2866,6 +2878,7 @@ footer h3 {
 .team-box .social a{
     font-size: 18px;
     color: #8dc647;
+    color:#626b7f;
     margin-top:5px;
     margin-left: 5px;
     margin-right: 5px;
@@ -2892,6 +2905,7 @@ footer h3 {
     margin-top: 20px;
     margin-right:20px;
     color: #8dc647;
+    color:#626b7f;
 }
 .screenshot-box .image{
     width: 150px;
@@ -2931,6 +2945,7 @@ body{
 }
 .mining-table thead th {
     color: #8dc647;
+    color:#626b7f;
 }
 
 .mining-table .ion_icon {

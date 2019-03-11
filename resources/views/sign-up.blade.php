@@ -41,7 +41,7 @@
                                 <span>Sign Up</span>
                         </h3>
                     </div>
-                    <div class="bg-white login_content login_border_radius">
+                    <div class="login_content login_border_radius">
                         <form class="form-horizontal login_validator m-b-20" id="register_valid"
                               action="{{URL('/')}}/add_user" method="post">
                               <input type="hidden" name="_token" value="{{csrf_token()}}">
@@ -49,7 +49,7 @@
                                 <div class="col-sm-12">
                                     <label for="username" class="col-form-label">Username *</label>
                                     <div class="input-group">
-                                    <span class="input-group-addon"> <i class="fa fa-user "  style="color:#8dc647"></i>
+                                    <span class="input-group-addon"> <i class="fa fa-user "  style="color:#626b7f"></i>
                                     </span>
                                         <input type="text" class="form-control" name="UserName" id="username" placeholder="Username">
                                     </div>
@@ -60,7 +60,7 @@
                                     <label for="email" class="col-form-label">Email *</label>
                                     <div class="input-group">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-envelope "  style="color:#8dc647"></i>
+                                        <i class="fa fa-envelope "  style="color:#626b7f"></i>
                                     </span>
                                         <input type="text" placeholder="Email Address"  name="email" id="email" class="form-control"/>
                                     </div>
@@ -71,7 +71,7 @@
                                     <label for="password" class="col-form-label text-sm-right">Password *</label>
                                     <div class="input-group">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-key "  style="color:#8dc647"></i>
+                                        <i class="fa fa-key "  style="color:#626b7f"></i>
                                     </span>
                                         <input type="password" placeholder="Password"  id="password" data-minlength="6" name="password" class="form-control"/>
                                     </div>
@@ -82,7 +82,7 @@
                                     <label for="confirmpassword" class="col-form-label">Confirm Password *</label>
                                     <div class="input-group">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-key "  style="color:#8dc647"></i>
+                                        <i class="fa fa-key "  style="color:#626b7f"></i>
                                     </span>
                                         <input type="password" placeholder="Confirm Password" name="confirmpassword" id="confirmpassword" class="form-control" />
                                     </div>
@@ -93,7 +93,7 @@
                             
                             <div class="form-group row">
                                 <div class="col-sm-9">
-                                    <input type="submit" value="Submit" class="btn"  style="background: #8dc647;color: white;font-weight: bold"/>
+                                    <input type="submit" value="Submit" class="btn"  style="background: #626b7f;color: white;font-weight: bold"/>
                                     <button type="reset" class="btn btn-danger">Reset</button>
                                 </div>
                             </div>

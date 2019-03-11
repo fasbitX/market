@@ -34,14 +34,14 @@
                         </h3>
                     </div>
 
-                    <div class="bg-white login_content login_border_radius">
+                    <div class="login_content login_border_radius">
                         <form action="user_login" id="login_validator" method="post" class="login_validator">
                         	<input type="hidden" name="_token" value="{{csrf_token()}}">
                             <div class="form-group">
                                 <label for="email" class="col-form-label"> E-mail</label>
                                 <div class="input-group">
                                     <span class="input-group-addon input_email"><i
-                                            class="fa fa-envelope" style="color:#8dc647"></i></span>
+                                            class="fa fa-envelope" style="color:#626b7f"></i></span>
                                     <input type="email" class="form-control  form-control-md" id="email" name="email" placeholder="E-mail" required>
                                 </div>
                             </div>
@@ -50,14 +50,14 @@
                                 <label for="password" class="col-form-label">Password</label>
                                 <div class="input-group">
                                     <span class="input-group-addon addon_password"><i
-                                            class="fa fa-lock" style="color:#8dc647"></i></span>
+                                            class="fa fa-lock" style="color:#626b7f"></i></span>
                                     <input type="password" class="form-control form-control-md" id="password"   name="password" placeholder="Password" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <input type="submit" value="Log In" class="btn btn-block login_button" style="background: #8dc647;color: white;font-weight: bold">
+                                        <input type="submit" value="Log In" class="btn btn-block login_button" style="background: #626b7f;color: white;font-weight: bold">
                                     </div>
                                 </div>
                             </div>
