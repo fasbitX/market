@@ -73,18 +73,13 @@ class AdminController extends BaseController
 
     public static function add_ico(Request $request)
     {
-
-        
-     
-       /* print_r($last_id);
-       exit ;*/
         $custom_file_name = time() . '.' . $request->file('image')->getClientOriginalExtension();
             $completePath = url('/public/ico') . '/' . $custom_file_name;
             $request->file('image')->move(base_path() . '/public/ico/', $custom_file_name);
 
         // $photoName2 = time().'.'.$request->images->getClientOriginalExtension();
         // $request->images->move(public_path('ico'), $photoName2);
-
+        
         $ins_data = array();
         $insert_data = array();
         $ins_data['title'] = $request->title;
@@ -116,7 +111,10 @@ class AdminController extends BaseController
         $ins_data['meta_desc'] = $request->meta_desc;
         $ins_data['meta_keyword'] = $request->meta_keyword;
 
-
+        /*echo '<pre>';
+        var_dump($ins_data);
+        echo '</pre>';
+        die();*/
         $insert = DB::table('ico')->insert($ins_data);
 
         $last_id=DB::table('ico')->orderBy('id','desc')->first();
@@ -140,6 +138,12 @@ class AdminController extends BaseController
         $insert = DB::table('token')->insert($insert_data);
 
         return back()->with('success','New ico added successfully');
+    }
+
+    public function delete_ico($id){
+        DB::table('token')->where('ico_id','=',$id)->delete();
+        DB::table('ico')->where('id','=',$id)->delete();
+        return redirect('/admin/index');
     }
 
     public function login($value='')

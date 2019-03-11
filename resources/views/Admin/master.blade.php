@@ -10,6 +10,7 @@
     <!-- global styles-->
     <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/components.css") }}" />
     <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/custom.css") }}" />
+    <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/admin_custom.css") }}" />
     <!--end of global styles-->
     <!--plugin styles-->
     <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/vendors/select2/css/select2.min.css") }}"/>
@@ -58,22 +59,22 @@ z-index: 999999">
         <img src="{{url('/')}}/public/img/loader.gif" style=" width: 40px;" alt="loading...">
     </div>
 </div>
-<div id="wrap">
+<div id="wrap" class="admin-dashboard">
     <div id="top">
         <!-- .navbar -->
-        @include('Admin.head')
+        <?php /*@include('Admin.head')*/?>
         <!-- /.navbar -->
         <!-- /.head -->
     </div>
 
-    @include('Admin.nav')
-    @yield('content')
-   <div>
+      @include('Admin.nav')
+      @yield('content')
+   <!--div>
     <h4 style="text-align:center">
     Copyright &copy; Fasbit Market Watch 2018 . All rights
     reserved.</h4> <a href="http://www.sparkouttech.com" target="_blank" style="text-align:center">Copyright &copy; Fasbit Market Watch 2018 . All rights
     reserved.</a>
-  </div>
+  </div-->
     </div>
 <!-- /#wrap -->
  

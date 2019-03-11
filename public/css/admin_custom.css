@@ -1,0 +1,108 @@
+.admin-dashboard #left{
+    min-height: 100vh;
+    box-shadow: none;
+}
+.admin-dashboard #left .menu_scroll{
+    height: 100vh;
+    position: fixed;
+    width: inherit;
+}
+#menu li:not(.active) a:hover{
+    background-color: #00101C!important; 
+    box-shadow: none !important;
+    border: none !important;
+}
+
+#wrap,  .admin-dashboard #content{
+    background-image: radial-gradient(#003B53, #000B15 80%);
+    min-height: 100vh !important;
+}
+
+.admin-dashboard .bg-container{
+    background: none;
+}
+
+.admin-dashboard .menu-left{
+    background: rgba(255,255,255, .08) !important;
+}
+.admin-dashboard .menu-left i, .admin-dashboard .menu-left span {
+    color: #C9CFD2 !important;
+}
+.admin-dashboard #menu>li.active{
+    background-color: #00101C;
+}
+.admin-dashboard #menu li{
+    outline: 0 !important;
+}
+.menu-left-logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.menu-left-logo img{
+    width: 100px;
+}
+
+
+.coins, .ads{
+    margin-top: -25px !important;
+}
+.admin-dashboard .card{
+    background: none;
+    border: none;
+}
+.admin-dashboard .card:hover{
+    box-shadow: none;
+}
+.admin-dashboard .table tbody td{
+    padding: 0 !important;
+    text-align: center;
+    width: auto;
+    vertical-align: middle;
+    border-color: #626B7F;
+    color: #C9CFD2;
+}
+
+.admin-dashboard .table tbody td img{
+    padding: 10px;
+}
+.admin-dashboard .table-bordered th{
+    border-color: #626B7F;
+    color: #626B7F;
+    text-align: center;
+    vertical-align: middle;
+}
+.admin-dashboard .table-bordered{
+    border-color: #626B7F;
+}
+.admin-dashboard .coins .dataTables_filter, .admin-dashboard .coins #example1_length,.admin-dashboard h6, .admin-dashboard h4{
+    color: #C9CFD2 !important;
+}
+.admin-dashboard  .dataTables_info{
+    display: none;
+}
+
+.btn-success:hover, .btn-success:focus, .btn-success:active{
+    background-color: #00101C;
+    border-color: #00101C;
+    color: white !important;  
+    outline: 0 !important;
+}
+
+.card-header:first-child{
+    background: rgba(255,255,255, .08) !important;
+    color: #C9CFD2 !important;
+}
+.admin-dashboard .ion_icon{
+    padding: 0;
+}
+
+/* MEDIA QUERYS */
+@media screen and (max-width: 768px){
+    .admin-dashboard #example1_length, .admin-dashboard #example1_filter{
+        display: flex;
+        justify-content: center;
+    }
+}

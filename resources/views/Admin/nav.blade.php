@@ -1,5 +1,5 @@
 
-        <div id="left">
+        <div id="left" class="menu-left">
             <div class="menu_scroll">
                 <!-- <div class="left_media">
                     <div class="media user-media">
@@ -16,6 +16,9 @@
                     </div>
                     <hr/>
                 </div> -->
+                <div class="menu-left-logo">
+                    <img src="{{$global_logo}}"  alt="logo">
+                </div>
                 <ul id="menu" >
                     <li {{{ (Request::is('admin/index') ? 'class=active' : '') }}}>
                         <a href="{{url('/')}}/admin/index" >
@@ -47,7 +50,12 @@
                             <span class="link-title menu_hide">&nbsp;Basic Settings</span>
                         </a>
                     </li>
-                    
+                    <li>
+                        <a href="{{url('/')}}/admin/logout" >
+                            <i class="fa fa-sign-out"></i>
+                            <span class="link-title menu_hide">&nbsp;Logout</span>
+                        </a>
+                    </li>
                 </ul>
                 <!-- /#menu -->
             </div>

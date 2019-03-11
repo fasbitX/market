@@ -10,7 +10,9 @@
     <link rel="shortcut icon" href="img/logo1.ico"/>
     <!-- global styles-->
     <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/components.css") }}" />
+
     <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/custom.css") }}" />
+    <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/admin_custom.css") }}" />
     <!--End of global styles-->
     <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/vendors/bootstrap3-wysihtml5-bower/css/bootstrap3-wysihtml5.min.css")}}"/>
     <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/pages/mail_box.css")}}"/>
@@ -36,11 +38,11 @@ z-index: 999999">
         <img src="{{URL::asset("public/img/loader.gif")}}" style=" width: 40px;" alt="loading...">
     </div>
 </div>
-<div id="wrap">
+<div id="wrap" class=" admin-dashboard ">
     
     <div id="top">
         <!-- .navbar -->
-        @include('Admin.head')
+        <?php //@include('Admin.head') ?>
         <!-- /.navbar -->
         <!-- /.head -->
     </div>
@@ -62,7 +64,7 @@ z-index: 999999">
                                     <form action="{{url('/')}}/admin/index" method="post" enctype="multipart/form-data">
                                         <input type="hidden" name="_token" value="{{csrf_token()}}">
                                         
-                                        <!-- <div class="form-group">
+                                        <div class="form-group">
                                             <div class="row">
                                             <div class="col-lg-4">
                                                 <h6>Meta title</h6>
@@ -70,14 +72,14 @@ z-index: 999999">
                                             </div>
                                              <div class="col-lg-4">
                                                 <h6>Meta Keyword</h6>
-                                              <input type="file" name="meta_keyword" class="form-control" style="max-width: 210px;" placeholder="Meta Keyword" required>
+                                              <input type="text" name="meta_keyword" class="form-control" placeholder="Meta Keyword" required>
                                             </div> 
                                             <div class="col-lg-4">
                                                  <h6>Meta Description</h6>
                                               <input type="text" name="meta_desc" class="form-control" placeholder="Meta Description" required>
                                             </div>
                                           </div>
-                                        </div> -->
+                                        </div>
 
                                         <div class="form-group">
                                             <div class="row">

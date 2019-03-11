@@ -34,7 +34,7 @@ Basic Settings
                                         <input type="hidden" name="_token" value="{{csrf_token()}}">
                                          <div class="form-group">
                                          	<div class="row">
-                                         		<img src="{{$logo->value}}" height="75" width="150">
+                                         		<img src="{{$logo->value}}" height="70" width="70">
 	                                            <div class="col-lg-4">
 	                                                <h6>LOGO</h6>
 	                                             <input type="file" name="logo" class="form-control" style="max-width: 210px;">

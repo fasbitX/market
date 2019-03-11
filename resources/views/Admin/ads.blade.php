@@ -30,16 +30,16 @@ i.fa.fa-trash {
 
 
 
-<div class="outer">
+<div class="outer ads">
                 <div class="inner bg-light lter bg-container">
                     <div class="row">
 
                         <div class="col-lg-12">
 
                             <div class="card">
-                                <div class="card-header bg-white">
+                                <!--div class="card-header bg-white">
                                   Ads
-                                </div>
+                                </div-->
                                 <div class="card-block m-t-35">
                                     <table  id="example1" class="display table table-stripped table-bordered"> 
                                       <thead>

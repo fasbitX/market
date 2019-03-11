@@ -45,17 +45,17 @@
                                           <th>ICO</th> 
                                           <th>Image</th> 
                                           <th>Category</th> 
-                                          <th>Short Description</th> 
-                                          <th>Link</th> 
-                                          <th>Start_date</th> 
-                                          <th>End_date</th> 
-                                          <!-- <th>Action</th>  -->
+                                          <!--th colspan="3">Short Description</th--> 
+                                          <!--th>Link</th--> 
+                                          <th>Start date</th> 
+                                          <th>End date</th> 
+                                          <th>Action</th>
                                         </tr>
                                       </thead> 
                                       <tbody>
                                         @foreach($ico as $data)
                                         <tr>
-                                          <td style="width:150px;">
+                                          <td>
                                             <span>
                                               {{$data->title}}
                                             </span>
@@ -63,53 +63,53 @@
                                             @if($data->rating == 5 )
 
                                                                <span class="col-12 ion_icon">
-                                                                <i class="ion-star " style="color:#f39c12;font-size: 22px"></i>
-                                                                <i class="ion-star " style="color:#f39c12;font-size: 22px"></i>
-                                                                <i class="ion-star " style="color:#f39c12;font-size: 22px"></i>
-                                                                <i class="ion-star " style="color:#f39c12;font-size: 22px"></i>
-                                                                <i class="ion-star " style="color:#f39c12;font-size: 22px"></i>
+                                                                <i class="ion-star " style="color:#f39c12;font-size: 15px"></i>
+                                                                <i class="ion-star " style="color:#f39c12;font-size: 15px"></i>
+                                                                <i class="ion-star " style="color:#f39c12;font-size: 15px"></i>
+                                                                <i class="ion-star " style="color:#f39c12;font-size: 15px"></i>
+                                                                <i class="ion-star " style="color:#f39c12;font-size: 15px"></i>
                                                                  </span>
                                                                  @elseif($data->rating == 4)
                                                                <span class="col-12 ion_icon">
-                                                                <i class="ion-star " style="color:#f39c12;font-size: 22px"></i>
-                                                                <i class="ion-star " style="color:#f39c12;font-size: 22px"></i>
-                                                                <i class="ion-star " style="color:#f39c12;font-size: 22px"></i>
-                                                                <i class="ion-star " style="color:#f39c12;font-size: 22px"></i>
-                                                                <i class="ion-star " style="color:#5f635f8f;font-size: 22px"></i>
+                                                                <i class="ion-star " style="color:#f39c12;font-size: 15px"></i>
+                                                                <i class="ion-star " style="color:#f39c12;font-size: 15px"></i>
+                                                                <i class="ion-star " style="color:#f39c12;font-size: 15px"></i>
+                                                                <i class="ion-star " style="color:#f39c12;font-size: 15px"></i>
+                                                                <i class="ion-star " style="color:#5f635f8f;font-size: 15px"></i>
                                                                  </span>
                                                                  @elseif($data->rating == 3)
                                                                <span class="col-12 ion_icon">
-                                                                <i class="ion-star " style="color:#f39c12;font-size: 22px"></i>
-                                                                <i class="ion-star " style="color:#f39c12;font-size: 22px"></i>
-                                                                <i class="ion-star " style="color:#f39c12;font-size: 22px"></i>
-                                                                <i class="ion-star " style="color:#5f635f8f;font-size: 22px"></i>
-                                                                <i class="ion-star " style="color:#5f635f8f;font-size: 22px"></i>
+                                                                <i class="ion-star " style="color:#f39c12;font-size: 15px"></i>
+                                                                <i class="ion-star " style="color:#f39c12;font-size: 15px"></i>
+                                                                <i class="ion-star " style="color:#f39c12;font-size: 15px"></i>
+                                                                <i class="ion-star " style="color:#5f635f8f;font-size: 15px"></i>
+                                                                <i class="ion-star " style="color:#5f635f8f;font-size: 15px"></i>
                                                                  </span>
                                                                  @elseif($data->rating == 2)
                                                                <span class="col-12 ion_icon">
-                                                                <i class="ion-star " style="color:#f39c12;font-size: 22px"></i>
-                                                                <i class="ion-star " style="color:#f39c12;font-size: 22px"></i>
-                                                                <i class="ion-star " style="color:#5f635f8f;font-size: 22px"></i>
-                                                                <i class="ion-star " style="color:#5f635f8f;font-size: 22px"></i>
-                                                                <i class="ion-star " style="color:#5f635f8f;font-size: 22px"></i>
+                                                                <i class="ion-star " style="color:#f39c12;font-size: 15px"></i>
+                                                                <i class="ion-star " style="color:#f39c12;font-size: 15px"></i>
+                                                                <i class="ion-star " style="color:#5f635f8f;font-size: 15px"></i>
+                                                                <i class="ion-star " style="color:#5f635f8f;font-size: 15px"></i>
+                                                                <i class="ion-star " style="color:#5f635f8f;font-size: 15px"></i>
                                                                  </span>
                                                                  @elseif($data->rating == 1)
                                                                <span class="col-12 ion_icon">
-                                                                <i class="ion-star " style="color:#f39c12;font-size: 22px"></i>
-                                                                <i class="ion-star " style="color:#5f635f8f;font-size: 22px"></i>
-                                                                <i class="ion-star " style="color:#5f635f8f;font-size: 22px"></i>
-                                                                <i class="ion-star " style="color:#5f635f8f;font-size: 22px"></i>
-                                                                <i class="ion-star " style="color:#5f635f8f;font-size: 22px;"></i>
+                                                                <i class="ion-star " style="color:#f39c12;font-size: 15px"></i>
+                                                                <i class="ion-star " style="color:#5f635f8f;font-size: 15px"></i>
+                                                                <i class="ion-star " style="color:#5f635f8f;font-size: 15px"></i>
+                                                                <i class="ion-star " style="color:#5f635f8f;font-size: 15px"></i>
+                                                                <i class="ion-star " style="color:#5f635f8f;font-size: 15px;"></i>
                                                                  </span>
                                                                @endif
                                                              </td>
                                           <td>
-                                            <img src="{{IMAGE_BASE_URL}}{{$data->image_url}}" height="70" width="70">
+                                            <img src="{{$data->image_url}}" height="70" width="70">
                                           </td>
                                           <td>{{$data->category}}</td>
-                                          <td style="width:150px;">
-                                            {{$data->short_description}}</td>
-                                          <td >
+                                          <!--td style="width:150px;" colspan="3">
+                                            {{$data->short_description}}</td-->
+                                          <!--td >
                                             <a href="{{$data->website}}">
                                               <i class="fa fa-2x fa-globe" style="font-size: 1em;color: #8dc647;" ></i>
                                             </a>
@@ -140,7 +140,7 @@
                                             <a href="{{$data->reddit}}">
                                               <i class="fa fa-2x fa-reddit" aria-hidden="true" style="font-size: 1em;color: #8dc647;"></i>
                                             </a>
-                                          </td>
+                                          </td-->
                                           <td>{{$data->start_date}}</td>
                                           <td>
                                             <?php 
@@ -151,6 +151,12 @@
                                             echo $diff->format("%R%a days");
                                             ?>
                                             
+                                          </td>
+                                          <td class="sorting_1">
+                                              <form action="/admin/index/delete/{{$data->id}}" method="GET">
+                                                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                  <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                              </form>
                                           </td>
                                           <!-- <td><a href="{{url('/')}}/delete_ico/{{$data->id}}">DELETE</a></td> -->
                                         </tr>

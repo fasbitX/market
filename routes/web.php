@@ -62,6 +62,7 @@ Route::GET('/admin/footer',function()
 
 Route::get('admin/index','AdminController@index')->name('admin_index');
 Route::POST('/admin/index','AdminController@add_ico');
+Route::GET('/admin/index/delete/{id}','AdminController@delete_ico');
 Route::GET('/admin/login','AdminController@login')->name('admin_login');
 Route::GET('/admin/logout','LoginController@logout');
 Route::POST('/admin/login','AdminController@check_login');
