@@ -1,0 +1,45 @@
+#top .navbar-static-top, #top .navbar{
+    background: none !important;
+}
+.home-table .table td{
+    border-top: none;
+    border-bottom: 1px solid #282e3b;
+    color: white;
+    text-align: right;
+}
+.priceup{
+    color: #26da71 !important;
+}
+.pricedown{
+    color: #ff5a1c !important;
+}
+#wrap{
+    background-image: radial-gradient(#003B53, #000B15);
+}
+
+.home-table thead{
+    background: none !important;
+    text-transform: uppercase;
+    color: #626b7f;
+}
+
+.home-table thead th{
+    color: #626b7f;
+    border-top: 0 !important;
+    border-bottom: 1px solid #282e3b !important;
+    text-align: right;
+}
+
+.home-table .table td:nth-child(1), .table th:nth-child(1){
+    text-align: left !important;
+}
+
+#pagination{
+    border: none!important
+}
+#pagination button{
+    background: none !important;
+    border: 1px solid #282e3b !important;
+    border-radius: 5px !important; 
+    color: white;
+}

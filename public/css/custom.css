@@ -212,7 +212,7 @@ button,
     align-items: center !important;
     font-family: 'Concert One', cursive !important;
     font-size: 28px !important;
-    color: black !important;
+    color: white !important;
 }
 .login-text{
     font-family: 'Concert One', cursive !important;
@@ -220,7 +220,7 @@ button,
     color: #8DC647 !important;
 }
 .content-image-header:hover{
-    color: black !important;
+    color: white !important;
 }
 .content-image-header p{
     margin-bottom: 5px !important;

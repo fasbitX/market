@@ -58,7 +58,6 @@ div.min-add-div {
                 <div class="m-t-30">
                     <!-- <i class="fa fa-table"></i> -->
                     <!-- <button class="btn btn-success">Coin list</button> -->
-                    <h5 style="color:#8dc647;font-weight:bold;">Coin List</h5>
                 </div>
                 <div class="">
                     <div class="m-t-10 home-table">
@@ -83,7 +82,7 @@ div.min-add-div {
                 
                 <img src="{{url('/')}}/public/add-bg.jpg" class="single-img-pro"> 
                 <img src="{{url('/')}}/public/add-bg1.jpg" class="single-img-pro"> 
-            </div>
+        </div>
 @endif
 </div>
 </div>
@@ -181,7 +180,7 @@ function ajaxFunction() {
         url: api_url + '?page=' + page_number,
         dataType: 'json',
         success: function(data) {
-           start = data.start;
+            start = data.start;
 
             //Fix data
             data.data.forEach(function(element){
@@ -264,8 +263,21 @@ function ajaxFunction() {
             }
             
 
-            //Map
-            var temp = '<div class="table-responsive"><table id="example1" class="table"> <thead class="flip-content"> <tr> <th onclick=orderBy("name") style="cursor: pointer">Cryptocurrency</th> <th onclick=orderBy("price") style="cursor: pointer">Price</th> <th onclick=orderBy("percent_change_24h") style="cursor: pointer" class="numeric">24h % change</th> <th class="numeric" onclick=orderBy("volume_24h") style="cursor: pointer">Volume</th> <th class="numeric" onclick=orderBy("market_cap") style="cursor: pointer">Market cap</th> <th class="numeric">24h performence</th> </tr></thead> <tbody>';
+            //Map  
+            var temp = '<div class="table-responsive">'+
+                        '<table id="example1" class="table">'+
+                            '<thead class="flip-content">'+
+                                '<tr>'+
+                                    '<th onclick=orderBy("name") style="cursor: pointer">Cryptocurrency</th>'+ 
+                                    '<th onclick=orderBy("price") style="cursor: pointer">Price</th>'+
+                                    '<th onclick=orderBy("percent_change_24h") style="cursor: pointer" class="numeric">24h % change</th>'+ 
+                                    '<th class="numeric" onclick=orderBy("volume_24h") style="cursor: pointer">Volume</th>'+
+                                    '<th class="numeric" onclick=orderBy("market_cap") style="cursor: pointer">Market cap</th>'+
+                                    '<th class="numeric">24h performence</th>'+
+                                '</tr>'+
+                            '</thead>'+ 
+                        '<tbody>';
+                    
             data.data.forEach(function(element) {
 
                 var o_graph = $("#G"+element.id).val();
@@ -282,28 +294,32 @@ function ajaxFunction() {
                 element.price = element.price.replace(' ', '');
 
                 var t_url = '"' + api_url1 + element.id + '?name=' + element.name + '"';
-                if (element.percent_change_24h < 0) {
-                    var percent_back = "width: 55px;max-width: 55px;background-color:#ed5565!important;color: #fff;border-radius: 30px; font-size: 0.8em;padding:5px 5px;display: inline-block;text-align:center;padding-bottom:3px;";
-                } else {
-                    var percent_back = "width: 55px;max-width: 55px;background-color:#57bd0f!important;color: #fff;border-radius: 30px; font-size: 0.8em;padding:5px 5px;display: inline-block;text-align:center;padding-bottom:3px;";
-                }
 
+                if (element.percent_change_24h < 0) var percent_back = "color: #ff5a1c";
+                else var percent_back = "color: #26da71";
+                
+                temp += '<tr onclick="test(' + element.id + ');" style="cursor: pointer;">'+
+                                '<td><img src="' + element.image_url + '" height="16" width="16">&nbsp;&nbsp;'+element.name+'</td>';
+                                
+                                
                 if (price_old < element.price) {
-                    console.log("Value increased");
-
-                    temp += '<tr onclick="test(' + element.id + ');" style="background-color: #8acc8a;cursor: pointer;"> <td> <img src="' + element.image_url + '" height="16" width="16">&nbsp;&nbsp;'+element.name+'</td><td id="' + element.id + '">$ ' + element.price + '</td><td class="numeric"><div style="' + percent_back + '"><span>' + element.percent_change_24h + '</span></div></td><td class="numeric">' + element.volume_24h + '</td><td class="numeric" style="color:rgb(66, 139, 202);">$ ' + element.market_cap + '</td><td class="numeric"> <img height="35" style="border: 1px solid #eee;" width="100" src="' + o_graph + '"> </td></tr>';
+                    //console.log("Value increased");
+                    temp +=     '<td class="priceup" id="' + element.id + '">$ ' + element.price + '</td>';
                 } else if (price_old > element.price) {
-                    console.log("Value decreased");
-                    temp += '<tr onclick="test(' + element.id + ');" style="background-color: #e46565;cursor: pointer;"> <td> <img src="' + element.image_url + '" height="16" width="16">&nbsp;&nbsp;'+element.name+'</td><td id="' + element.id + '">$ ' + element.price + '</td><td class="numeric"><div style="' + percent_back + '"><span>' + element.percent_change_24h + '</span></div></td><td class="numeric">' + element.volume_24h + '</td><td class="numeric" style="color:rgb(66, 139, 202);">$ ' + element.market_cap + '</td><td class="numeric"> <img height="35" style="border: 1px solid #eee;" width="100" src="' + o_graph + '"> </td></tr>';
+                    //console.log("Value decreased");
+                    temp +=     '<td class="pricedown" id="' + element.id + '">$ ' + element.price + '</td>';
                 } else {
-                    temp += '<tr style="cursor: pointer;" onclick="test(' + element.id + ');" > <td> <img src="' + element.image_url + '" height="16" width="16">&nbsp;&nbsp;'+element.name+'</td><td id="' + element.id + '">$ ' + element.price + '</td><td class="numeric"><div style="' + percent_back + '"><span>' + element.percent_change_24h + '</span></div></td><td class="numeric">' + element.volume_24h + '</td><td class="numeric" style="color:rgb(66, 139, 202);">$ ' + element.market_cap + '</td><td class="numeric"> <img height="35" style="border: 1px solid #eee;" width="100" src="' + o_graph + '"> </td></tr>';
-                }
-
-
+                    temp +=     '<td id="' + element.id + '">$ ' + element.price + '</td>';
+                }               
+                temp +=         '<td class="numeric" style="' + percent_back + '">' + element.percent_change_24h + '</td>'+
+                                '<td class="numeric">' + element.volume_24h + '</td>'+
+                                '<td class="numeric" style="color:rgb(66, 139, 202);">$ ' + element.market_cap + '</td>'+
+                                '<td class="numeric"> <img height="35"  width="100" src="' + o_graph + '"> </td>'+
+                        '</tr>';
             });
 
-            temp += '</tbody></table></div><div id="pagination" class="float-right"></div>';
 
+            temp += '</tbody></table></div><div id="pagination" class="float-right"></div>';
             document.getElementById("table_body").innerHTML = temp;
 
             var page_html = "";
@@ -385,7 +401,6 @@ setInterval(function() {
         url: cron_url,
         data: paramns,
         success: function(data) {
-            //console.log(data);
         }
     });
 }, 3000);
