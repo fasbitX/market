@@ -52,7 +52,123 @@ a.nav-link {
 <div class="">
 <div id="" class="container">
 <div class="row">
-                <div class="col-md-10 col-sm-10 col-xs-12">
+<div class="col-md-12 col-sm-12 col-xs-12">
+
+<?php /*
+<div class="outer">
+                <div class="r">
+                    <div class="row">
+
+                        <div class="col-lg-12">                 
+                                        <div class="nav-tabs-custom ico-table">
+                                            <ul class="nav nav-tabs">
+                                                <li class="nav-item">
+                                                    <a href="#tab_1" class="nav-link active" data-toggle="tab">Upcoming</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#tab_2" class="nav-link" data-toggle="tab">Ongoing</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#tab_3" class="nav-link" data-toggle="tab">Ended</a>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content">
+
+                                                <div class="tab-pane" id="tab_3">
+                                                    <div class="row no-gutters">
+                                                         
+                                                     <div class="full-width">
+                                                        <div class="m-t-35 table-responsive">
+                                                          <table class="table table-bordered table-striped flip-content">
+                                                              <thead class="flip-content">
+                                                            <tr>  
+                                                              <th>#</th>
+                                                              <th>ICO</th> 
+                                                              <th>Category</th>  
+                                                              <th>Timeline</th>
+                                                            </tr>
+                                                          </thead> 
+                                                          <tbody>
+                                                            <?php $cont = 0 ?>
+                                                            @foreach($ended as $data)
+                                                              <?php $cont++; ?>
+                                                            <tr>
+                                                              <td style="width: 20px">
+                                                                <?php echo $cont; ?>
+                                                              </td>
+                                                              <td class="ico-title-img">
+                                                                <div>
+                                                                  <img src="{{IMAGE_BASE_URL}}{{$data->image_url}}" height="50" width="50">
+                                                                </div>
+
+                                                                <div>
+                                                                    <a href="{{url('/')}}/ico_view/{{$data->id}}">{{$data->title}}</a>
+                                                                    <br>
+                                                                    @if($data->rating == 5)
+                                                                  <span class="col-12 ion_icon">
+                                                                    <i class="ion-star " style="color:#f39c12;font-size: 12px"></i>
+                                                                    <i class="ion-star " style="color:#f39c12;font-size: 12px"></i>
+                                                                    <i class="ion-star " style="color:#f39c12;font-size: 12px"></i>
+                                                                    <i class="ion-star " style="color:#f39c12;font-size: 12px"></i>
+                                                                    <i class="ion-star " style="color:#f39c12;font-size: 12px"></i>
+                                                                    </span>
+                                                                    @elseif($data->rating == 4)
+                                                                  <span class="col-12 ion_icon">
+                                                                    <i class="ion-star " style="color:#f39c12;font-size: 12px"></i>
+                                                                    <i class="ion-star " style="color:#f39c12;font-size: 12px"></i>
+                                                                    <i class="ion-star " style="color:#f39c12;font-size: 12px"></i>
+                                                                    <i class="ion-star " style="color:#f39c12;font-size: 12px"></i>
+                                                                    <i class="ion-star " style="color:#5f635f8f;font-size: 12px"></i>
+                                                                    </span>
+                                                                    @elseif($data->rating == 3)
+                                                                  <span class="col-12 ion_icon">
+                                                                    <i class="ion-star " style="color:#f39c12;font-size: 12px"></i>
+                                                                    <i class="ion-star " style="color:#f39c12;font-size: 12px"></i>
+                                                                    <i class="ion-star " style="color:#f39c12;font-size: 12px"></i>
+                                                                    <i class="ion-star " style="color:#5f635f8f;font-size: 12px"></i>
+                                                                    <i class="ion-star " style="color:#5f635f8f;font-size: 12px"></i>
+                                                                    </span>
+                                                                    @elseif($data->rating == 2)
+                                                                  <span class="col-12 ion_icon">
+                                                                    <i class="ion-star " style="color:#f39c12;font-size: 12px"></i>
+                                                                    <i class="ion-star " style="color:#f39c12;font-size: 12px"></i>
+                                                                    <i class="ion-star " style="color:#5f635f8f;font-size: 12px"></i>
+                                                                    <i class="ion-star " style="color:#5f635f8f;font-size: 12px"></i>
+                                                                    <i class="ion-star " style="color:#5f635f8f;font-size: 12px"></i>
+                                                                    </span>
+                                                                    @elseif($data->rating == 1)
+                                                                  <span class="col-12 ion_icon">
+                                                                    <i class="ion-star " style="color:#f39c12;font-size: 12px"></i>
+                                                                    <i class="ion-star " style="color:#5f635f8f;font-size: 12px"></i>
+                                                                    <i class="ion-star " style="color:#5f635f8f;font-size: 12px"></i>
+                                                                    <i class="ion-star " style="color:#5f635f8f;font-size: 12px"></i>
+                                                                    <i class="ion-star " style="color:#5f635f8f;font-size: 12px;"></i>
+                                                                    </span>
+                                                                    @endif
+                                                                  </div>
+                                                                </td>
+                                                                <td>{{$data->category}}</td>
+                                                                <td>Completed</td>
+                                                            </tr>
+                                                            @endforeach
+                                                          </tbody>
+                                                        </table>
+                                                </div>
+                                                </div>
+                                                    </div>
+                                                </div>
+                                                <!-- /thumnail helper gallery -->
+                                            </div>
+                                            <!-- /.tab-content -->
+                                      
+                                        <!-- nav-tabs-custom -->
+                        </div>
+                    </div>
+                </div>
+                <!-- /.inner -->
+            </div>
+        </div>
+*/?>
 
 
 <div class="outer">
@@ -517,13 +633,10 @@ a.nav-link {
             </div>
         </div>
 
-<div class="col-md-2 col-sm-2 col-xs-12 text-center">
-                <!-- <img src="https://tpc.googlesyndication.com/simgad/9530178552289300702" class="single-img-pro"> -->
-                <img src="{{url('/')}}/public/add-bg.jpg" class="single-img-pro"> 
-            </div>
+
         </div>
-    </div>
-</div>
+    </div> 
+</div> 
 <script src="{{ URL::asset("public/pages/icons.js")}}"></script>
 @endsection
 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5afec5426d44f1e2"></script>

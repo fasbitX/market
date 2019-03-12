@@ -1,9 +1,54 @@
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, label{
     color: white !important;
 }
+
+/***** HEADER STYLES *****/
+
 #top .navbar-static-top, #top .navbar{
     background: none !important;
 }
+#top .navbar-brand{
+    padding: 0 !important;
+    padding-top: 10px;
+}
+.menu-front-mobile{
+    display: none;
+}
+.navbar-nav .nav-link{
+    font-size: 13px !important;
+}
+.menu-front-desktop .nav-link{
+    text-transform: none;
+    font-size: initial !important;
+}
+#navbarToggler{
+    margin-left: 65px;
+}
+
+@media screen and (max-width: 991px){
+    .menu-front-desktop{
+        display: none;
+    }
+    .menu-front-mobile{
+        display: block;
+    }
+    #navbarToggler{
+        margin-left: initial;
+    }
+    .burger-btn{
+        display: flex;
+        padding-bottom: 10px;
+    }
+    .navbar-nav .nav-link{
+        font-size: initial !important;
+    }
+}
+@media screen and (max-width: 420px){
+    .content-image-header p{
+        font-size: 18px;
+    }
+}
+/*************************/
 .home-table .table td{
     border-top: none;
     border-bottom: 1px solid #282e3b;

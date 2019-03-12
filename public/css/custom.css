@@ -19,8 +19,12 @@
 
 
 /* ================ 1.Reset css========================== */
+@font-face {
+    font-family: 'Ubuntu';
+    src: url('../fonts/Ubuntu-R.ttf');
+}
 body{
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: Ubuntu, Arial, sans-serif;
     color: white;
 }
 .card-header {
@@ -211,12 +215,12 @@ button,
 .content-image-header{
     display: flex !important;
     align-items: center !important;
-    font-family: 'Concert One', cursive !important;
+    font-family: 'Ubuntu' !important;
     font-size: 28px !important;
     color: white !important;
 }
 .login-text{
-    font-family: 'Concert One', cursive !important;
+    font-family: 'Ubuntu', cursive !important;
     font-size: 40px !important;
     /*color: #8DC647 !important;*/
     color: white !important;
@@ -2404,8 +2408,11 @@ table.dataTable thead .sorting_desc:after {
     font-weight: 400;
     color: #fff;
     font-size: 15px !important;
-    padding: 18px 15px!important;
-    font-family: Helvetica, Arial, sans-serif
+    /*padding: 18px 15px!important;*/
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    font-family: Ubuntu, Arial, sans-serif;
+    text-transform: uppercase;
 }
 
 .navbar-nav .nav-link:hover,
@@ -2414,6 +2421,7 @@ table.dataTable thead .sorting_desc:after {
     font-weight: 400;
     color: #fff;
     background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
 }
 
 .ccc-widget {
@@ -2985,4 +2993,17 @@ body{
 td.sorting_1{
     text-align: center;
 	vertical-align: middle;
+}
+
+.ico-table .table tr td{
+    /*text-align: center;*/
+    vertical-align: middle;
+}
+
+.ico-title-img{
+    display: flex;
+}
+
+.ico-title-img>div{
+    margin-right: 15px;
 }

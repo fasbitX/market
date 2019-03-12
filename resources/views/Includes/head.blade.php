@@ -1,17 +1,51 @@
 
-<link href="https://fonts.googleapis.com/css?family=Concert+One" rel="stylesheet">
-<nav class="navbar navbar-expand-lg navbar-static-top">
+<!-- <link href="https://fonts.googleapis.com/css?family=Concert+One" rel="stylesheet"> -->
+<nav class="navbar navbar-expand-lg navbar-static-top" style="display:block; padding-top: 10px;">
   <div class="container">
   
+      
+   <div class="col-lg-6 burger-btn">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand content-image-header" href="{{url('/')}}/">
+          <img src="{{$global_logo}}" alt="logo">
+          <p><strong>Fasbit Market Watch</strong></p>
+      </a>
+   </div>
 
-   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-   </button>
+  <div class="col-6 menu-front-desktop">
+      <ul class="navbar-nav ml-auto float-right">
 
-   <a class="navbar-brand content-image-header" href="{{url('/')}}/">
-      <img src="{{$global_logo}}" alt="logo">
-      <p>Fasbit Market Watch</p>
-   </a>
+      @if(Session::get( 'user_name' ) =="")
+        <li class="nav-item">
+          <a class="nav-link" href="{{URL('/')}}/sign_in">Sign in</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{URL('/')}}/sign_up">Sign up</a>
+        </li>
+
+      @else
+
+        <li class="nav-item">
+          <a class="nav-link" href="#" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">
+          Welcome {{Session::get( 'user_name' )}} !
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{{url('/')}}/fav_coin_list">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url('/')}}/logout">Logout</a>
+        </li>
+
+      @endif    
+    </ul>
+   </div>
+</div>
+
+<div class="container">
    <div class="collapse navbar-collapse justify-content-md-center" id="navbarToggler">
     <!-- 
               
@@ -19,7 +53,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
     <div class="collapse navbar-collapse" id="navbarText"> -->
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav mr-auto" style="margin-bottom: 5px !important;">
       <li class="nav-item">
         <a class="nav-link" href="{{url('/')}}/">Coins</a>
       </li>
@@ -32,39 +66,35 @@
       <li class="nav-item">
         <a class="nav-link" href="{{url('/')}}/mining"">Mining</a>
       </li>
-       @if(Session::get( 'user_name' ) !="")
-      
-      @endif
+
+      <ul class="navbar-nav ml-auto menu-front-mobile">
+        @if(Session::get( 'user_name' ) =="")
+          <li class="nav-item">
+            <a class="nav-link" href="{{URL('/')}}/sign_in">Sign in</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{URL('/')}}/sign_up">Sign up</a>
+          </li>
+
+        @else
+
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">
+            Welcome {{Session::get( 'user_name' )}} !
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{{url('/')}}/fav_coin_list">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{url('/')}}/logout">Logout</a>
+          </li>
+
+        @endif  
+      </ul>
     </ul>
     
-    <ul class="navbar-nav ml-auto">
-
-    @if(Session::get( 'user_name' ) =="")
-      <li class="nav-item">
-        <a class="nav-link" href="{{URL('/')}}/sign_in">Sign in</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{URL('/')}}/sign_up">Sign up</a>
-      </li>
-
-      @else
-
-      <li class="nav-item">
-        <a class="nav-link" href="#" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">
-         Welcome {{Session::get( 'user_name' )}} !
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="{{url('/')}}/fav_coin_list">Dashboard</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{url('/')}}/logout">Logout</a>
-      </li>
-  
-      @endif
-       
-    </ul>
   </div>
 
 
