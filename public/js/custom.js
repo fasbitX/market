@@ -714,4 +714,19 @@ $(document).ready(function () {
         });
 
     }
+
+
+        $("#admin-menu-btn").click((e)=>{
+            if($("#admin-menu-btn").hasClass('visible')){
+                $("#admin-menu-btn").removeClass('visible');
+                $("#left").css({'left':'-250px'});
+            } else{
+                $("#admin-menu-btn").addClass('visible');
+                $("#left").css({'left':'0'});
+                $("#left").css({'position':'absolute'});
+                $("#left").css({'top':'0'});
+                $("#left").css({'z-index':'100'});
+            }
+        });
+    
 });

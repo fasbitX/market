@@ -22,9 +22,6 @@
     background: none;
 }
 
-.admin-dashboard .menu-left{
-    background: rgba(255,255,255, .08) !important;
-}
 .admin-dashboard .menu-left i, .admin-dashboard .menu-left span {
     color: #C9CFD2 !important;
 }
@@ -99,10 +96,40 @@
     padding: 0;
 }
 
+.admin-menu{
+    display: none;
+}
+
 /* MEDIA QUERYS */
-@media screen and (max-width: 768px){
+@media screen and (min-width: 768px){
+    .admin-dashboard .menu-left{
+        background: rgba(255,255,255, .08) !important;
+    }
+}
+@media screen and (max-width: 767px){
     .admin-dashboard #example1_length, .admin-dashboard #example1_filter{
         display: flex;
         justify-content: center;
+    }
+    #top .navbar{
+        background: rgba(255,255,255, .08) !important;
+    }
+    .admin-menu .container-fluid{
+        display: flex;
+    }
+    .menu-left{
+        background: #142531 !important;
+    }
+    .admin-menu .container-fluid .float-right{
+        right: 0;
+        position: absolute;
+        bottom: 0;
+        top: 0;
+        align-items: center;
+        display: flex;
+        height: 100%;
+    }
+    .admin-menu{
+        display: block;
     }
 }

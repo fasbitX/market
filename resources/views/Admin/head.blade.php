@@ -1,4 +1,4 @@
-<nav class="navbar navbar-static-top">
+<nav class="navbar navbar-static-top admin-menu ">
             <div class="container-fluid m-0">
                 <a class="navbar-brand" href="{{url('/')}}/admin/index">
                     <!-- <img src="{{$global_logo}}" class="admin_img" alt="logo"> -->
@@ -8,14 +8,13 @@
                     </h4>
                 </a>
 
-                <div class="topnav dropdown-menu-right float-right">
-
+                <div class="float-right">
 
                     <div class="btn-group">
                         <div class="user-settings no-bg">
-                            <button type="button" class="btn btn-default no-bg micheal_btn" data-toggle="dropdown">
+                            <!--button type="button" class="btn btn-default no-bg micheal_btn" data-toggle="dropdown"-->
                                 <!--img src="{{url('/')}}/public/img/admin.jpg" class="admin_img2 img-thumbnail rounded-circle avatar-img" alt="avatar"-->
-                                <img src="{{$global_logo}}" class="admin_img2 img-thumbnail rounded-circle avatar-img" alt="avatar"> 
+                                <!-- <img src="{{$global_logo}}" class="admin_img2 img-thumbnail rounded-circle avatar-img" alt="avatar"> 
                                 <strong>Admin</strong>
                                 <span class="fa fa-sort-down white_bg"></span>
                             </button>
@@ -25,7 +24,10 @@
                                 
                                 <a class="dropdown-item" href="{{url('/')}}/admin/logout"><i class="fa fa-sign-out"></i>
                                     Log Out</a>
-                            </div>
+                            </div> -->
+                            <button class="navbar-toggler collapsed" type="button" id="admin-menu-btn">
+                                 <span class="navbar-toggler-icon"></span>
+                            </button>
                         </div>
                     </div>
 

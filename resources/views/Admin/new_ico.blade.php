@@ -42,7 +42,7 @@ z-index: 999999">
     
     <div id="top">
         <!-- .navbar -->
-        <?php //@include('Admin.head') ?>
+        @include('Admin.head')
         <!-- /.navbar -->
         <!-- /.head -->
     </div>
