@@ -91,3 +91,81 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, label{
     border-radius: 5px !important; 
     color: white;
 }
+
+/*** ICO PAGE ***/
+.ico-mobile{
+    border-bottom: 1px solid #282e3b;
+    padding: 10px 0;
+}
+.ico-mobile  .ion_icon {
+    padding: 13px;
+    font-size: 18px!important;
+}
+.ico-title-img-mobile{
+    background: none !important;
+    width: 100%;
+    border: none !important;
+    text-align: left;
+}
+.ico-title-img-mobile>div{
+    display: flex;
+    width: 100%;
+}
+.ico-title-img-mobile>div>div>a{
+    padding-left: 13px;
+}
+.ico-title-img-mobile:focus{
+    outline: none !important;
+}
+.ico-icons-mobile{
+    display: block;
+    padding-left: 70px;
+}
+.ico-icons-mobile>p{
+    padding-right: 10px;
+}
+.ico-mobile .collapse{
+    padding: 10px 0;
+    font-size: 14px;
+}
+.ico-table .table tr td a{
+    color: white !important;
+}
+
+.table-bordered td, .table-bordered th{
+    border: none !important;
+    border-bottom: 1px solid #282e3b !important;
+}
+.ico-mobile-display .nav-tabs .nav-link, .ico-desktop-display .nav-tabs .nav-link{
+    border-radius: 20px !important;
+    color: #626b7f;
+}
+.ico-mobile-display .nav-tabs .nav-link:hover, .ico-desktop-display .nav-tabs .nav-link:hover{
+    color: white;
+    border-color: rgba(255,255,255, 0.1);
+}
+.ico-mobile-display .nav-tabs .nav-link.active, .ico-desktop-display .nav-tabs .nav-link.active{
+    border-color: rgba(255,255,255, 0.1);
+    background-color:rgba(255,255,255, 0.1);
+}
+.ico-mobile-display .nav-tabs .nav-link.active:focus, .ico-desktop-display .nav-tabs .nav-link.active:focus{
+    border-color: rgba(255,255,255, 0.1);
+    background-color:rgba(255,255,255, 0.1);
+}
+.ico-mobile-display .nav-tabs .nav-link.active:hover, .ico-desktop-display .nav-tabs .nav-link.active:hover{
+    border-color: rgba(255,255,255, 0.1);
+}
+.ico-mobile-display .nav-tabs, .ico-desktop-display .nav-tabs{
+    border-bottom: none !important;
+}
+.ico-mobile-display{
+    display: none;
+}
+@media screen and (max-width: 991px){
+    .ico-desktop-display{
+        display: none;
+    }
+    .ico-mobile-display{
+        display: block;
+    }
+}

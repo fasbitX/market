@@ -15,7 +15,7 @@ class IcoController extends BaseController
     	$current = DB::select("SELECT * FROM `ico` WHERE `start_date` <= CURDATE() AND `end_date` >= CURDATE()");
     	$ended = DB::select("SELECT * FROM `ico` WHERE `end_date` < CURDATE()");
     	$ads = DB::table('ads')->where('id',1)->first();
-        $title = DB::table('settings')->where('name','title')->first();
+        $title = DB::table('settings')->where('name','title')->first();      
     	// return view('ico-new',['upcoming'=>$upcoming,'current'=>$current,'ended'=>$ended,'ads'=>$ads,'title'=>$title]);
         return view('ico',['upcoming'=>$upcoming,'current'=>$current,'ended'=>$ended,'ads'=>$ads,'title'=>$title]);
     }

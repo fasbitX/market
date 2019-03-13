@@ -2781,7 +2781,7 @@ footer h3 {
 
 .ico-table .progress {
     height: 15px;
-    font-size: 6px;
+    /*font-size: 6px;*/
 }
 
 .ico-table .table tr td a {
@@ -2996,14 +2996,22 @@ td.sorting_1{
 }
 
 .ico-table .table tr td{
-    /*text-align: center;*/
+    /*text-align: center !important;*/
+    vertical-align: middle;
+}
+.ico-table .table tr th{
+    text-align: center !important;
+    vertical-align: middle;
+}
+.ico-table .table tr td:nth-child(1), .ico-table .table tr td:nth-child(3), .ico-table .table tr td:nth-child(4) {
+    text-align: center !important;
     vertical-align: middle;
 }
 
-.ico-title-img{
+.ico-title-img > div{
     display: flex;
 }
 
-.ico-title-img>div{
+.ico-title-img>div>div{
     margin-right: 15px;
 }

@@ -1,4 +1,3 @@
-
 <!-- <link href="https://fonts.googleapis.com/css?family=Concert+One" rel="stylesheet"> -->
 <nav class="navbar navbar-expand-lg navbar-static-top" style="display:block; padding-top: 10px;">
   <div class="container">
@@ -55,16 +54,19 @@
     <div class="collapse navbar-collapse" id="navbarText"> -->
     <ul class="navbar-nav mr-auto" style="margin-bottom: 5px !important;">
       <li class="nav-item">
-        <a class="nav-link" href="{{url('/')}}/">Coins</a>
+        <a class="nav-link" href="{{url('/')}}/">COINS</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{url('/')}}/news">News</a>
+        <a class="nav-link" href="{{url('/')}}/ico">ICO</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{url('/')}}/ico"">ICO</a>
+        <a class="nav-link" href="{{url('/')}}/">STOCK</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{url('/')}}/mining"">Mining</a>
+        <a class="nav-link" href="{{url('/')}}/">COMMODITIES</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url('/')}}/">ARBITRAGE</a>
       </li>
 
       <ul class="navbar-nav ml-auto menu-front-mobile">
