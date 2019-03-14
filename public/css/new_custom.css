@@ -3,7 +3,11 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, label{
 }
 
 /***** HEADER STYLES *****/
-
+.market{
+    padding: 0 30px 0 10px;
+    margin-top: -15px;
+    font-size: 13px !important;
+}
 #top .navbar-static-top, #top .navbar{
     background: none !important;
 }
@@ -12,7 +16,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, label{
     padding-top: 10px;
 }
 .menu-front-mobile{
-    display: none;
+    display: none !important;
 }
 .navbar-nav .nav-link{
     font-size: 13px !important;
@@ -30,10 +34,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, label{
         display: none;
     }
     .menu-front-mobile{
-        display: block;
+        display: block !important;
     }
     #navbarToggler{
-        margin-left: initial;
+        margin-left: 20px;
     }
     .burger-btn{
         display: flex;

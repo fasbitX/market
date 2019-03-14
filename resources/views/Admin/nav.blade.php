@@ -19,7 +19,7 @@
                 <div class="menu-left-logo">
                     <img src="{{$global_logo}}"  alt="logo">
                 </div>
-                <ul id="menu" >
+                <ul id="menu"  style="overflow-y: auto; height: 79vh;">
                     <li {{{ (Request::is('admin/index') ? 'class=active' : '') }}}>
                         <a href="{{url('/')}}/admin/index" >
                             <i class="fa fa-home"></i>
@@ -30,6 +30,12 @@
                         <a href="{{url('/')}}/admin/coins" >
                             <i class="fa fa-tachometer"></i>
                             <span class="link-title menu_hide">&nbsp;Coins</span>
+                        </a>
+                    </li>
+                    <li {{{ (Request::is('admin/stocks') ? 'class=active' : '') }}}>
+                        <a href="{{url('/')}}/admin/stocks" >
+                            <i class="fa fa-tachometer"></i>
+                            <span class="link-title menu_hide">&nbsp;Stocks</span>
                         </a>
                     </li>
                      <li {{{ (Request::is('admin/ads') ? 'class=active' : '') }}}>

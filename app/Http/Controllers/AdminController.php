@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\LiveData;
+use App\Stock;
 use DB;
 
 class AdminController extends BaseController
@@ -252,5 +253,11 @@ class AdminController extends BaseController
         $data = DB::table('ads')->where('id','=',$id)->delete();
 
         return redirect('/admin/ads');
+    }
+
+    /*******  STOCKS  ********/
+    public function stocks(){
+        $data = Stock::all();
+        return view('Admin.stocks',['data'=>$data]);
     }
 }

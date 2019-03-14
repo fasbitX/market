@@ -24,7 +24,7 @@
     src: url('../fonts/Ubuntu-R.ttf');
 }
 body{
-    font-family: Ubuntu, Arial, sans-serif;
+    font-family: Ubuntu, Arial, sans-serif !important;
     color: white;
 }
 .card-header {

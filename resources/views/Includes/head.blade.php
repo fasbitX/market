@@ -9,7 +9,7 @@
       </button>
       <a class="navbar-brand content-image-header" href="{{url('/')}}/">
           <img src="{{$global_logo}}" alt="logo">
-          <p><strong>Fasbit Market Watch</strong></p>
+          <p><strong>Fasbit</strong></p>
       </a>
    </div>
 
@@ -52,7 +52,8 @@
         <span class="navbar-toggler-icon"></span>
       </button>
     <div class="collapse navbar-collapse" id="navbarText"> -->
-    <ul class="navbar-nav mr-auto" style="margin-bottom: 5px !important;">
+    <div class="market menu-front-desktop">MARKET WATCH</div>
+    <ul class="navbar-nav mr-auto" style="margin-bottom: 5px !important; margin-top: -10px !important;">
       <li class="nav-item">
         <a class="nav-link" href="{{url('/')}}/">COINS</a>
       </li>
@@ -69,7 +70,7 @@
         <a class="nav-link" href="{{url('/')}}/">ARBITRAGE</a>
       </li>
 
-      <ul class="navbar-nav ml-auto menu-front-mobile">
+      <ul class="navbar-nav menu-front-mobile">
         @if(Session::get( 'user_name' ) =="")
           <li class="nav-item">
             <a class="nav-link" href="{{URL('/')}}/sign_in">Sign in</a>
