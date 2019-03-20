@@ -17,6 +17,7 @@ class CreateStocksTable extends Migration
             $table->increments('id');
             $table->string('symbol');
             $table->string('name');
+            $table->string('region');
             $table->timestamps();
         });
     }

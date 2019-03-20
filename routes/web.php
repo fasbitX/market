@@ -81,6 +81,8 @@ Route::GET('/admin/coins/deactivate/{id}','AdminController@deactivate_coins');
 Route::GET('/admin/coins/delete/{id}', 'AdminController@delete_coin');
 
 Route::GET('/admin/stocks', 'AdminController@stocks');
+Route::GET('/admin/stocks/delete/{id}', 'AdminController@delete_stocks');
+Route::POST('/admin/stocks', 'AdminController@add_stocks');
 
 Route::GET('/admin/ads','AdminController@ads');
 Route::GET('/admin/ads/activate/{id}','AdminController@activate_ads');

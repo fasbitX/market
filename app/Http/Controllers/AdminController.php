@@ -257,7 +257,25 @@ class AdminController extends BaseController
 
     /*******  STOCKS  ********/
     public function stocks(){
-        $data = Stock::all();
-        return view('Admin.stocks',['data'=>$data]);
+        $data = Stock::paginate(10);
+        return view('Admin.stocks', compact("data"));
+    }
+
+    public function add_stocks(Request $request){
+        $stock = new Stock();
+        $stock->symbol = $request->symbol;
+        $stock->name = $request->name;
+        $stock->region = $request->region;
+
+        $verify = Stock::where('symbol','=',$stock->symbol)->first();
+        if($verify) return 'error';
+        else{
+            $stock->save();
+            return 'success';
+        } 
+    }
+    public function delete_stocks($id){
+        Stock::find($id)->delete();
+        return redirect('/admin/stocks');
     }
 }
