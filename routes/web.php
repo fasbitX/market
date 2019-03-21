@@ -74,6 +74,7 @@ Route::post('/user_login','LoginController@login');
 Route::GET('/ico','IcoController@ico');
 Route::GET('/ico_view/{id}','IcoController@ico_view');
 Route::GET('/news','DashboardController@news');
+Route::GET('/stock', 'DashboardController@stock')->name('stock');
 
 Route::GET('/admin/coins','AdminController@coins');
 Route::GET('/admin/coins/activate/{id}','AdminController@activate_coins');
@@ -121,4 +122,3 @@ Route::GET('/coin/{crypto}','DashboardController@single_coin_new');
 
 Route::post('/admin/update_basic_settings','AdminController@update_basic_settings');
 Route::get('/admin/basic_settings','AdminController@basic_settings');
-

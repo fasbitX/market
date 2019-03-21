@@ -61,7 +61,7 @@
         <a class="nav-link" href="{{url('/')}}/ico">ICO</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{url('/')}}/">STOCK</a>
+        <a class="nav-link" href="{{url('/stock')}}/">STOCK</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{url('/')}}/">COMMODITIES</a>

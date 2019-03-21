@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\LiveData;
+use App\Stock;
 use DB;
 error_reporting(0);
 ini_set("display_errors", 0);
@@ -639,5 +640,11 @@ class DashboardController extends BaseController
     if ($sort_ascending) $array = array_reverse($temp_array);
 
     else $array = $temp_array;
-}
+    }
+
+    public function stock(){
+        $data = Stock::all();
+        $title = DB::table('settings')->where('name','title')->first();
+        return view('stocks', ['data'=>$data, 'title'=>$title]);
+    }
 }

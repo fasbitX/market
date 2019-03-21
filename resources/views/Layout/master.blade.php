@@ -51,6 +51,7 @@
   position: absolute;
   left: 48%;
   top: 48%;
+
   background-position: center;
 z-index: 999999">
         <img src="{{url('/')}}/public/img/loader.gif" style=" width: 40px;" alt="loading...">
