@@ -63,35 +63,5 @@
 @endsection
 
 @section('scripts')
-<script type="text/javascript">
-
-    $(document).ready(()=>{
-        let API = 'S672N57EU2CP2L0I';
-        //let data = [];
-        $(".table").find("td[data-id]").each(function(){
-            //data.push($(this).attr("data-id"));
-            $url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol='+$(this).attr("data-id")+'&apikey='+API;
-            //data.push($url);
-            $.ajax({
-                type: "GET",
-                url: $url,
-                success: function(data) {
-                    $("#"+data["Global Quote"]['01. symbol']+"Open").text(data["Global Quote"]['02. open']);
-                    $("#"+data["Global Quote"]['01. symbol']+"High").text(data["Global Quote"]['03. high']);
-                    $("#"+data["Global Quote"]['01. symbol']+"Low").text(data["Global Quote"]['04. low']);
-                    $("#"+data["Global Quote"]['01. symbol']+"Price").text(data["Global Quote"]['05. price']);
-                    $("#"+data["Global Quote"]['01. symbol']+"Volume").text(data["Global Quote"]['06. volume']);
-                    //console.log($("#"+data["Global Quote"]['01. symbol']+"Open"));
-                    //console.log(data)
-                }
-            });
-        });
-        $('#loading').hide();
-        $(".itemsStock").show("slow");
-        //console.log(data);
-    })
-
-
-</script>
-
+<script type="text/javascript" src="{{ URL::asset("public/js/stocks.js") }}"></script>
 @endsection

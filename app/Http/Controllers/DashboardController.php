@@ -642,9 +642,4 @@ class DashboardController extends BaseController
     else $array = $temp_array;
     }
 
-    public function stock(){
-        $data = Stock::all();
-        $title = DB::table('settings')->where('name','title')->first();
-        return view('stocks', ['data'=>$data, 'title'=>$title]);
-    }
 }
