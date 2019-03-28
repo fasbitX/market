@@ -1,4 +1,3 @@
-<!-- <link href="https://fonts.googleapis.com/css?family=Concert+One" rel="stylesheet"> -->
 <nav class="navbar navbar-expand-lg navbar-static-top" style="display:block; padding-top: 10px;">
   <div class="container">
   
@@ -46,12 +45,6 @@
 
 <div class="container">
    <div class="collapse navbar-collapse justify-content-md-center" id="navbarToggler">
-    <!-- 
-              
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    <div class="collapse navbar-collapse" id="navbarText"> -->
     <div class="market menu-front-desktop">MARKET WATCH</div>
     <ul class="navbar-nav mr-auto" style="margin-bottom: 5px !important; margin-top: -10px !important;">
       <li class="nav-item">

@@ -57,9 +57,9 @@ function add_stock(array){
         url: "/admin/stocks",
         data: paramns,
         success: function(data) {
-            //console.log(data);
-            if(data == "success") location.reload();
-            else $('#errorStock').click();
+            console.log(data);
+            if(data == "error") $('#errorStock').click();
+            else location.reload();
         }
     });
 }

@@ -273,3 +273,42 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, label{
     }
   }
 /********* end loading spinner *********/
+
+/****************************************/
+/********* Stock single view  ***********/
+/****************************************/
+
+.stock-view ul{
+    list-style: none;
+}
+
+.stock-view .nav-link{
+    display: block;
+    padding: .1rem 1rem;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.nav-item {
+    margin: 5px;
+}
+.stock-view .nav-link:focus {
+    outline: none !important;
+}
+
+.stock-view .nav-item .active{
+    background-color: rgba(255, 255, 255, 0.2);
+    color: rgba(221, 221, 221);
+}
+
+.stock-view .chart-title{
+    padding: 50px 50px 30px 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.stock-view .chart-title span:nth-child(2){
+    font-size: 18px;
+}

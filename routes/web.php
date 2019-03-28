@@ -68,7 +68,7 @@ Route::get('/getItemAjax/exchange/load','DashboardController@exchange_ajax');
 Route::get('/admin/new_ico', function(){
 		return view('Admin.new_ico');
 });	
-
+Route::GET('test', function(){return view('test');});
 Route::get('/admin/basic_settings','AdminController@basic_settings');
 Route::POST('/admin/footer-update','DashboardController@footer_update');
 Route::get('/getItemAjax/fav_coin/load/{id}','favCoinController@showFavCoin');
@@ -77,6 +77,8 @@ Route::post('/add_fav_coin','favCoinController@add_fav_coin')->name('add_fav_coi
 Route::get('/user/logout','LoginController@logout_user');
 Route::GET('/{crypto}','DashboardController@single_coin');
 Route::GET('/coin/{crypto}','DashboardController@single_coin_new');
+
+Route::GET('stock/{symbol}', 'StockController@dataCharts');
 
 Route::group(['prefix' => 'admin'] , function() {
 	
