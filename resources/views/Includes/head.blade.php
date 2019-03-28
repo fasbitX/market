@@ -1,7 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-static-top" style="display:block; padding-top: 10px;">
   <div class="container">
   
-      
    <div class="col-lg-6 burger-btn">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -48,19 +47,22 @@
     <div class="market menu-front-desktop">MARKET WATCH</div>
     <ul class="navbar-nav mr-auto" style="margin-bottom: 5px !important; margin-top: -10px !important;">
       <li class="nav-item">
-        <a class="nav-link" href="{{url('/')}}/">COINS</a>
+        <a class="nav-link" href="{{url('/')}}/">Crypto-Currency</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url('/stock')}}/">STOCKS</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url('/')}}/">FOREX</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url('/')}}/">TECHNICAL</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url('/')}}/">INDICATORS</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{url('/')}}/ico">ICO</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{url('/stock')}}/">STOCK</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{url('/')}}/">COMMODITIES</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{url('/')}}/">ARBITRAGE</a>
       </li>
 
       <ul class="navbar-nav menu-front-mobile">

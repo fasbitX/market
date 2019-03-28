@@ -26,7 +26,7 @@
             <li {{{ (Request::is('admin/commodities') ? 'class=active' : '') }}}>
                 <a href="{{url('/')}}/admin/commodities" >
                     <i class="fa fa-tachometer"></i>
-                    <span class="link-title menu_hide">&nbsp;Commodities</span>
+                    <span class="link-title menu_hide">&nbsp;Forex</span>
                 </a>
             </li>
             <li {{{ (Request::is('admin/ads') ? 'class=active' : '') }}}>

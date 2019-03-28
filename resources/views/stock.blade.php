@@ -26,7 +26,16 @@
             <input type="button" id="year" value="1 year" class="nav-link"/>
           </li>
           <li class="nav-item">
-            <input type="button" id="6months" value="6 meses" class="nav-link"/>
+            <input type="button" id="6months" value="6 months" class="nav-link"/>
+          </li>
+          <li class="nav-item">
+            <input type="button" id="3months" value="3 months" class="nav-link"/>
+          </li>
+          <li class="nav-item">
+            <input type="button" id="1month" value="1 month" class="nav-link"/>
+          </li>
+          <li class="nav-item">
+            <input type="button" id="week" value="1 week" class="nav-link"/>
           </li>
         </ul>
         <div id="curve_chart" style="height: 400px"></div>
@@ -71,7 +80,22 @@ function renderCharts(type){
       if(type == '6months'){
         if(++cont <= 100){
           data.push([new Date(date[0], date[1]-1, date[2]), parseFloat('{{$item->close}}')]);
-        } 
+        }
+      }
+      if(type == '3months'){
+        if(++cont <= 60){
+          data.push([new Date(date[0], date[1]-1, date[2]), parseFloat('{{$item->close}}')]);
+        }
+      }
+      if(type == '1month'){
+        if(++cont <= 30){
+          data.push([new Date(date[0], date[1]-1, date[2]), parseFloat('{{$item->close}}')]);
+        }
+      }
+      if(type == 'week'){
+        if(++cont <= 10){
+          data.push([new Date(date[0], date[1]-1, date[2]), parseFloat('{{$item->close}}')]);
+        }
       }
     @endforeach
   }
@@ -95,7 +119,6 @@ function renderCharts(type){
       });
     }
 
-
     //Horizontal axis 
     let _hAxis = {};
     if(type == 'all'){
@@ -112,7 +135,38 @@ function renderCharts(type){
           color: '#282e3b'
         }
       }
-    } else{
+    }
+    else if(type == '1month'){
+      _hAxis = {
+        format: "dd MMM yyyy",
+        textStyle: {
+          color: '#666',
+          fontSize: 12
+        },
+        minorGridlines: {
+          color: 'transparent'
+        },
+        gridlines: {
+          color: '#282e3b'
+        }
+      }
+    }
+    else if(type == 'week'){
+      _hAxis = {
+        format: "dd MMM",
+        textStyle: {
+          color: '#666',
+          fontSize: 12
+        },
+        minorGridlines: {
+          color: 'transparent'
+        },
+        gridlines: {
+          color: '#282e3b'
+        }
+      }
+    }
+    else{
       _hAxis = {
         format: "MMM yyyy",
         textStyle: {
@@ -168,18 +222,54 @@ $('#5years').click((e)=>{
   $('#5years').addClass('active');
   $('#year').removeClass('active');
   $('#6months').removeClass('active');
+  $('#3months').removeClass('active');
+  $('#1month').removeClass('active');
+  $('#week').removeClass('active');
 })
 $('#year').click((e)=>{
   renderCharts('year'); // Year
   $('#year').addClass('active');
   $('#5years').removeClass('active');
   $('#6months').removeClass('active');
+  $('#3months').removeClass('active');
+  $('#1month').removeClass('active');
+  $('#week').removeClass('active');
 })
 $('#6months').click((e)=>{
   renderCharts('6months'); // Six months
   $('#6months').addClass('active');
   $('#year').removeClass('active');
   $('#5years').removeClass('active');
+  $('#3months').removeClass('active');
+  $('#1month').removeClass('active');
+  $('#week').removeClass('active');
+})
+$('#3months').click((e)=>{
+  renderCharts('3months'); // three months
+  $('#3months').addClass('active');
+  $('#year').removeClass('active');
+  $('#5years').removeClass('active');
+  $('#6months').removeClass('active');
+  $('#1month').removeClass('active');
+  $('#week').removeClass('active');
+})
+$('#1month').click((e)=>{
+  renderCharts('1month'); // one month
+  $('#1month').addClass('active');
+  $('#5years').removeClass('active');
+  $('#year').removeClass('active');
+  $('#6months').removeClass('active');
+  $('#3months').removeClass('active');
+  $('#week').removeClass('active');
+})
+$('#week').click((e)=>{
+  renderCharts('week'); // one month
+  $('#week').addClass('active');
+  $('#5years').removeClass('active');
+  $('#year').removeClass('active');
+  $('#6months').removeClass('active');
+  $('#3months').removeClass('active');
+  $('#1month').removeClass('active');
 })
 $(window).resize(function(){
   renderCharts('all');

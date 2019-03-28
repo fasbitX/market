@@ -27,9 +27,7 @@
 				@endif
                     <div class="login_logo login_border_radius1">
                         <h3 class="text-center">
-                            <div class="login-text"><p>Fasbit Market Watch</p></div>
-                            <!--img src="https://www.bitexchange.cash/images/logo1.png" alt="josh logo" class="admire_logo"><span class=""-->
-                            	
+                            <div class="login-text"><p>Fasbit Market Watch</p></div>                            	
                             <span>Log In</span>
                         </h3>
                     </div>
@@ -45,7 +43,6 @@
                                     <input type="email" class="form-control  form-control-md" id="email" name="email" placeholder="E-mail" required>
                                 </div>
                             </div>
-                            <!--</h3>-->
                             <div class="form-group">
                                 <label for="password" class="col-form-label">Password</label>
                                 <div class="input-group">
