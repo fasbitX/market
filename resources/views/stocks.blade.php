@@ -34,8 +34,8 @@
                                 @foreach($data as $item)
                                     <?php $cont++; ?>
                                     <tr class="itemsStock">
-                                        <td data-id="{{$item->symbol}}">{{$item->symbol}}</td>
-                                        <td>{{$item->name}}</td>
+                                        <td data-id="{{$item->symbol}}"><a href="/stock/{{$item->symbol}}">{{$item->symbol}}</a></td>
+                                        <td><a href="/stock/{{$item->symbol}}">{{$item->name}}</a></td>
                                         <td id="{{$item->symbol}}Open"></td>
                                         <td id="{{$item->symbol}}High"></td>
                                         <td id="{{$item->symbol}}Low"></td>

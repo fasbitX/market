@@ -277,7 +277,12 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, label{
 /****************************************/
 /********* Stock single view  ***********/
 /****************************************/
-
+#stocks-table table td a{
+ color: white;
+}
+#stocks-table table td a:hover{
+    color: #999999;
+}
 .stock-view ul{
     list-style: none;
 }
