@@ -15,7 +15,7 @@ class favCoinController extends BaseController
         */
     	//print_r($joindata);
     	//exit;
-    	$data=DB::table('live_data')->where('status','=', 1)->get();
+        $data=DB::table('live_data')->where('status','=', 1)->get();
     	return view ('fav_coin',['data'=>$data]);
     }
 

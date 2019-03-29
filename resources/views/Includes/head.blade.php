@@ -56,10 +56,7 @@
         <a class="nav-link" href="{{url('/')}}/">FOREX</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{url('/')}}/">TECHNICAL</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{url('/')}}/">INDICATORS</a>
+        <a class="nav-link" href="{{url('/')}}/">TECHNICAL INDICATORS</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{url('/')}}/ico">ICO</a>
