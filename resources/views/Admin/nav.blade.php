@@ -23,8 +23,8 @@
                     <span class="link-title menu_hide">&nbsp;Stocks</span>
                 </a>
             </li>
-            <li {{{ (Request::is('admin/commodities') ? 'class=active' : '') }}}>
-                <a href="{{url('/')}}/admin/commodities" >
+            <li {{{ (Request::is('admin/forex') ? 'class=active' : '') }}}>
+                <a href="{{url('/')}}/admin/forex" >
                     <i class="fa fa-tachometer"></i>
                     <span class="link-title menu_hide">&nbsp;Forex</span>
                 </a>

@@ -12,8 +12,8 @@ use Illuminate\Http\Request;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::GET('csv', function(){
-	if($handle = fopen(public_path().'\forex_currency_list.csv', 'r')){
+/*Route::GET('csv', function(){
+	if($handle = fopen(public_path().'/forex_currency_list.csv', 'r')){
 		fgetcsv($handle, 1000, ',');
 		while(($data = fgetcsv($handle, 1000, ','))){
 			$c = new App\ForexList();
@@ -24,7 +24,8 @@ Route::GET('csv', function(){
 		fclose($handle);
 	}
 	return \App\ForexList::all();
-});
+});*/
+
 Route::GET('/logout',function(Request $request)
 {
 	$request->session()->forget('user_name');
