@@ -12,7 +12,19 @@ use Illuminate\Http\Request;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::GET('csv', function(){
+	if($handle = fopen(public_path().'\forex_currency_list.csv', 'r')){
+		fgetcsv($handle, 1000, ',');
+		while(($data = fgetcsv($handle, 1000, ','))){
+			$c = new App\ForexList();
+			$c->currency = $data[0];
+			$c->currency_name = $data[1];
+			$c->save();
+		}
+		fclose($handle);
+	}
+	return \App\ForexList::all();
+});
 Route::GET('/logout',function(Request $request)
 {
 	$request->session()->forget('user_name');
@@ -77,8 +89,8 @@ Route::post('/add_fav_coin','favCoinController@add_fav_coin')->name('add_fav_coi
 Route::get('/user/logout','LoginController@logout_user');
 Route::GET('/{crypto}','DashboardController@single_coin');
 Route::GET('/coin/{crypto}','DashboardController@single_coin_new');
-
 Route::GET('stock/{symbol}', 'StockController@dataCharts');
+
 
 Route::group(['prefix' => 'admin'] , function() {
 	

@@ -182,6 +182,25 @@ function renderCharts(type){
       }
     }
 
+    //Media Querys
+    mediaquery = window.matchMedia("(max-width: 991px)");
+    let _chartArea = {};
+    if (mediaquery.matches) {
+      _chartArea = {
+        top: '10%',
+        bottom: '10%',
+        left: '10%',
+        right: '5%'
+      }
+    } else {
+      _chartArea = {
+        top: '10%',
+        bottom: '10%',
+        left: '5%',
+        right: '5%'
+      }
+    }
+
     //Options grapichs
     let options = {
       legend: 'none',
@@ -200,12 +219,7 @@ function renderCharts(type){
       },
       hAxis: _hAxis,
       backgroundColor: 'none',
-      chartArea: {
-        top: '10%',
-        bottom: '10%',
-        left: '5%',
-        right: '5%'
-      }
+      chartArea: _chartArea
     }
     //Draw chart
     let chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
@@ -274,5 +288,6 @@ $('#week').click((e)=>{
 $(window).resize(function(){
   renderCharts('all');
 });
+
 </script>
 @endsection
