@@ -15,7 +15,7 @@
     <link type="text/css" rel="stylesheet" href="{{ URL::asset('public/css/pages/login1.css')}}"/>
     <!--End of Page level styles-->
 
-     <link rel="stylesheet" href="{{URL::asset('/public/css/bootstrap.min.css')}}">
+     <link rel="stylesheet" href="{{URL::asset('/public/css/pages/bootstrap.login.css')}}">
 
 
 <body>

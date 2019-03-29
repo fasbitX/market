@@ -8,7 +8,7 @@
 
 @section('content')
 
-  <link rel="stylesheet" href="{{URL::asset('/public/css/bootstrap.min.css')}}">
+  <link rel="stylesheet" href="{{URL::asset('/public/css/pages/bootstrap.login.css')}}">
 
 
 <br><br>
