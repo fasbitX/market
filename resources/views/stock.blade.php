@@ -37,6 +37,9 @@
           <li class="nav-item">
             <input type="button" id="week" value="1 week" class="nav-link"/>
           </li>
+          <li class="nav-item">
+            <input type="button" id="day" value="1 day" class="nav-link"/>
+          </li>
         </ul>
         <div id="curve_chart" style="height: 400px"></div>
       </div>    
@@ -50,9 +53,31 @@
 @section('scripts')
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
+//loading intraday data
+let dailyData=[];
+$.ajax({
+    type: "GET",
+    url: 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={{$stock->symbol}}&interval=5min&apikey={{$API}}',
+    success: function(data) {
+      //console.log(data);
+      Object.entries(data["Time Series (5min)"]).map((item)=>{
+          let date = item[0].split("-");
+          let day = date[2].split(" ");
+          let hour = day[1].split(":");
+          //console.log(date[0]+" "+(date[1]-1)+" "+day[0]+" "+hour[0]+" "+hour[1]+" "+hour[2]);
+          dailyData.push([new Date(date[0], date[1], day[0], hour[0], hour[1], hour[2]), parseFloat(item[1]["4. close"])]);
+      })
+      //console.log(dailyData);
+      dailyData.push([{type: 'date'}, {type: 'number'}]);
+    }
+});
 
+
+
+/**********************************************************/
  //Google charts API
- //@type = all, year, 6months
+ //@type = all, year, 6months, 3months, 1month, week, day 
+ /**********************************************************/
 function renderCharts(type){
   google.charts.load('current', {'packages':['corechart']});
   google.charts.setOnLoadCallback(drawChart);
@@ -106,6 +131,7 @@ function renderCharts(type){
   function drawChart() {
     //Data
     let _data = google.visualization.arrayToDataTable(data.reverse());
+    if(type == 'day') _data = google.visualization.arrayToDataTable(dailyData.reverse());
 
     //fix hAxis labels for 5 years chart
     let dateRange = _data.getColumnRange(0);
@@ -154,6 +180,20 @@ function renderCharts(type){
     else if(type == 'week'){
       _hAxis = {
         format: "dd MMM",
+        textStyle: {
+          color: '#666',
+          fontSize: 12
+        },
+        minorGridlines: {
+          color: 'transparent'
+        },
+        gridlines: {
+          color: '#282e3b'
+        }
+      }
+    }
+    else if(type=="day"){
+      _hAxis = {
         textStyle: {
           color: '#666',
           fontSize: 12
@@ -239,6 +279,7 @@ $('#5years').click((e)=>{
   $('#3months').removeClass('active');
   $('#1month').removeClass('active');
   $('#week').removeClass('active');
+  $('#day').removeClass('active');
 })
 $('#year').click((e)=>{
   renderCharts('year'); // Year
@@ -248,6 +289,7 @@ $('#year').click((e)=>{
   $('#3months').removeClass('active');
   $('#1month').removeClass('active');
   $('#week').removeClass('active');
+  $('#day').removeClass('active');
 })
 $('#6months').click((e)=>{
   renderCharts('6months'); // Six months
@@ -257,6 +299,7 @@ $('#6months').click((e)=>{
   $('#3months').removeClass('active');
   $('#1month').removeClass('active');
   $('#week').removeClass('active');
+  $('#day').removeClass('active');
 })
 $('#3months').click((e)=>{
   renderCharts('3months'); // three months
@@ -266,6 +309,7 @@ $('#3months').click((e)=>{
   $('#6months').removeClass('active');
   $('#1month').removeClass('active');
   $('#week').removeClass('active');
+  $('#day').removeClass('active');
 })
 $('#1month').click((e)=>{
   renderCharts('1month'); // one month
@@ -275,15 +319,27 @@ $('#1month').click((e)=>{
   $('#6months').removeClass('active');
   $('#3months').removeClass('active');
   $('#week').removeClass('active');
+  $('#day').removeClass('active');
 })
 $('#week').click((e)=>{
-  renderCharts('week'); // one month
+  renderCharts('week'); //weekly
   $('#week').addClass('active');
   $('#5years').removeClass('active');
   $('#year').removeClass('active');
   $('#6months').removeClass('active');
   $('#3months').removeClass('active');
   $('#1month').removeClass('active');
+  $('#day').removeClass('active');
+})
+$('#day').click((e)=>{
+  renderCharts('day'); //day
+  $('#day').addClass('active');
+  $('#5years').removeClass('active');
+  $('#year').removeClass('active');
+  $('#6months').removeClass('active');
+  $('#3months').removeClass('active');
+  $('#1month').removeClass('active');
+  $('#week').removeClass('active');
 })
 $(window).resize(function(){
   renderCharts('all');

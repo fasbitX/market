@@ -29,7 +29,8 @@ class StockController extends Controller
         $pricesDaily = Stock::find($stock->id)->dailyPrices()->get();
         $title = DB::table('settings')->where('name','title')->first();
 
-        return view('stock', ['pricesWeekly' => $pricesWeekly, 'pricesDaily' => $pricesDaily, 'stock' => $stock, 'title'=>$title]);
+        $API = 'S672N57EU2CP2L0I';    
+        return view('stock', ['pricesWeekly' => $pricesWeekly, 'pricesDaily' => $pricesDaily, 'stock' => $stock, 'title'=>$title, 'API' => $API]);
     }
 
     public function addStocks(Request $request){
