@@ -126,7 +126,10 @@ function renderCharts(type){
   }
 
   data.push([{type: 'date'}, {type: 'number'}]);
-  //console.log(data);
+  data.sort((a,b)=>{
+    return a[0] - b[0];
+  });
+  console.log(data);
   //Chart Callback
   function drawChart() {
     //Data
