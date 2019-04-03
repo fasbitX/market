@@ -83,53 +83,55 @@ function renderCharts(type){
   google.charts.setOnLoadCallback(drawChart);
 
   //Map data from Server
-  let data=[], date;  
+  let data=[], __data=[], date;  
   let cont=0;
-
-  //Weekly Data
-  if(type == 'all' || type == 'year') {
+  if(type == 'all' || type == 'year'){
     @foreach($pricesWeekly as $item)
       date = ('{{$item->date}}').split("-");
-      if(type == 'all') 
-        data.push([new Date(date[0], date[1]-1, date[2]), parseFloat('{{$item->close}}')]);
-      else if(type == 'year'){
-        if(++cont <= 52) data.push([new Date(date[0], date[1]-1, date[2]), parseFloat('{{$item->close}}')]);
-      } 
+      __data.push([new Date(date[0], date[1]-1, date[2]), parseFloat('{{$item->close}}')]); 
     @endforeach
-  }
-  //Daily Data
-  else{
-    cont=0;
-    @foreach($pricesDaily as $item)
-      date = ('{{$item->date}}').split("-");
-      if(type == '6months'){
-        if(++cont <= 100){
-          data.push([new Date(date[0], date[1]-1, date[2]), parseFloat('{{$item->close}}')]);
-        }
-      }
-      if(type == '3months'){
-        if(++cont <= 60){
-          data.push([new Date(date[0], date[1]-1, date[2]), parseFloat('{{$item->close}}')]);
-        }
-      }
-      if(type == '1month'){
-        if(++cont <= 30){
-          data.push([new Date(date[0], date[1]-1, date[2]), parseFloat('{{$item->close}}')]);
-        }
-      }
-      if(type == 'week'){
-        if(++cont <= 10){
-          data.push([new Date(date[0], date[1]-1, date[2]), parseFloat('{{$item->close}}')]);
-        }
-      }
-    @endforeach
+    __data.sort((a,b)=>{
+      return b[0] - a[0];
+    });
+
+    //Weekly Data
+    if(type=='all'){
+      data = __data;
+    }
+    else if(type == 'year'){
+      for(let i=0; i<=52; i++)
+          data.push(__data[i]);    
+    }
   }
 
+  //Daily Data
+  else {
+    @foreach($pricesDaily as $item)
+      date = ('{{$item->date}}').split("-");
+      __data.push([new Date(date[0], date[1]-1, date[2]), parseFloat('{{$item->close}}')]); 
+    @endforeach
+    __data.sort((a,b)=>{
+      return b[0] - a[0];
+    });
+    if(type=='6months'){
+      for(let i=0; i<100; i++)
+          data.push(__data[i]); 
+    }
+    else if(type == '3months'){
+      for(let i=0; i<60; i++)
+          data.push(__data[i]);
+    }
+    else if(type == '1month'){
+      for(let i=0; i<30; i++)
+          data.push(__data[i]);
+    }
+    else if(type == 'week'){
+      for(let i=0; i<10; i++)
+          data.push(__data[i]);
+    }
+  }
   data.push([{type: 'date'}, {type: 'number'}]);
-  data.sort((a,b)=>{
-    return a[0] - b[0];
-  });
-  console.log(data);
+
   //Chart Callback
   function drawChart() {
     //Data
