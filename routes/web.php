@@ -72,9 +72,10 @@ Route::group(['prefix' => 'admin'] , function() {
 		Route::GET('stocks/delete/{id}', 'StockController@deleteStocks');
 		Route::POST('stocks', 'StockController@addStocks');
 
-		Route::GET('forex', function(){ 
-			return view('Admin.forex');
-		});
+		Route::POST('forex', 'ForexController@searchForex');
+		Route::GET('forex', 'ForexController@indexForexAdmin');
+		Route::POST('forex/add', 'ForexController@addForex');
+		Route::GET('forex/delete/{id}', 'ForexController@deleteForexes');
 	});
 });
 

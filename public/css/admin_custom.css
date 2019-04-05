@@ -279,6 +279,26 @@ ul.custom-pagination li.active{
 .custom-pagination>.active>span{
     background: none !important;
 }
+.btn-forex{
+    /*display: flex;*/
+    justify-content: center;
+}
+.search-forex-list{
+    position: relative;
+    margin-right: 0;
+    z-index: 2;
+    width: 100%;
+    margin-top: -1px;
+    border-radius: 0 0 5px 5px;
+    padding: 0 15px 5px;
+    background: rgba(255,255,255, .08) !important;;
+}
+.form-search-forex{
+    align-items: unset !important;
+}
+.form-inline .form-control{
+    width: 100% !important;
+}
 /* MEDIA QUERYS */
 @media screen and (min-width: 768px){
     .admin-dashboard .menu-left{
