@@ -13,21 +13,38 @@ use App\DailyForexPrice;
 
 class ForexController extends Controller
 {
+    public function index(){
+        $data = Forex::all();
+        $title = DB::table('settings')->where('name','title')->first();
+        return view('forexes', ['data' => $data, 'title'=>$title]);
+    }
+
 	public function indexForexAdmin(){
         $data = Forex::all();
         $title = DB::table('settings')->where('name','title')->first();
         return view('Admin.forex', ['data'=>$data, 'title'=>$title]);
-        
     }
 
     public function searchForex(Request $request){
         $from = $request->from;
     	$data = DB::table('forex_list')->where('currency','like','%'.$from.'%')->get();
-    	if (empty($data)) {
+    	if (empty($data))
     		return "empty";
-    	}
     	return $data;
     } 
+
+    public function dataCharts($coins){
+        $coin = explode('_', $coins);
+        $forex  = DB::table('forexes')->where('from', $coin[0])
+                                      ->where('to', $coin[1])
+                                      ->first();
+
+        $pricesWeekly = Forex::find($forex->id)->weeklyPrices()->get();
+        $pricesDaily = Forex::find($forex->id)->dailyPrices()->get();
+        $title = DB::table('settings')->where('name','title')->first();
+
+        return view('forex', ['forex'=>$forex, 'pricesWeekly' => $pricesWeekly, 'pricesDaily' => $pricesDaily, 'title' => $title]);
+    }
 
     public function addForex(Request $request){
         
@@ -66,12 +83,8 @@ class ForexController extends Controller
                 $price->forex_id = $_forex->id;
                 $price->save();
                 if($key == '2014-03-21') break;
-
             }
-
-            
-            return redirect('/admin/forex');
-                
+            return redirect('/admin/forex');        
         }
     }
 

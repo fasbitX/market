@@ -1,26 +1,23 @@
 /*****************************************************************************/
 /**************************  VALIDATION SECTION  *****************************/
 /*****************************************************************************/
-function check(){
+function check(e){
 	let frm = document.getElementById('search_forex_text_from').value;
 	let too = document.getElementById('search_forex_text_to').value;
 
 	if(too <= 0 && frm <= 0){
-	    alert("empty in both fields");
+		alert("empty in both fields");
 		return false;
 	}
-
 	//Empty Space
 	else if(frm <= 0){
 		alert("empty in from");
 		return false;
 	}
-
 	else if(too <= 0){
 		alert("empty in to");
 		return false;
 	}
-
 	//Diferent Both
 	else if(frm == too){
 		alert("they can not be the same crypto currencies");
@@ -28,7 +25,6 @@ function check(){
 	}
 
 	return true;
-
 }
 /*********************************************************************************/
 /**************************  END VALIDATION SECTION  *****************************/

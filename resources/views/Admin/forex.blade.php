@@ -16,7 +16,7 @@ Forex
             <div style="display: flex; justify-content: center;">
                 <div class="search_stock_section container">
                     <div class="label-stock container">Add Forex</div>
-                    <form action="/admin/forex/add" method="POST" class="form-inline form-search-forex">
+                    <form action="/admin/forex/add" method="POST" class="form-inline form-search-forex" onsubmit="return check(this)">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <!--@From-->
                             <br>
@@ -33,7 +33,7 @@ Forex
                             </div>
                         <!--//-->
                             <div class="col-sm-2 btn-forex">
-                                <input type="submit" value="GO" onclick="check()" class="btn btn-outline-secondary"/>
+                                <input type="submit" value="GO" class="btn btn-outline-secondary"/>
                             </div>
                     </form>
                 </div>

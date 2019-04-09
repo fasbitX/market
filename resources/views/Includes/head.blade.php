@@ -53,7 +53,7 @@
         <a class="nav-link" href="{{url('/stock')}}/">STOCKS</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{url('/')}}/">FOREX</a>
+        <a class="nav-link" href="{{url('/forex')}}/">FOREX</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{url('/')}}/">TECHNICAL INDICATORS</a>
