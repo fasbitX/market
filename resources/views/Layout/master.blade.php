@@ -16,25 +16,25 @@
     <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/new_custom.css") }}" />
     <!--end of global styles-->
     <!--plugin styles-->
-    <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/vendors/select2/css/select2.min.css") }}"/>
-    <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/vendors/datatables/css/dataTables.bootstrap.min.css") }}"/>
-    <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/pages/dataTables.bootstrap.css") }}"/>
+    <!--link type="text/css" rel="stylesheet" href="{{ URL::asset("public/vendors/select2/css/select2.min.css") }}"/-->
+    <!--link type="text/css" rel="stylesheet" href="{{ URL::asset("public/vendors/datatables/css/dataTables.bootstrap.min.css") }}"/-->
+    <!-- link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/pages/dataTables.bootstrap.css") }}"/ -->
 
     <!-- end of plugin styles -->
     <!--Page level styles-->
-    <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/pages/tables.css") }}"/>
-    <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/pages/form_elements.css") }}"/>
-    <link type="text/css" rel="stylesheet" href="#" id="skin_change"/>
+    <!--link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/pages/tables.css") }}"/-->
+    <!--link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/pages/form_elements.css") }}"/-->
+    <!-- <link type="text/css" rel="stylesheet" href="#" id="skin_change"/>
     <link type="text/css" rel="stylesheet" href="{{ URL::asset('public/vendors/bootstrapvalidator/css/bootstrapValidator.min.css')}}"/>
-     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.css"/>
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.css"/>
     
     <link type="text/css" rel="stylesheet" href="{{ URL::asset('public/vendors/c3/css/c3.min.css')}}"/>
     <link type="text/css" rel="stylesheet" href="{{ URL::asset('public/vendors/toastr/css/toastr.min.css')}}"/>
     <link type="text/css" rel="stylesheet" href="{{ URL::asset('public/vendors/switchery/css/switchery.min.css')}}"/>
-    <link type="text/css" rel="stylesheet" href="{{ URL::asset('public/css/pages/new_dashboard.css')}}"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js") }}"></script>
+    <link type="text/css" rel="stylesheet" href="{{ URL::asset('public/css/pages/new_dashboard.css')}}"/> -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js") }}"></script> -->
+    <script src="{{ URL::asset('public/js/jquery.min.js')}}" ></script>
     <!--End of page level styles-->
-
 </head>
 
 <body>
@@ -86,17 +86,18 @@ z-index: 999999">
 
 <!-- end of global scripts-->
 <!-- plugin scripts -->
-<script type="text/javascript" src="{{ URL::asset("public/vendors/select2/js/select2.js") }}"></script>
+<!-- <script type="text/javascript" src="{{ URL::asset("public/vendors/select2/js/select2.js") }}"></script>
 <script type="text/javascript" src="{{ URL::asset("public/vendors/datatables/js/jquery.dataTables.min.js") }}"></script>
 <script type="text/javascript" src="{{ URL::asset("public/vendors/datatables/js/dataTables.bootstrap.min.js") }}"></script>
-<script type="text/javascript" src="{{ URL::asset('public/vendors/bootstrapvalidator/js/bootstrapValidator.min.js')}}"></script>
+<script type="text/javascript" src="{{ URL::asset('public/vendors/bootstrapvalidator/js/bootstrapValidator.min.js')}}"></script> -->
 <!-- end plugin scripts -->
 
 <!-- global scripts-->
+
 <script type="text/javascript" src="{{ URL::asset("public/js/components.js") }}"></script>
 <script type="text/javascript" src="{{ URL::asset("public/js/custom.js") }}"></script>
 <!-- global scripts end-->
-<script type="text/javascript" src="{{ URL::asset("public/vendors/slimscroll/js/jquery.slimscroll.min.js") }}"></script>
+<!-- <script type="text/javascript" src="{{ URL::asset("public/vendors/slimscroll/js/jquery.slimscroll.min.js") }}"></script>
 <script type="text/javascript" src="{{ URL::asset("public/vendors/raphael/js/raphael-min.js") }}"></script>
 <script type="text/javascript" src="{{ URL::asset("public/vendors/d3/js/d3.min.js") }}"></script>
 <script type="text/javascript" src="{{ URL::asset("public/vendors/c3/js/c3.min.js") }}"></script>
@@ -112,7 +113,7 @@ z-index: 999999">
 <script type="text/javascript" src="{{ URL::asset("public/vendors/flot.tooltip/js/jquery.flot.tooltip.min.js") }}"></script>
 <script type="text/javascript" src="{{ URL::asset("public/vendors/jquery_newsTicker/js/newsTicker.js") }}"></script>
 <script type="text/javascript" src="{{ URL::asset("public/vendors/countUp.js/js/countUp.min.js") }}"></script>
-<script type="text/javascript" src="{{ URL::asset("public/js/pages/datatable.js") }}"></script>
+<script type="text/javascript" src="{{ URL::asset("public/js/pages/datatable.js") }}"></script> -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.js"></script>
 <script type="text/javascript">
   $('#example1').data();
