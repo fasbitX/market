@@ -53,36 +53,32 @@
 @section('scripts')
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
-//loading intraday data
 let dailyData=[];
 $.ajax({
     type: "GET",
     url: 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={{$stock->symbol}}&interval=5min&apikey={{$API}}',
     success: function(data) {
-      //console.log(data);
       Object.entries(data["Time Series (5min)"]).map((item)=>{
           let date = item[0].split("-");
           let day = date[2].split(" ");
           let hour = day[1].split(":");
-          //console.log(date[0]+" "+(date[1]-1)+" "+day[0]+" "+hour[0]+" "+hour[1]+" "+hour[2]);
           dailyData.push([new Date(date[0], date[1], day[0], hour[0], hour[1], hour[2]), parseFloat(item[1]["4. close"])]);
-      })
-      //console.log(dailyData);
+      }),
       dailyData.push([{type: 'date'}, {type: 'number'}]);
     }
 });
 
 
 
-/**********************************************************/
- //Google charts API
- //@type = all, year, 6months, 3months, 1month, week, day 
- /**********************************************************/
+/**********************************************************
+ Google charts API
+ @type = all, year, 6months, 3months, 1month, week, day 
+ **********************************************************/
 function renderCharts(type){
   google.charts.load('current', {'packages':['corechart']});
   google.charts.setOnLoadCallback(drawChart);
 
-  //Map data from Server
+  /*Map data from Server*/
   let data=[], __data=[], date;  
   let cont=0;
   if(type == 'all' || type == 'year'){
@@ -94,7 +90,7 @@ function renderCharts(type){
       return b[0] - a[0];
     });
 
-    //Weekly Data
+    /* Weekly Data */
     if(type=='all'){
       data = __data;
     }
@@ -104,7 +100,7 @@ function renderCharts(type){
     }
   }
 
-  //Daily Data
+  /* Daily Data */
   else {
     @foreach($pricesDaily as $item)
       date = ('{{$item->date}}').split("-");
@@ -132,13 +128,13 @@ function renderCharts(type){
   }
   data.push([{type: 'date'}, {type: 'number'}]);
 
-  //Chart Callback
+  /* Chart Callback */
   function drawChart() {
-    //Data
+    /* Data */
     let _data = google.visualization.arrayToDataTable(data.reverse());
     if(type == 'day') _data = google.visualization.arrayToDataTable(dailyData.reverse());
 
-    //fix hAxis labels for 5 years chart
+    /* fix hAxis labels for 5 years chart */
     let dateRange = _data.getColumnRange(0);
     let oneYear = (1000 * 60 * 60 * 24 * 365.25);
     let ticksAxisH = [];
@@ -150,7 +146,7 @@ function renderCharts(type){
       });
     }
 
-    //Horizontal axis 
+    /* Horizontal axis  */
     let _hAxis = {};
     if(type == 'all'){
       _hAxis = {
@@ -227,7 +223,7 @@ function renderCharts(type){
       }
     }
 
-    //Media Querys
+    /* Media Querys */
     mediaquery = window.matchMedia("(max-width: 991px)");
     let _chartArea = {};
     if (mediaquery.matches) {
@@ -246,7 +242,7 @@ function renderCharts(type){
       }
     }
 
-    //Options grapichs
+    /* Options grapichs */
     let options = {
       legend: 'none',
       vAxis: {
@@ -265,8 +261,8 @@ function renderCharts(type){
       hAxis: _hAxis,
       backgroundColor: 'none',
       chartArea: _chartArea
-    }
-    //Draw chart
+    };
+    /* Draw chart */
     let chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
     chart.draw(_data, options);
   }
@@ -275,9 +271,9 @@ function renderCharts(type){
 renderCharts('all');
 $('#5years').addClass('active');
 
-// Change data grapich
+ /* Change data grapich */
 $('#5years').click((e)=>{
-  renderCharts('all'); // all
+  renderCharts('all'); /* all */
   $('#5years').addClass('active');
   $('#year').removeClass('active');
   $('#6months').removeClass('active');
@@ -285,9 +281,9 @@ $('#5years').click((e)=>{
   $('#1month').removeClass('active');
   $('#week').removeClass('active');
   $('#day').removeClass('active');
-})
+});
 $('#year').click((e)=>{
-  renderCharts('year'); // Year
+  renderCharts('year');  /* Year */
   $('#year').addClass('active');
   $('#5years').removeClass('active');
   $('#6months').removeClass('active');
@@ -295,9 +291,9 @@ $('#year').click((e)=>{
   $('#1month').removeClass('active');
   $('#week').removeClass('active');
   $('#day').removeClass('active');
-})
+});
 $('#6months').click((e)=>{
-  renderCharts('6months'); // Six months
+  renderCharts('6months'); /* Six months */
   $('#6months').addClass('active');
   $('#year').removeClass('active');
   $('#5years').removeClass('active');
@@ -305,9 +301,9 @@ $('#6months').click((e)=>{
   $('#1month').removeClass('active');
   $('#week').removeClass('active');
   $('#day').removeClass('active');
-})
+});
 $('#3months').click((e)=>{
-  renderCharts('3months'); // three months
+  renderCharts('3months');  /* three months */
   $('#3months').addClass('active');
   $('#year').removeClass('active');
   $('#5years').removeClass('active');
@@ -315,9 +311,9 @@ $('#3months').click((e)=>{
   $('#1month').removeClass('active');
   $('#week').removeClass('active');
   $('#day').removeClass('active');
-})
+});
 $('#1month').click((e)=>{
-  renderCharts('1month'); // one month
+  renderCharts('1month');  /* one month */
   $('#1month').addClass('active');
   $('#5years').removeClass('active');
   $('#year').removeClass('active');
@@ -325,9 +321,9 @@ $('#1month').click((e)=>{
   $('#3months').removeClass('active');
   $('#week').removeClass('active');
   $('#day').removeClass('active');
-})
+});
 $('#week').click((e)=>{
-  renderCharts('week'); //weekly
+  renderCharts('week'); /* weekly */
   $('#week').addClass('active');
   $('#5years').removeClass('active');
   $('#year').removeClass('active');
@@ -335,9 +331,9 @@ $('#week').click((e)=>{
   $('#3months').removeClass('active');
   $('#1month').removeClass('active');
   $('#day').removeClass('active');
-})
+});
 $('#day').click((e)=>{
-  renderCharts('day'); //day
+  renderCharts('day'); /* day */
   $('#day').addClass('active');
   $('#5years').removeClass('active');
   $('#year').removeClass('active');
@@ -345,7 +341,7 @@ $('#day').click((e)=>{
   $('#3months').removeClass('active');
   $('#1month').removeClass('active');
   $('#week').removeClass('active');
-})
+});
 $(window).resize(function(){
   renderCharts('all');
 });

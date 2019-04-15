@@ -17,6 +17,8 @@ class OptimizeMiddleware
     public function handle($request, Closure $next)
     {
         $response = $next($request);
+        $response->header('Cache-Control', 'max-age=360000, public, no-transform, must-revalidate');
+        $response->header('Last-modified', 'Tue, 1 Oct 1999 10:10:10 GMT');
         $buffer = $response->getContent();
         if(strpos($buffer,'<pre>') !== false)
         {
