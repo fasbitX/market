@@ -34,7 +34,15 @@ $("#search_stock_form").submit((e)=>{
             let ul = document.getElementById("list_search_stock");
             ul.innerHTML = html;
             $('#list_search_stock').show("slow");
+        },
+       
+        error: function(){
+            document.getElementById('error-t').innerHTML  = 'Error, it cannot access to the API in this moment, please try again.'; 
+            $('.lds-roller').hide();
+            $('#errorStock').click();
+            
         }
+    
     });
     
 });
@@ -60,6 +68,10 @@ function add_stock(array){
             console.log(data);
             if(data == "error") $('#errorStock').click();
             else location.reload();
+        },
+        error: function(){
+            document.getElementById('error-t').innerHTML  = "Error, it could not save the API's data, please try to add it again";
+            $('#errorStock').click();
         }
     });
 }

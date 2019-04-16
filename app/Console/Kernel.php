@@ -15,7 +15,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         //
         Commands\UpdateWeeklyPrices::class,
-        Commands\UpdateDailyPrices::class
+        Commands\UpdateDailyPrices::class,
+        Commands\UpdateCoinsData::class
     ];
 
     /**
@@ -30,6 +31,8 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
         $schedule->command('update:weeklyprices')->weekly();
         $schedule->command('update:dailyprices')->daily();
+        $schedule->command('coins:update')->everyMinute()->withoutOverlapping();;
+
     }
 
     /**

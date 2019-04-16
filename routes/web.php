@@ -76,6 +76,12 @@ Route::group(['prefix' => 'admin'] , function() {
 		Route::GET('forex', 'ForexController@indexForexAdmin');
 		Route::POST('forex/add', 'ForexController@addForex');
 		Route::GET('forex/delete/{id}', 'ForexController@deleteForexes');
+
+
+		Route::RESOURCE('ccoins', 'CoinController');
+		Route::GET('ccoins/delete/{id}', ['uses' => 'CoinController@destroy', 'as' => 'coin.delete']);
+		Route::GET('ccoins/desactivate/{id}','CoinController@desactivate_coin');
+		Route::GET('ccoins/activate/{id}','CoinController@activate_coin');
 	});
 });
 
@@ -114,6 +120,7 @@ Route::get('/sign_up',function(){
 });
 
 Route::get('/','DashboardController@index');
+Route::GET('/home','CryptoController@index');
 Route::get('/get-data','DashboardController@get_data');
 Route::post('/add_user','LoginController@sign_up');
 Route::post('/user_login','LoginController@login');

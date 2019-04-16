@@ -100,7 +100,7 @@
 
 <div class="scroller">
 
-        <script type="text/javascript">
+        <script async type="text/javascript">
 baseUrl = "https://widgets.cryptocompare.com/";
 var scripts = document.getElementsByTagName("script");
 var embedder = scripts[ scripts.length - 1 ];

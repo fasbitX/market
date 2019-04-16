@@ -64,50 +64,14 @@ z-index: 999999">
 
     
     @yield('content')
-<div class="bottom">
+  <div class="bottom">
     @include('Includes.footer')
   </div>
-    </div>
-
-<!-- /#wrap -->
-
-
-<!-- global scripts-->
-
-<!-- <script type="text/javascript" src="{{ URL::asset("public/js/components.js") }}"></script> -->
-
-<!-- <script type="text/javascript" src="{{ URL::asset("public/js/custom.js") }}"></script> -->
-
-<!-- end of global scripts-->
-<!-- plugin scripts -->
-<!-- <script type="text/javascript" src="{{ URL::asset("public/vendors/select2/js/select2.js") }}"></script>
-<script type="text/javascript" src="{{ URL::asset("public/vendors/datatables/js/jquery.dataTables.min.js") }}"></script>
-<script type="text/javascript" src="{{ URL::asset("public/vendors/datatables/js/dataTables.bootstrap.min.js") }}"></script>
-<script type="text/javascript" src="{{ URL::asset('public/vendors/bootstrapvalidator/js/bootstrapValidator.min.js')}}"></script> -->
-<!-- end plugin scripts -->
-
-<!-- global scripts-->
+</div>
 
 <script type="text/javascript" src="{{ URL::asset("public/js/components.js") }}"></script>
 <script type="text/javascript" src="{{ URL::asset("public/js/custom.js") }}"></script>
 <!-- global scripts end-->
-<!-- <script type="text/javascript" src="{{ URL::asset("public/vendors/slimscroll/js/jquery.slimscroll.min.js") }}"></script>
-<script type="text/javascript" src="{{ URL::asset("public/vendors/raphael/js/raphael-min.js") }}"></script>
-<script type="text/javascript" src="{{ URL::asset("public/vendors/d3/js/d3.min.js") }}"></script>
-<script type="text/javascript" src="{{ URL::asset("public/vendors/c3/js/c3.min.js") }}"></script>
-<script type="text/javascript" src="{{ URL::asset("public/vendors/toastr/js/toastr.min.js") }}"></script>
-<script type="text/javascript" src="{{ URL::asset("public/vendors/switchery/js/switchery.min.js") }}"></script>
-<script type="text/javascript" src="{{ URL::asset("public/vendors/flotchart/js/jquery.flot.js") }}"></script>
-<script type="text/javascript" src="{{ URL::asset("public/vendors/flotchart/js/jquery.flot.resize.js") }}"></script>
-<script type="text/javascript" src="{{ URL::asset("public/vendors/flotchart/js/jquery.flot.stack.js") }}"></script>
-<script type="text/javascript" src="{{ URL::asset("public/vendors/flotchart/js/jquery.flot.time.js") }}"></script>
-<script type="text/javascript" src="{{ URL::asset("public/vendors/flotspline/js/jquery.flot.spline.min.js") }}"></script>
-<script type="text/javascript" src="{{ URL::asset("public/vendors/flotchart/js/jquery.flot.categories.js") }}"></script>
-<script type="text/javascript" src="{{ URL::asset("public/vendors/flotchart/js/jquery.flot.pie.js") }}"></script>
-<script type="text/javascript" src="{{ URL::asset("public/vendors/flot.tooltip/js/jquery.flot.tooltip.min.js") }}"></script>
-<script type="text/javascript" src="{{ URL::asset("public/vendors/jquery_newsTicker/js/newsTicker.js") }}"></script>
-<script type="text/javascript" src="{{ URL::asset("public/vendors/countUp.js/js/countUp.min.js") }}"></script>
-<script type="text/javascript" src="{{ URL::asset("public/js/pages/datatable.js") }}"></script> -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.js"></script>
 <script type="text/javascript">
   $('#example1').data();
