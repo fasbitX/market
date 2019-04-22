@@ -163,13 +163,13 @@ img.single-img-pro {
                             
                                 <script type=" text/javascript ">
                                 baseUrl = "https://widgets.cryptocompare.com/ ";
-                                var scripts = document.getElementsByTagName("script ");
+                                var scripts = document.getElementsByTagName("script");
                                 var embedder = scripts[scripts.length - 1];
                                 var cccTheme = { "Chart ": { "labelBackground ": "green ", "fillColor ": "#8dc647 ", "borderColor ": "green " }, "Trend ": { "background ": "trans ", "colorUp ": "#8dc647 ", "colorUnchanged ": "#8dc647 " } };
                                 (function() {
                                     var appName = encodeURIComponent(window.location.hostname);
                                     if (appName == " ") { appName = "local "; }
-                                    var s = document.createElement("script ");
+                                    var s = document.createElement("script");
                                     s.type = "text/javascript ";
                                     s.async = true;
                                     var theUrl = baseUrl + 'serve/v1/coin/header?fsym=BTC&tsyms=USD,CNY,EUR,GBP';

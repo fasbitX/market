@@ -69,7 +69,7 @@
                                             </span>
                                         </td>
                                         <td class="fit clickable-coin-td">
-                                            <img class="tbl-icon" src="{{$item->image_url}}" alt="{{$item->name}} logo">
+                                            <img class="tbl-icon" src="{{$item->image_url}}?width=30" alt="{{$item->name}} logo">
                                         </td>
                                         <td class="clickable-coin-td">
                                             <div class="tbl-currency">

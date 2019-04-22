@@ -6,10 +6,12 @@
     <title><?php echo $__env->yieldContent('title'); ?></title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="img/logo1.ico"/>
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
+    <link rel="shortcut icon" href="<?php echo e(asset('resources/assets/logo.png')); ?>"/>
     <!-- global styles-->
     <link type="text/css" rel="stylesheet" href="<?php echo e(URL::asset("public/css/components.css")); ?>" />
     <link type="text/css" rel="stylesheet" href="<?php echo e(URL::asset("public/css/custom.css")); ?>" />
+    <link type="text/css" rel="stylesheet" href="<?php echo e(URL::asset("public/css/admin_custom.css")); ?>" />
     <!--end of global styles-->
     <!--plugin styles-->
     <link type="text/css" rel="stylesheet" href="<?php echo e(URL::asset("public/vendors/select2/css/select2.min.css")); ?>"/>
@@ -58,7 +60,7 @@ z-index: 999999">
         <img src="<?php echo e(url('/')); ?>/public/img/loader.gif" style=" width: 40px;" alt="loading...">
     </div>
 </div>
-<div id="wrap">
+<div id="wrap" class="admin-dashboard">
     <div id="top">
         <!-- .navbar -->
         <?php echo $__env->make('Admin.head', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
@@ -66,14 +68,14 @@ z-index: 999999">
         <!-- /.head -->
     </div>
 
-    <?php echo $__env->make('Admin.nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-    <?php echo $__env->yieldContent('content'); ?>
-   <div>
+      <?php echo $__env->make('Admin.nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+      <?php echo $__env->yieldContent('content'); ?>
+   <!--div>
     <h4 style="text-align:center">
-    Copyright &copy; BitExchange 2018 . All rights
-    reserved.</h4> <a href="http://www.sparkouttech.com" target="_blank" style="text-align:center">Copyright &copy; BitExchange 2018 . All rights
+    Copyright &copy; Fasbit Market Watch 2018 . All rights
+    reserved.</h4> <a href="http://www.sparkouttech.com" target="_blank" style="text-align:center">Copyright &copy; Fasbit Market Watch 2018 . All rights
     reserved.</a>
-  </div>
+  </div-->
     </div>
 <!-- /#wrap -->
  

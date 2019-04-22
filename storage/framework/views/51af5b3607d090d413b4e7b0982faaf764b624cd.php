@@ -5,16 +5,16 @@
   <div class="top-footer">
     <div class="container">
       <i type="light" class="fa fa-exclamation-triangle text-lg text-danger mr-1"></i><span class="disclaimer"><a class="text-danger text-xs underline" href="<?php echo e(URL('/')); ?>/disclaimer">Read the Disclaimer:</a></span>
-<span class="text-lite text-xs">The content on our site and social media accounts may contain useful financial information. Users are ultimately responsible for the investment decisions he/she/it makes based on these information. It is your responsibility to review, analyse and verify any content/information before relying on them. Trading is a highly risky activity. Do consult your financial advisor before making any decision. BitExchange is not responsible for any trading decisions.</span>
+<span class="text-lite text-xs">The content on our site and social media accounts may contain useful financial information. Users are ultimately responsible for the investment decisions he/she/it makes based on these information. It is your responsibility to review, analyse and verify any content/information before relying on them. Trading is a highly risky activity. Do consult your financial advisor before making any decision. Fasbit Market Watch is not responsible for any trading decisions.</span>
   </div>
 </div>
 
 <div id="footer" class="container my-3">
 <div class="row">
 <div class="col-12 col-lg-4 my-2">
-<div class="font-semibold text-sm mb-3" ><h3 class="text-white">BitExchange</h3></div>
+<div class="font-semibold text-sm mb-3" ><h3 class="text-white">Fasbit Market Watch</h3></div>
 <div class="text-xs text-muted text-white">
-<span class="text-white">BitExchange aims to collect all the data required to quantitatively and qualitatively rank the potential of an altcoin. We plan to benchmark the coins based on our algorithm to determine how valuable a coin is compared to its peers.</span></div>
+<span class="text-white">Fasbit Market Watch aims to collect all the data required to quantitatively and qualitatively rank the potential of an altcoin. We plan to benchmark the coins based on our algorithm to determine how valuable a coin is compared to its peers.</span></div>
 </div>
 <div class="col-12 col-lg-5 my-2">
 <div class="font-semibold text-sm mb-3"><h3 class="text-white">Donations</h3></div>
@@ -77,7 +77,7 @@
 <div class="py-1 px-3"><a class="text-white" href="<?php echo e(URL('/')); ?>/privacy">Privacy policy</a></div>
 
 </div>
-<div class="d-flex center px-3"><span class="copy">© 2018 BitExchange. All Rights Reserved.</span></div>
+<div class="d-flex center px-3"><span class="copy">© 2018 Fasbit Market Watch. All Rights Reserved.</span></div>
 </div>
 </div>
 </div>

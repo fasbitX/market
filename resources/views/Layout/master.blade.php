@@ -11,8 +11,8 @@
     <!-- global styles-->
     <!-- <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/components.css") }}" /> -->
     <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/bootstrap.min.css") }}" />
-    <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/custom.css") }}" />
-    <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/new_custom.css") }}" />
+    <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/original.css") }}" />
+    <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/newcustom.css") }}" />
     <!--end of global styles-->
     <!--plugin styles-->
     <!--link type="text/css" rel="stylesheet" href="{{ URL::asset("public/vendors/select2/css/select2.min.css") }}"/-->
