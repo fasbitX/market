@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-static-top" style="display:block; padding-top: 10px;">
+<nav class="navbar navbar-expand-lg navbar-static-top mynav">
   <div class="container">
   
    <div class="col-lg-6 burger-btn">
@@ -15,12 +15,12 @@
       <ul class="navbar-nav ml-auto float-right">
 
       @if(Session::get( 'user_name' ) =="")
-        <li class="nav-item">
+        <!--li class="nav-item">
           <a class="nav-link" href="{{URL('/')}}/sign_in">Sign in</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{URL('/')}}/sign_up">Sign up</a>
-        </li>
+        </li -->
 
       @else
 
@@ -52,24 +52,24 @@
       <li class="nav-item">
         <a class="nav-link" href="{{url('/stock')}}/">STOCKS</a>
       </li>
-      <li class="nav-item">
+      <!--li class="nav-item">
         <a class="nav-link" href="{{url('/forex')}}/">FOREX</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{url('/')}}/">TECHNICAL INDICATORS</a>
-      </li>
+      </li-->
       <li class="nav-item">
         <a class="nav-link" href="{{url('/')}}/ico">ICO</a>
       </li>
 
       <ul class="navbar-nav menu-front-mobile">
         @if(Session::get( 'user_name' ) =="")
-          <li class="nav-item">
+          <!--li class="nav-item">
             <a class="nav-link" href="{{URL('/')}}/sign_in">Sign in</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{URL('/')}}/sign_up">Sign up</a>
-          </li>
+          </li-->
 
         @else
 
@@ -98,9 +98,9 @@
 </nav >
 
 
-<div class="scroller">
+<!--div class="scroller">
 
-        <script async type="text/javascript">
+<script async type="text/javascript">
 baseUrl = "https://widgets.cryptocompare.com/";
 var scripts = document.getElementsByTagName("script");
 var embedder = scripts[ scripts.length - 1 ];
@@ -116,4 +116,4 @@ s.src = theUrl + ( theUrl.indexOf("?") >= 0 ? "&" : "?") + "app=" + appName;
 embedder.parentNode.appendChild(s);
 })();
 </script>
-</div>
+</div-->
