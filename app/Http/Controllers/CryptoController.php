@@ -12,7 +12,7 @@ class CryptoController extends Controller
     public function index(Request $request){
        
        
-        $data = Coin::paginate(10);
+        $data = Coin::simplePaginate(50);
         
         $title = DB::table('settings')->where('name','title')->first();
         $settings = DB::table('settings')->where('name','logo')->first();

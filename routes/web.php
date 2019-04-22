@@ -26,6 +26,7 @@ use Illuminate\Http\Request;
 	return \App\ForexList::all();
 });*/
 
+Route::get('top', 'CoinController@loadingTop');
 
 //User login group
 Route::group(['middleware' => ['auth_user']], function() {
@@ -119,7 +120,8 @@ Route::get('/sign_up',function(){
 	return view('sign-up',['title'=>$title]);
 });
 
-Route::get('/','DashboardController@index');
+//Route::get('/','DashboardController@index');
+Route::get('/','CryptoController@index');
 Route::GET('/home','CryptoController@index');
 Route::get('/get-data','DashboardController@get_data');
 Route::post('/add_user','LoginController@sign_up');
@@ -137,7 +139,7 @@ Route::get('/getItemAjax/exchange/load','DashboardController@exchange_ajax');
 Route::get('/admin/new_ico', function(){
 		return view('Admin.new_ico');
 });	
-Route::GET('test', function(){return view('test');});
+//Route::GET('test', function(){return view('test');});
 Route::get('/user/logout','LoginController@logout_user');
 Route::GET('/{crypto}','DashboardController@single_coin');
 Route::GET('/coin/{crypto}','DashboardController@single_coin_new');

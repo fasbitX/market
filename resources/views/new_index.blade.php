@@ -35,7 +35,9 @@
             <div class="dark container">
                 <div class="tab-content">
                     <div class="tab-pane active" id="top" role="tabpanel">
-                        
+                        <div class="pull-right mb-1">
+                            {{ $data->links() }}
+                        </div>
                         <table class="table coinlist">
                             <thead>
                                 <tr>
@@ -43,13 +45,13 @@
                                     <th><span class="d-none d-sm-block">Rank</span></th>
                                     <th colspan="2">Name</th>
                                     <th class="text-right">Price</th>
-                                    <th class="d-none d-lg-table-cell text-right">Market cap</th>
+                                    <th class="d-none d-lg-table-cell text-right">
+                                        <a href="javascript:void(0);" onclick="Homepage.setOrder('volume');" class="order-volume">Market cap</a>
+                                    </th>
                                     <th class="d-none d-lg-table-cell text-right">
                                         <a href="javascript:void(0);" onclick="Homepage.setOrder('volume');" class="order-volume">Volume</a>
                                     </th>
-                                    <th class="text-right">
-                                        <a href="javascript:void(0);" onclick="Homepage.setOrder('volume');" class="order-volume">24H PERFORMENCE</a>
-                                    </th>
+                                    <th class="text-right">24H PERFORMENCE</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -59,7 +61,13 @@
                                 
                                     <tr coin_id="{{$item->id}}" coin_url="/coin/{{$item->symbol}}">
                                         <td class="tbl-col-sm"></td>  
-                                        <td class="tbl-col-sm"><span class="tbl-rank">{{$index+1}}</span></td>
+                                        <td class="tbl-col-sm">
+                                            <span class="tbl-rank">
+                                                @if(Request::get('page')) {{((Request::get('page')-1) * 50) + ($index+1)}}
+                                                @else {{ $index+1 }}
+                                                @endif
+                                            </span>
+                                        </td>
                                         <td class="fit clickable-coin-td">
                                             <img class="tbl-icon" src="{{$item->image_url}}" alt="{{$item->name}} logo">
                                         </td>
@@ -86,7 +94,11 @@
                                             <span class="tbl-price price dimmed volume-859">{{$item->f_volume_24h}}</span>
                                         </td>
                                         <td class="tbl-col-md change-period clickable-coin-td">
-                                            <span class="tbl-price pr-change delta-859 price down">{{$item->percent_change_24h}}%</span>
+                                            @if($item->percent_change_24h < 0)
+                                                <span class="tbl-price pr-change delta-859 price down">{{$item->percent_change_24h}}%</span>
+                                            @else
+                                                <span class="tbl-price pr-change delta-859 price up">{{$item->percent_change_24h}}%</span>
+                                            @endif
                                             <span class="small-chart-container">
                                                 <div class="small-chart small-live-chart">
                                                     <div id="highcharts-q6qp1d2-0" class="highcharts-container " style="overflow: hidden; text-align: left;">
@@ -101,6 +113,9 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        <div class="pull-right mt-4">
+                            {{ $data->links() }}
+                        </div>
                     </div>
                 </div>
             </div>
