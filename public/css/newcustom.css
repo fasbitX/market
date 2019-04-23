@@ -573,3 +573,16 @@ div.dark.container{
     border-top: 1px solid #282e3b;
     border-bottom: 1px solid #282e3b;
 }
+footer{
+    /* background-color: rgba(255,255,255,.05) !important; */
+    background-color: #001320 !important;
+}
+.top-footer{
+    background: rgba(255,255,255,.1) !important;
+}
+.middlefooter{
+    background: rgba(255,255,255,.05);
+}
+.bottomfooter {
+    background-color: #001320;
+}
