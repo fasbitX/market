@@ -62,15 +62,13 @@ z-index: 999999">
         <!-- /.head -->
     </div>
 
-    
     @yield('content')
+
   <div class="bottom">
     @include('Includes.footer')
   </div>
 </div>
 
-<script type="text/javascript" src="{{ URL::asset("public/js/components.js") }}"></script>
-<script type="text/javascript" src="{{ URL::asset("public/js/custom.js") }}"></script>
 <!-- global scripts end-->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.js"></script>
 <script type="text/javascript">
@@ -79,6 +77,8 @@ z-index: 999999">
 </script>
 <!--end of plugin scripts-->
 @yield('scripts')
+<script type="text/javascript" src="{{ URL::asset("public/js/components.js") }}"></script>
+<script type="text/javascript" src="{{ URL::asset("public/js/custom.js") }}"></script>
 </body>
 
 

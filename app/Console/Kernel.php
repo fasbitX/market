@@ -29,8 +29,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $schedule->command('update:weeklyprices')->weekly();
-        $schedule->command('update:dailyprices')->daily();
+        //$schedule->command('update:weeklyprices')->weekly();
+        //$schedule->command('update:dailyprices')->daily();
         $schedule->command('coins:update')->everyMinute()->withoutOverlapping();;
 
     }

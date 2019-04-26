@@ -167,40 +167,5 @@ class CoinController extends Controller
 
     }
 
-    public function loadingTop(){
-        $url = 'https://api.coinmarketcap.com/v2/ticker/';
-        $data = json_decode( file_get_contents($url), true );
-
-        foreach($data['data'] as $item){
-
-            $coin = new Coin();
-        
-            $coin->symbol = $item['symbol'];
-            $coin->name =$item['name'];
-
-            $url = 'https://min-api.cryptocompare.com/data/pricemultifull?fsyms='.$coin->symbol.'&tsyms=USD,BTC';
-            $data = json_decode( file_get_contents($url), true );
-            if( $coin->symbol != 'MIOTA' && $coin->symbol != 'BTM' && $coin->symbol != 'INB' && $coin->symbol != 'THR' && $coin->symbol != 'QBIT'){
-                $chart_image = "https://images.cryptocompare.com/sparkchart/".$coin->symbol."/USD/latest.png?ts=".microtime(true);
-                $coin->price = $data['RAW'][$coin->symbol]['USD']['PRICE'];
-                $coin->f_price = $data['DISPLAY'][$coin->symbol]['USD']['PRICE'];      
-                $coin->percent_change_24h = round($data['RAW'][$coin->symbol]['USD']['CHANGEPCT24HOUR'],2); 
-                $coin->volume_24h = round($data['RAW'][$coin->symbol]['USD']['TOTALVOLUME24HTO'],5);
-                $coin->f_volume_24h = $data['DISPLAY'][$coin->symbol]['USD']['TOTALVOLUME24HTO'];      
-                $coin->market_cap = round($data['RAW'][$coin->symbol]['USD']['MKTCAP'],5);
-                $coin->f_market_cap = $data['DISPLAY'][$coin->symbol]['USD']['MKTCAP'];
-                $coin->image_url = "https://www.cryptocompare.com".$data['DISPLAY'][$coin->symbol]['USD']['IMAGEURL'];
-                $coin->chart_image = $chart_image; 
-                $coin->btc_price = $data['DISPLAY'][$coin->symbol]['BTC']['PRICE'];
-                $coin->status = 1;
-                $verify = Coin::where('symbol','=',$coin->symbol)->first();
-                if($verify) echo 'NO';
-                else{
-                    $coin->save();
-                    //return 'success';
-                }
-            }
-
-        }
-    }
+    
 }

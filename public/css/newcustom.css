@@ -569,7 +569,7 @@ div.dark.container{
     padding-top: 15px !important;
     padding-bottom: 5px !important;
     background-color: rgba(255, 255, 255, .05) !important;
-    margin-top: 36px;
+    /* margin-top: 36px; */
     border-top: 1px solid #282e3b;
     border-bottom: 1px solid #282e3b;
 }
@@ -586,3 +586,146 @@ footer{
 .bottomfooter {
     background-color: #001320;
 }
+
+/* NEW STYLES COIN SINGLE PAGE */
+.coin-single{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.name-details-coin{
+    font-size: 30px;
+}
+.name-details-coin img{
+    margin-right: 5px;
+}
+
+.name-details-coin span{
+    font-size: 16px;
+    color: #c9c9c9;
+}
+
+.prices-details-coin{
+    padding-left: 60px;
+}
+.prices-details-coin-2{
+    padding-left: 60px;
+}
+.price-usd .font-size-price{
+    font-size: 25px;
+}
+
+.price-usd .font-size-price .text-large, .price-btc .text-large{
+    font-size: 16px;
+    color: #c9c9c9;
+}
+
+.data-coin-table{
+    margin-bottom: 24px;
+    padding: 0;
+}
+
+.data-coin-table .data-coin-table-header{
+    padding: 12px 12px 11px;
+    border-bottom: 1px solid rgba(255,255,255,.35);
+    font-size: 18px;
+    white-space: nowrap;
+    margin-bottom: 12px;
+    text-align: center;
+    background: #000c176b;
+}
+
+.data-coin-table .data-coin-table-detail{
+    padding: 0 12px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.second-section-single-coin{
+    margin-top: 30px;
+}
+
+.span-single-coin{
+    padding: 8px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.span-single-coin-2{
+    margin-left: 15px;
+    padding: 8px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.span-single-coin-2 a{
+    color:white !important;
+}
+
+.span-single-coin-2 a:hover{
+    text-decoration: none;
+}
+
+#container-chart{
+    margin-top: 30px;
+}
+
+@media screen and (max-width: 768px){
+    .coin-single{
+        max-width: 100% !important;
+    }
+    .prices-details-coin-2{
+        padding-left: 40px;
+    }
+    
+    .text-span-single-coin{
+        text-align: center;
+        margin-bottom: 30px;
+    }
+}
+
+/** SPINNER CHART **/
+.loading-chart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+}
+
+.lds-facebook {
+    display: inline-block;
+    position: relative;
+    width: 64px;
+    height: 100px;
+  }
+  .lds-facebook div {
+    display: inline-block;
+    position: absolute;
+    left: 6px;
+    width: 12px;
+    background: #fff;
+    animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+  }
+  .lds-facebook div:nth-child(1) {
+    left: 6px;
+    animation-delay: -0.24s;
+  }
+  .lds-facebook div:nth-child(2) {
+    left: 26px;
+    animation-delay: -0.12s;
+  }
+  .lds-facebook div:nth-child(3) {
+    left: 45px;
+    animation-delay: 0;
+  }
+  @keyframes lds-facebook {
+    0% {
+      top: 6px;
+      height: 100px;
+    }
+    50%, 100% {
+      top: 19px;
+      height: 60px;
+    }
+  }
+  
