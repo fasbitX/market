@@ -1,9 +1,8 @@
 @extends('Layout.master') 
 
-@section('title') 
+@section('title') {{ $title->value }} | {{ $data->symbol }}@endsection 
 
 @section('meta')
-
 
 @endsection
 

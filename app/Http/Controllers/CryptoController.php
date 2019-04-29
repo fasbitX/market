@@ -22,7 +22,7 @@ class CryptoController extends Controller
     }
 
     public function singleCoin($name){
-
+        $title = DB::table('settings')->where('name','title')->first();
         $id_call = file_get_contents('https://min-api.cryptocompare.com/data/coin/generalinfo?fsyms='.$name.'&tsym=USD');
         $id_get = json_decode($id_call);
         $id = $id_get->Data[0]->CoinInfo->Id;
@@ -39,6 +39,7 @@ class CryptoController extends Controller
         $ads1 = DB::table('ads')->where('id',10)->first();
 
         return view('coin-single')
+                ->with('title', $title)
                 ->with('data',$coin)
                 ->with('ads',$ads)
                 ->with('ads1',$ads1)
