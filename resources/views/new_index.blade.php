@@ -63,9 +63,7 @@
                                         <td class="tbl-col-sm"></td>  
                                         <td class="tbl-col-sm">
                                             <span class="tbl-rank">
-                                                @if(Request::get('page')) {{((Request::get('page')-1) * 50) + ($index+1)}}
-                                                @else {{ $index+1 }}
-                                                @endif
+                                                {{ $item->rank }}
                                             </span>
                                         </td>
                                         <td class="fit clickable-coin-td">

@@ -14,8 +14,7 @@ $("#search_coin_form").submit((e)=>{
     
 
     let val = $("#search_coin_text").val();
-    $url = 'https://min-api.cryptocompare.com/data/coin/generalinfo?fsyms='+val.toUpperCase()+'&tsym=USD';
-    console.log($url);
+    $url = 'https://min-api.cryptocompare.com/data/coin/generalinfo?fsyms='+val.toUpperCase().trim()+'&tsym=USD';
     
     $.ajax({
         type: "GET",
@@ -26,8 +25,7 @@ $("#search_coin_form").submit((e)=>{
             if(data.Message=="Success"){
                 let html = '';
             
-              //  console.log(data->Data[0]);
-                let array = "'"+data.Data[0].CoinInfo.Name+ ','+data.Data[0].CoinInfo.FullName+"'";
+                let array = "'"+data.Data[0].CoinInfo.Id+','+data.Data[0].CoinInfo.Name+ ','+data.Data[0].CoinInfo.FullName+"'";
                 let aux = '<li onclick="add_coin('+array+');">'+
                                 '<strong>'+data.Data[0].CoinInfo.Name+' </strong>'+
                                 '<span> - '+data.Data[0].CoinInfo.FullName+' </span>'+
@@ -63,8 +61,9 @@ function add_coin(array){
     
     let _data = array.split(",");
     let paramns = {
-        symbol: _data[0],
-        name: _data[1],
+        id: _data[0],
+        symbol: _data[1],
+        name: _data[2],
     }
 
     $.ajax({
@@ -75,18 +74,45 @@ function add_coin(array){
         url: "/admin/ccoins",
         data: paramns,
         success: function(data) {
-            console.log(data);
+            
             if(data == "error") {
-                document.getElementById('error-t').innerHTML  = 'This coin already added';
+                document.getElementById('error-t').innerHTML  = 'This is coin already added';
                 $('#errorStock').click();
             }
-            else location.reload();
+            else{
+                rank();
+            } 
         },
         error: function() {
             document.getElementById('error-t').innerHTML  = "Error, it could not save the API's data, please try to add it again";
             $('#errorStock').click();
         }
     });
+
+    
+}
+
+function rank(){
+    
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: "GET",
+        url: "/admin/ccoins/rank",
+        success: function(data) {
+            location.reload();
+         
+        },
+        error: function() {
+            // document.getElementById('error-t').innerHTML  = "Error, it could not update top data";
+            // $('#errorStock').click();
+            location.reload();
+        }
+    });
+
+    
 }
 
 

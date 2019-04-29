@@ -15,12 +15,13 @@ class CreateCoinsTable extends Migration
     {
         Schema::create('coins', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('id_coin');
+            $table->integer('rank');
             $table->string('symbol');
             $table->string('name');
             $table->decimal('price',24,5);
             $table->string('f_price');
             $table->float('percent_change_24h');
-           // $table->string('f_percent_change_24h');
             $table->decimal('volume_24h',24,5);
             $table->string('f_volume_24h');
             $table->decimal('market_cap',24,2);

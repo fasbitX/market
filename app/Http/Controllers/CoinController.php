@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Coin;
-
+use DB;
 class CoinController extends Controller
 {
     /**
@@ -20,16 +20,6 @@ class CoinController extends Controller
         return view('Admin.ccoins',['data'=>$data]);
         
        // return view('Admin.ccoins')->with('data',$data);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
-    {
-           
     }
 
     /**
@@ -74,39 +64,6 @@ class CoinController extends Controller
  
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -163,6 +120,76 @@ class CoinController extends Controller
             
             $item->save();
 
+        }
+
+    }
+
+    public static function rank(){
+
+       
+        $url = 'https://min-api.cryptocompare.com/data/top/mktcapfull?limit=100&tsym=USD';
+        $data = json_decode( file_get_contents($url), true );
+
+        $url_price = 'https://min-api.cryptocompare.com/data/top/mktcapfull?limit=100&tsym=BTC';
+        $prices_btc = json_decode( file_get_contents($url_price), true );
+
+        DB::update('update coins set rank = ?',[9999]);
+      
+
+        foreach($data['Data'] as $index => $item){
+           
+            $verify = Coin::where('id_coin',"=",$item['CoinInfo']['Id'])->first();
+
+            if(!$verify){
+                $coin = new Coin();
+            
+                $coin->id_coin = $item['CoinInfo']['Id'];
+                $coin->rank = $index+1;
+                $coin->symbol = $item['CoinInfo']['Name'];
+                
+                $coin->name = $item['CoinInfo']['FullName'];
+                
+                $chart_image = "https://images.cryptocompare.com/sparkchart/".$coin->symbol."/USD/latest.png?ts=".microtime(true);
+                $coin->price = $item['RAW']['USD']['PRICE'];
+                $coin->f_price = $item['DISPLAY']['USD']['PRICE'];      
+                $coin->percent_change_24h = round($item['RAW']['USD']['CHANGEPCT24HOUR'],2); 
+                $coin->volume_24h = round($item['RAW']['USD']['TOTALVOLUME24HTO'],5);
+                $coin->f_volume_24h = $item['DISPLAY']['USD']['TOTALVOLUME24HTO'];      
+                $coin->market_cap = round($item['RAW']['USD']['MKTCAP'],5);
+                $coin->f_market_cap = $item['DISPLAY']['USD']['MKTCAP'];
+                $coin->image_url = "https://www.cryptocompare.com".$item['DISPLAY']['USD']['IMAGEURL'];
+                $coin->chart_image = $chart_image; 
+                    
+                $coin->btc_price = $prices_btc['Data'][$index]['DISPLAY']['BTC']['PRICE'];
+                $coin->status = 1;
+                $coin->save();
+            
+
+
+            }
+            else{
+                $chart_image = "https://images.cryptocompare.com/sparkchart/".$verify->symbol."/USD/latest.png?ts=".microtime(true);
+                $verify->price = $item['RAW']['USD']['PRICE'];
+                $verify->f_price = $item['DISPLAY']['USD']['PRICE'];      
+                $verify->percent_change_24h = round($item['RAW']['USD']['CHANGEPCT24HOUR'],2); 
+                $verify->volume_24h = round($item['RAW']['USD']['TOTALVOLUME24HTO'],5);
+                $verify->f_volume_24h = $item['DISPLAY']['USD']['TOTALVOLUME24HTO'];      
+                $verify->market_cap = round($item['RAW']['USD']['MKTCAP'],5);
+                $verify->f_market_cap = $item['DISPLAY']['USD']['MKTCAP'];
+                $verify->image_url = "https://www.cryptocompare.com".$item['DISPLAY']['USD']['IMAGEURL'];
+                $verify->chart_image = $chart_image; 
+                $verify->btc_price = $prices_btc['Data'][$index]['DISPLAY']['BTC']['PRICE'];
+                $verify->rank = $index+1;
+                $verify->save();
+            }
+            
+        }
+
+        $not_top = Coin::where('rank','=',9999)->get();
+
+        foreach($not_top as $index=>$item){
+            $item->rank = 100+$index;
+            $item->save();
         }
 
     }

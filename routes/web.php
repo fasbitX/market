@@ -77,10 +77,12 @@ Route::group(['prefix' => 'admin'] , function() {
 		Route::GET('forex/delete/{id}', 'ForexController@deleteForexes');
 
 
-		Route::RESOURCE('ccoins', 'CoinController');
+		Route::POST('ccoins','CoinController@store');
+		Route::GET('ccoins','CoinController@index');
 		Route::GET('ccoins/delete/{id}', ['uses' => 'CoinController@destroy', 'as' => 'coin.delete']);
 		Route::GET('ccoins/desactivate/{id}','CoinController@desactivate_coin');
 		Route::GET('ccoins/activate/{id}','CoinController@activate_coin');
+		Route::GET('ccoins/rank','CoinController@rank');
 	});
 });
 

@@ -242,7 +242,7 @@ $.getJSON('https://min-api.cryptocompare.com/data/histoday?aggregate=1&fsym='+na
     Highcharts.stockChart('container-chart', {
 
         rangeSelector: {
-            selected: 1
+            selected: 6,
         },
 
         title: {

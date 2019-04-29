@@ -670,6 +670,28 @@ footer{
     margin-top: 30px;
 }
 
+.third-section-single-coin{
+    margin-top: 50px;
+}
+
+.third-section-single-coin h2{
+    margin-bottom: 30px;
+    font-size: 30px;
+}
+
+.third-section-single-coin p{
+    color: #c9c9c9 !important;
+    text-align: justify;
+}
+
+.third-section-single-coin p a{
+    color: #20c997 !important;
+}
+
+div.third-section-single-coin.row strong{
+    color: white !important;
+}
+
 @media screen and (max-width: 768px){
     .coin-single{
         max-width: 100% !important;

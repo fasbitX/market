@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="{{asset('resources/assets/logo.png')}}"/>
     <!-- global styles-->
     <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/components.css") }}" />
-    <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/custom.css") }}" />
+    <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/original.css") }}" />
     <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/admin_custom.css") }}" />
     <!--end of global styles-->
     <!--plugin styles-->

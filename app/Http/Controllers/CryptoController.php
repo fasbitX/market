@@ -21,12 +21,27 @@ class CryptoController extends Controller
         return view('new_index',['data'=>$data,'ads'=>$ads,'ads1'=>$ads1,'title'=>$title,'meta_description'=>$meta_description,'meta_keyword'=>$meta_keyword]);
     }
 
-    public function singleCoin($coin){
+    public function singleCoin($name){
 
-        $data = Coin::where("symbol",'=',$coin)->first();
-        if($data)
-            return view('coin-single', ['data' => $data]);
-        else
-            return redirect('/');
+        $id_call = file_get_contents('https://min-api.cryptocompare.com/data/coin/generalinfo?fsyms='.$name.'&tsym=USD');
+        $id_get = json_decode($id_call);
+        $id = $id_get->Data[0]->CoinInfo->Id;
+
+
+        $core_data = file_get_contents('https://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id='.$id);
+        $data = json_decode($core_data);
+        
+        $coin = Coin::where('symbol',$name)->first();
+        /* echo '<pre>';
+        var_dump($data);
+        echo '</pre>'; die(); */
+        $ads = DB::table('ads')->where('id',3)->first();
+        $ads1 = DB::table('ads')->where('id',10)->first();
+
+        return view('coin-single')
+                ->with('data',$coin)
+                ->with('ads',$ads)
+                ->with('ads1',$ads1)
+                ->with('core_data', $data->Data->General);
     }
 }
