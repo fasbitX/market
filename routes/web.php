@@ -141,7 +141,7 @@ Route::get('/admin/new_ico', function(){
 });	
 //Route::GET('test', function(){return view('test');});
 Route::get('/user/logout','LoginController@logout_user');
-Route::GET('/{crypto}','DashboardController@single_coin');
+/* Route::GET('/{crypto}','DashboardController@single_coin');*/
 Route::GET('/coin/{crypto}','DashboardController@single_coin_new');
 Route::GET('stock/{symbol}', 'StockController@dataCharts');
 Route::GET('forex/{coins}', 'ForexController@dataCharts');

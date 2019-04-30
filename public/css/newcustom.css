@@ -692,6 +692,13 @@ div.third-section-single-coin.row strong{
     color: white !important;
 }
 
+.page-404{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 43vh;
+}
+
 @media screen and (max-width: 768px){
     .coin-single{
         max-width: 100% !important;
