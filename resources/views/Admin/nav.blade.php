@@ -11,8 +11,8 @@
                     <span class="link-title menu_hide">&nbsp;ICO</span>
                 </a>
             </li>
-            <li {{{ (Request::is('admin/coins') ? 'class=active' : '') }}}>
-                <a href="{{url('/')}}/admin/coins" >
+            <li {{{ (Request::is('admin/ccoins') ? 'class=active' : '') }}}>
+                <a href="{{url('/')}}/admin/ccoins" >
                     <i class="fa fa-tachometer"></i>
                     <span class="link-title menu_hide">&nbsp;Coins</span>
                 </a>
