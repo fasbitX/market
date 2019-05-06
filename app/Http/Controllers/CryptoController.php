@@ -10,7 +10,7 @@ use DB;
 class CryptoController extends Controller
 {
     public function index(Request $request){    
-        $data = Coin::simplePaginate(50);     
+        $data = Coin::orderBy('rank', 'ASC')->simplePaginate(50);     
         $title = DB::table('settings')->where('name','title')->first();
         $settings = DB::table('settings')->where('name','logo')->first();      
         $ads = DB::table('ads')->where('id',6)->first();

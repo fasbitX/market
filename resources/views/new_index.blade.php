@@ -18,7 +18,6 @@
 
 @endsection
 
-
  @section('content')
 
      <div class="container">
@@ -38,19 +37,15 @@
                         <div class="pull-right mb-1">
                             {{ $data->links() }}
                         </div>
-                        <table class="table coinlist">
+                        <table id="coin-table" class="table coinlist">
                             <thead>
                                 <tr>
                                     <th class="tbl-col-sm"></th>
-                                    <th><span class="d-none d-sm-block">Rank</span></th>
+                                    <th onclick="sortTable(1,'int',this)" ><span class="d-none d-sm-block">Rank<i class="fa fa-fw fa-sort"></i></span></th>
                                     <th colspan="2">Name</th>
                                     <th class="text-right">Price</th>
-                                    <th class="d-none d-lg-table-cell text-right">
-                                        <a href="javascript:void(0);" onclick="Homepage.setOrder('volume');" class="order-volume">Market cap</a>
-                                    </th>
-                                    <th class="d-none d-lg-table-cell text-right">
-                                        <a href="javascript:void(0);" onclick="Homepage.setOrder('volume');" class="order-volume">Volume</a>
-                                    </th>
+                                    <th class="d-none d-lg-table-cell text-right" onclick="sortTable(5, 'int',this)"> Market cap<i class="fa fa-fw fa-sort"></i> </th>
+                                    <th class="d-none d-lg-table-cell text-right" onclick="sortTable(6, 'int',this)"> Volume<i class="fa fa-fw fa-sort"></i></th>
                                     <th class="text-right">24H PERFORMENCE</th>
                                 </tr>
                             </thead>
@@ -61,7 +56,7 @@
                                 
                                     <tr coin_id="{{$item->id}}" coin_url="/coin/{{$item->symbol}}">
                                         <td class="tbl-col-sm"></td>  
-                                        <td class="tbl-col-sm">
+                                        <td class="tbl-col-sm" >
                                             <span class="tbl-rank">
                                                 {{ $item->rank }}
                                             </span>
@@ -76,9 +71,9 @@
                                             </div>
                                             <div class="d-lg-none tbl-mob-info smaller">
                                                 <span class="mob-info-title">Mkt Cap:&nbsp;</span>
-                                                <span class="mob-info-value marketcap-859">{{$item->f_market_cap}}</span>
+                                                <span class="mob-info-value marketcap-859" data-market="{{$item->market_cap}}">{{$item->f_market_cap}}</span>
                                                 <span class="mob-info-title">Volume:&nbsp;</span>
-                                                <span class="mob-info-value volume-859">{{$item->f_volume_24h}}</span>
+                                                <span class="mob-info-value volume-859" data-volume="{{$item->volume_24h}}">{{$item->f_volume_24h}}</span>
                                             </div>
                                         </td>
                                         <td class="clickable-coin-td">
@@ -86,10 +81,10 @@
                                             <span class="tbl-price small price avgprice-145-859 dimmed">{{$item->btc_price}}</span>
                                         </td>
                                         <td class="d-none d-lg-table-cell clickable-coin-td">
-                                            <span class="tbl-price price dimmed marketcap-859">{{$item->f_market_cap}}</span>
+                                            <span class="tbl-price price dimmed marketcap-859" data="{{$item->market_cap}}">{{$item->f_market_cap}}</span>
                                         </td>
                                         <td class="d-none d-lg-table-cell clickable-coin-td">
-                                            <span class="tbl-price price dimmed volume-859">{{$item->f_volume_24h}}</span>
+                                            <span class="tbl-price price dimmed volume-859" data="{{$item->volume_24h}}">{{$item->f_volume_24h}}</span>
                                         </td>
                                         <td class="tbl-col-md change-period clickable-coin-td">
                                             @if($item->percent_change_24h < 0)
@@ -137,3 +132,4 @@
 
 @endsection
 <script type="text/javascript" async src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5afec5426d44f1e2"></script>
+<script type="text/javascript" src="{{ URL::asset("public/js/sort_table.js") }}"></script>

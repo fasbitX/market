@@ -699,6 +699,10 @@ div.third-section-single-coin.row strong{
     min-height: 43vh;
 }
 
+th[onClick] {
+    cursor:pointer;
+}
+
 @media screen and (max-width: 768px){
     .coin-single{
         max-width: 100% !important;
