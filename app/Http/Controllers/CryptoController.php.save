@@ -28,19 +28,25 @@ class CryptoController extends Controller
         $id = $id_get->Data[0]->CoinInfo->Id;
 
 
-        //$core_data = file_get_contents('http://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id='.$id);
-        //$data = json_decode($core_data);
+        $core_data = file_get_contents('http://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id='.$id);
+        $data = json_decode($core_data);
         
         $coin = Coin::where('symbol',$name)->first();
-       $url = 'https://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id='.$id;
-       $curl = curl_init($url);
-       curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-       curl_setopt($curl, CURLOPT_HTTPGET, 1);
-       $success = curl_exec($curl);
-       $data = json_decode($success, false);
-       
+$ch = curl_init();
+// Will return the response, if false it print the response
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+// Set the url
+curl_setopt($ch, CURLOPT_URL, ''http://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id='.$id));
+// Execute
+$result=curl_exec($ch);
+// Closing
+curl_close($ch);
+
+// Will dump a beauty json :3
+var_dump(json_decode($result, true));
+
         /*echo '<pre>';
-        var_dump($data->Data);
+        var_dump(file_get_contents('http://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id=7605'));
         echo '</pre>'; die();*/
         $ads = DB::table('ads')->where('id',3)->first();
         $ads1 = DB::table('ads')->where('id',10)->first();

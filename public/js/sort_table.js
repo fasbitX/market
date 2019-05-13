@@ -31,7 +31,7 @@ function sortTable(n,type,event) {
         x = rows[i].getElementsByTagName("TD")[n];
         y = rows[i + 1].getElementsByTagName("TD")[n];
             
-        console.log(x.firstElementChild.getAttribute("data"));
+//        console.log(x.firstElementChild.getAttribute("data"));
         if (dir == "asc") {
             if ((type=="int" && parseFloat(x.textContent) > parseFloat(y.textContent)) || (type=="int" && parseFloat(x.firstElementChild.getAttribute("data")) > parseFloat(y.firstElementChild.getAttribute("data"))) ) {
             
