@@ -1,5 +1,6 @@
-
-function sortTable(n,type,event) {
+function sortTable(n,event) {
+    
+    
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     
     table = document.getElementById("coin-table");
@@ -9,17 +10,14 @@ function sortTable(n,type,event) {
     const i_tags = table.querySelectorAll('i');
     
     const target = event.getElementsByTagName('i')[0];
-
     
-    i_tags.forEach(function(i_tag){
-        if(target != i_tag){
+    i_tags.forEach(function(i_tag){ 
             i_tag.className="fa fa-fw fa-sort";
-        }
     });
     
 
     while (switching) {
-        target.className="fa fa-fw fa-sort-"+dir;
+        
     
         switching = false;
         rows = table.rows;
@@ -30,16 +28,15 @@ function sortTable(n,type,event) {
         
         x = rows[i].getElementsByTagName("TD")[n];
         y = rows[i + 1].getElementsByTagName("TD")[n];
-            
-//        console.log(x.firstElementChild.getAttribute("data"));
+    
         if (dir == "asc") {
-            if ((type=="int" && parseFloat(x.textContent) > parseFloat(y.textContent)) || (type=="int" && parseFloat(x.firstElementChild.getAttribute("data")) > parseFloat(y.firstElementChild.getAttribute("data"))) ) {
+            if ((Number(x.textContent) > Number(y.textContent)) || (Number(x.firstElementChild.getAttribute("data")) > Number(y.firstElementChild.getAttribute("data"))) ) {
             
             shouldSwitch= true;
             break;
             }
         } else if (dir == "desc") {
-            if ((type=="int" && parseFloat(x.textContent) < parseFloat(y.textContent)) || (type=="int" && parseFloat(x.firstElementChild.getAttribute("data")) < parseFloat(y.firstElementChild.getAttribute("data")))) {
+            if ((Number(x.textContent) < Number(y.textContent)) || (Number(x.firstElementChild.getAttribute("data")) < Number(y.firstElementChild.getAttribute("data")))) {
             
             shouldSwitch = true;
             break;
@@ -58,10 +55,10 @@ function sortTable(n,type,event) {
             dir = "desc";
             switching = true;
         }
-    
+
         }
     
     }
-    
-    }
+        target.className += "-"+dir;
+}
 

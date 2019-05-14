@@ -63,7 +63,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, label{
     color: #26da71 !important;
 }
 .pricedown{
-    color: #ff5a1c !important;
+    color: #FF0000 !important;
 }
 #wrap{
     background-image: radial-gradient(#003B53, #000B15);
@@ -381,7 +381,10 @@ a.btn.disabled{pointer-events:none;}
 .tab-content>.active{display:block;}
 .d-none{display:none!important;}
 @media (min-width:576px){
-.d-sm-block{display:block!important;}
+.d-sm-block{    
+    display: flex !important;
+    align-items: center;
+    justify-content: center;}
 }
 @media (min-width:992px){
 .d-lg-none{display:none!important;}
@@ -517,7 +520,7 @@ button.ch-period{font-weight:600;font-size:11px;padding:2px 2px;white-space:nowr
 .dark .tbl-price.small{color:#c9c9c9;}
 .dark .mob-info-title,.dark .mob-info-value{color:#c9c9c9;}
 .dark .price.up{color:#26da71;}
-.dark .price.down{color:#ff5a1c;}
+.dark .price.down{color:#FF0000;}
 .dark .price.dimmed{color:#c9c9c9;}
 .dark .btn-secondary{color:#606060;background:#282e3b;border:1px solid #383e4b;}
 .dark .btn-secondary:hover,.dark .btn-secondary:focus,.dark .btn-secondary:active{color:#373a3c;background:#e6e6e6;}

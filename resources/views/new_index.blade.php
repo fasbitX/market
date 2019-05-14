@@ -41,11 +41,11 @@
                             <thead>
                                 <tr>
                                     <th class="tbl-col-sm"></th>
-                                    <th onclick="sortTable(1,'int',this)" ><span class="d-none d-sm-block">Rank<i class="fa fa-fw fa-sort"></i></span></th>
+                                    <th onclick="sortTable(1,this)" ><span class="d-none d-sm-block">Rank<i class="fa fa-fw fa-sort"></i></span></th>
                                     <th colspan="2">Name</th>
                                     <th class="text-right">Price</th>
-                                    <th class="d-none d-lg-table-cell text-right" onclick="sortTable(5, 'int',this)"> Market cap<i class="fa fa-fw fa-sort"></i> </th>
-                                    <th class="d-none d-lg-table-cell text-right" onclick="sortTable(6, 'int',this)"> Volume<i class="fa fa-fw fa-sort"></i></th>
+                                    <th class="d-none d-lg-table-cell text-right" onclick="sortTable(5,this)"> Market cap<i class="fa fa-fw fa-sort"></i> </th>
+                                    <th class="d-none d-lg-table-cell text-right" onclick="sortTable(6,this)"> Volume<i class="fa fa-fw fa-sort"></i></th>
                                     <th class="text-right">24H PERFORMENCE</th>
                                 </tr>
                             </thead>
@@ -88,15 +88,15 @@
                                         </td>
                                         <td class="tbl-col-md change-period clickable-coin-td">
                                             @if($item->percent_change_24h < 0)
-                                                <span class="tbl-price pr-change delta-859 price down">{{$item->percent_change_24h}}%</span>
+                                                <span id="p_down" class="tbl-price pr-change delta-859 price down">{{$item->percent_change_24h}}%</span>
                                             @else
-                                                <span class="tbl-price pr-change delta-859 price up">{{$item->percent_change_24h}}%</span>
+                                                <span id="p_up" class="tbl-price pr-change delta-859 price up">{{$item->percent_change_24h}}%</span>
                                             @endif
                                             <span class="small-chart-container">
                                                 <div class="small-chart small-live-chart">
                                                     <div id="highcharts-q6qp1d2-0" class="highcharts-container " style="overflow: hidden; text-align: left;">
                                                         
-                                                        <img src="{{$item->chart_image}}"/>  
+                                                        
                                                     
                                                     </div>
                                                 </div>
@@ -131,5 +131,13 @@
 <!-- # right side -->
 
 @endsection
-<script type="text/javascript" async src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5afec5426d44f1e2"></script>
+
+
+@section('scripts')
 <script type="text/javascript" src="{{ URL::asset("public/js/sort_table.js") }}"></script>
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script type="text/javascript" src='{{ URL::asset("public/js/chart.1.js") }}'></script>
+<script type="text/javascript" async src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5afec5426d44f1e2"></script>
+@endsection
