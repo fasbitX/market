@@ -822,7 +822,7 @@ $.ajax({
     }
 });
 </script>
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5afec5426d44f1e2"></script>
+<!-- <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5afec5426d44f1e2"></script> -->
 @endsection
 
 @section('scripts')
