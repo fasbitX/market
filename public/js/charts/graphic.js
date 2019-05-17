@@ -3,8 +3,59 @@
 let paths = window.location.pathname.split('/');
 let name = paths[paths.length-1]; //crypto symbol
 
+/*
+function afterSetExtremes(e) {
+    let chart = Highcharts.charts[0];
+    var url,
+        currentExtremes = this.getExtremes(),
+        range = e.max - e.min;
+    console.log(range);
+    if(range <= 86400000){
+        console.log('entro');
+        $.getJSON('https://min-api.cryptocompare.com/data/histohour?fsym='+name+'&tsym=USD&limit=24', function (data) {
+            
+        // split the data set into ohlc and volume
+        let hours_price = [],
+        hours_volume = [],
+        h_dataLength = data.Data.length,
+        i=0;
+        // set the allowed units for data grouping
+    
+        // data.Data.map(item=>{
+        //     info_coin.push([item.time*1000,item.close]);
+        // })
 
+        
+    
+        for (i; i < h_dataLength; i += 1) {
+            hours_price.push([
+                data.Data[i].time*1000, // the date
+                data.Data[i].close // close
+            ]);
+            hours_volume.push([
+                data.Data[i].time*1000, // the date
+                data.Data[i].volumeto // the volume
+            ]);
+        }
 
+    //       chart.series[0].update({name:'new title'});
+            chart.series[0].setData(hours_price);
+    //     chart.series[1].update({name:'new'});
+            chart.series[1].setData(hours_volume);
+
+        });   
+        
+    }else 
+    {   
+        console.log('here');
+        chart.series[0].setData(price);
+    //     chart.series[1].update({name:'new'});
+            chart.series[1].setData(volume);
+    }
+    
+}
+
+*/
 Highcharts.createElement('link', {
     href: 'https://fonts.googleapis.com/css?family=Unica+One',
     rel: 'stylesheet',
@@ -41,6 +92,11 @@ Highcharts.theme = {
         }
     },
     xAxis: {
+        events: {
+          //  afterSetExtremes: afterSetExtremes
+        },
+        minRange: 3600 * 1000 *24 ,
+    
         gridLineColor: '#707073',
         labels: {
             style: {
@@ -136,11 +192,59 @@ Highcharts.theme = {
             theme: {
                 fill: '#505053'
             }
-        }
+        },
+
     },
 
     // scroll charts
     rangeSelector: {
+    //   buttons: [{
+        
+    //         type: 'week',
+    //         count: 1,
+    //         text: '1W'
+    //     }],
+        
+        buttons: [
+            // {
+            //     type: 'day',
+            //     count: 1,
+            //     text: '1d',
+			// 	// events: {
+			// 	// 	click: afterSetExtremes,
+            //     // }
+                
+			// }, 
+            {
+                type: 'week',
+                count: 1,
+                text: '1w'
+            },
+            
+        {
+            type: 'month',
+            count: 1,
+            text: '1m'
+        }, {
+            type: 'month',
+            count: 3,
+            text: '3m'
+        }, {
+            type: 'month',
+            count: 6,
+            text: '6m'
+        }, {
+            type: 'ytd',
+            text: 'YTD'
+        }, {
+            type: 'year',
+            count: 1,
+            text: '1y'
+        }, {
+            type: 'all',
+            text: 'All'
+        }],
+        allButtonsEnabled: true,
         buttonTheme: {
             fill: '#505053',
             stroke: '#000000',
@@ -171,10 +275,13 @@ Highcharts.theme = {
         },
         labelStyle: {
             color: 'silver'
-        }
+        },
+        preserveDataGrouping: false,
+
     },
 
     navigator: {
+        //enabled: false,
         handles: {
             backgroundColor: '#666',
             borderColor: '#AAA'
@@ -187,10 +294,15 @@ Highcharts.theme = {
         },
         xAxis: {
             gridLineColor: '#505053'
-        }
+        },
+       
+        adaptToUpdatedData: false,
+       
+
     },
 
     scrollbar: {
+        enabled: false,
         barBackgroundColor: '#808083',
         barBorderColor: '#808083',
         buttonArrowColor: '#CCC',
@@ -198,7 +310,10 @@ Highcharts.theme = {
         buttonBorderColor: '#606063',
         rifleColor: '#FFF',
         trackBackgroundColor: '#404043',
-        trackBorderColor: '#404043'
+        trackBorderColor: '#404043',
+        
+          
+     
     },
 
     // special colors for some of the
@@ -214,13 +329,13 @@ Highcharts.theme = {
 Highcharts.setOptions(Highcharts.theme);
 
 
-
+var price = [],
+    volume = [];
 $.getJSON('https://min-api.cryptocompare.com/data/histoday?aggregate=1&fsym='+name+'&tsym=USD&limit=1825', function (data) {
 
     // split the data set into ohlc and volume
-    var price = [],
-    volume = [],
-    dataLength = data.Data.length,
+    
+   var dataLength = data.Data.length,
     // set the allowed units for data grouping
 /*
     data.Data.map(item=>{
@@ -242,7 +357,9 @@ $.getJSON('https://min-api.cryptocompare.com/data/histoday?aggregate=1&fsym='+na
     Highcharts.stockChart('container-chart', {
 
         rangeSelector: {
+          
             selected: 6,
+           
         },
 
         title: {
@@ -274,6 +391,7 @@ $.getJSON('https://min-api.cryptocompare.com/data/histoday?aggregate=1&fsym='+na
         }],
 
         series: [{
+           
             name: name+' Price',
             data: price,
             type: 'area',
@@ -294,8 +412,10 @@ $.getJSON('https://min-api.cryptocompare.com/data/histoday?aggregate=1&fsym='+na
                     [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
                 ]
             },
-          
-            
+            dataGrouping: {
+                enabled: false
+              },
+         
             
         }, {
             type: 'column',
@@ -305,8 +425,12 @@ $.getJSON('https://min-api.cryptocompare.com/data/histoday?aggregate=1&fsym='+na
             tooltip: {
                 valueDecimals: 2
             },
+            dataGrouping: {
+                enabled: false
+              },
          
-        }],
+        }
+        ],
         responsive: {
             rules: [{
                 condition: {
@@ -319,6 +443,9 @@ $.getJSON('https://min-api.cryptocompare.com/data/histoday?aggregate=1&fsym='+na
                 }
             }]
         }
+
+
+
     });
 
     $('.loading-chart').hide();

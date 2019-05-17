@@ -138,7 +138,7 @@ for ( let i = 0; i < len; i += 1) {
  
      
      let $tr_i = $($tr_coin[i]);
-     let symbol_coin = $tr_i.attr('coin_url').substring(6);
+     let symbol_coin = $tr_i.attr('coin_href').substring(6);
      $.getJSON('https://min-api.cryptocompare.com/data/histohour?fsym='+symbol_coin+'&tsym=USD&limit=24', function (data) {
 
          $td = $tr_i.find('#highcharts-q6qp1d2-0');

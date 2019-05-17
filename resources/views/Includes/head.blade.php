@@ -77,9 +77,9 @@
       <li class="nav-item">
         <a class="nav-link" href="{{url('/')}}/">TECHNICAL INDICATORS</a>
       </li-->
-      <li class="nav-item">
+      <!--<li class="nav-item">
         <a class="nav-link" href="{{url('/')}}/ico">ICO</a>
-      </li>
+      </li>-->
 
       <ul class="navbar-nav menu-front-mobile">
         @if(Session::get( 'user_name' ) =="")

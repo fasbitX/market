@@ -21,16 +21,54 @@
                     </h1>       
                 </div>
 
+                <div class="col-md-8 prices-details-coin" style=" display: flex; flex-direction: row;">
+   
+                
+                    <div class="price-usd" style="  display: flex;    flex-direction: column;">
+                        <span class="font-size-price" style="flex-shrink: 2;">
+                            <span>{{ $data->f_price }}</span>
+                            <span class="text-large">USD</span>
+                        </span>
+                        <span class="price-btc">
+                            <span class="text-large">{{ $data->btc_price }}</span>
+                            <span class="text-large">BTC</span>
+                        </span>
+                    </div>
+                    <div class="price-btc" style=" display: flex;flex-direction: column; justify-content: flex-end;    padding-left: 1em;">
 
+    
+                        @if($data->percent_change_24h >= 0)
+                        <span class="font-size-price price up"style="font-size: 25px;">
+                            (<span>{{ $data->percent_change_24h }}</span>%)
+                        </span>
+                        <span class="font-size-price price up">Last 24 Hour</span>
+                        @else
+                        <span class="font-size-price price down" style="font-size: 25px;">
+                            (<span>{{ $data->percent_change_24h }}</span>%)
+                        </span>
+                        <span class="font-size-price price down">Last 24 Hour</span>
+                        @endif        
+                   
+                    </div>
 
-                <div class="col-md-8 prices-details-coin">
+                </div>
+
+               <!-- <div class="col-md-8 prices-details-coin">
+
+                
                 
                     <div class="price-usd">
                         <span class="font-size-price">
                             <span>{{ $data->f_price }}</span>
                             <span class="text-large">USD</span>
                         </span>
-                        @if($data->percent_change_24h >= 0)
+                        <span  class="text-large">
+                            <span>{{ $data->btc_price }}</span>
+                            BTC
+                        </span>
+                    </div>
+                    <div class="price-btc">
+                    @if($data->percent_change_24h >= 0)
                         <span class="font-size-price price up">
                             (<span>{{ $data->percent_change_24h }}</span>%)
                         </span>
@@ -39,15 +77,11 @@
                             (<span>{{ $data->percent_change_24h }}</span>%)
                         </span>
                         @endif
-                    </div>
-                    <div class="price-btc">
-                        <span  class="text-large">
-                            <span>{{ $data->btc_price }}</span>
-                            BTC
-                        </span>
+                      
+                        <span>Last 24 Hour</span>
                     </div>
 
-                </div>
+                </div>-->
             </div>
         </div>
 
@@ -113,7 +147,7 @@
                                 <h5 class="data-coin-table-header">Total Coin Supply</h5>
                                     <div class="data-coin-table-detail">
                                         <span>
-                                            <span>$ {{ $core_data->TotalCoinSupply }}</span>
+                                            <span> {{ round($core_data->TotalCoinSupply,2) }}</span>
                                         </span>
                                     </div>
                                 </div>

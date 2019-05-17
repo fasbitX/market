@@ -54,7 +54,7 @@
                                 @foreach ($data as $index => $item)
                                     
                                 
-                                    <tr coin_id="{{$item->id}}" coin_url="/coin/{{$item->symbol}}">
+                                    <tr coin_id="{{$item->id}}" coin_href="/coin/{{$item->symbol}}">
                                         <td class="tbl-col-sm"></td>  
                                         <td class="tbl-col-sm" >
                                             <span class="tbl-rank">
@@ -134,10 +134,18 @@
 
 
 @section('scripts')
+<script>
+$(document).ready(function(){
+    $('table tbody tr').click(function(){
+        window.location = $(this).attr('coin_href');
+        return false;
+    });
+});
+</script>
 <script type="text/javascript" src="{{ URL::asset("public/js/sort_table.js") }}"></script>
 
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script type="text/javascript" src='{{ URL::asset("public/js/chart.1.js") }}'></script>
-<script type="text/javascript" async src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5afec5426d44f1e2"></script>
+<!--<script type="text/javascript" async src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5afec5426d44f1e2"></script>-->
 @endsection
