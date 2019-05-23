@@ -215,12 +215,12 @@ Highcharts.theme = {
             //     // }
                 
 			// }, 
-            {
-                type: 'week',
-                count: 1,
-                text: '1w'
-            },
-            
+        {
+            type: 'week',
+            count: 1,
+            text: '1w'
+        },
+        
         {
             type: 'month',
             count: 1,
@@ -397,7 +397,7 @@ $.getJSON('https://min-api.cryptocompare.com/data/histoday?aggregate=1&fsym='+na
             type: 'area',
             threshold: null,
             tooltip: {
-                valueDecimals: 2
+                valueDecimals: 4
             },
             
             fillColor: {
@@ -423,7 +423,7 @@ $.getJSON('https://min-api.cryptocompare.com/data/histoday?aggregate=1&fsym='+na
             data: volume,
             yAxis: 1,
             tooltip: {
-                valueDecimals: 2
+                valueDecimals: 4
             },
             dataGrouping: {
                 enabled: false

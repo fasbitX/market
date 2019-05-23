@@ -10,7 +10,7 @@ use DB;
 class CryptoController extends Controller
 {
     public function index(Request $request){    
-        $data = Coin::orderBy('rank', 'ASC')->simplePaginate(40);     
+        $data = Coin::Where('status','=',1)->orderBy('rank', 'ASC')->simplePaginate(40);     
         $title = DB::table('settings')->where('name','title')->first();
         $settings = DB::table('settings')->where('name','logo')->first();      
         $ads = DB::table('ads')->where('id',6)->first();
@@ -31,7 +31,7 @@ class CryptoController extends Controller
         //$core_data = file_get_contents('http://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id='.$id);
         //$data = json_decode($core_data);
         
-        $coin = Coin::where('symbol',$name)->first();
+       $coin = Coin::where('symbol',$name)->first();
        $url = 'https://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id='.$id;
        $curl = curl_init($url);
        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);

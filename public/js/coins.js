@@ -22,7 +22,8 @@ $("#search_coin_form").submit((e)=>{
         success: function(data) {
             
             $('.lds-roller').hide();
-            if(data.Message=="Success"){
+            if(data.Message=="Success" && data.Data.length!=0){
+                
                 let html = '';
             
                 let array = "'"+data.Data[0].CoinInfo.Id+','+data.Data[0].CoinInfo.Name+ ','+data.Data[0].CoinInfo.FullName+"'";
@@ -106,8 +107,8 @@ function rank(){
          
         },
         error: function() {
-            // document.getElementById('error-t').innerHTML  = "Error, it could not update top data";
-            // $('#errorStock').click();
+            document.getElementById('error-t').innerHTML  = "Error, it could not update top data";
+            $('#errorStock').click();
             location.reload();
         }
     });

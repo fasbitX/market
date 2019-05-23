@@ -27,7 +27,7 @@ class CreateCoinsTable extends Migration
             $table->decimal('market_cap',24,2);
             $table->string('f_market_cap');
             $table->string('image_url');
-            $table->string('chart_image');
+            
             $table->string('btc_price');
             $table->integer('status');
             $table->timestamps();
