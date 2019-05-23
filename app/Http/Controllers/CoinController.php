@@ -13,6 +13,8 @@ class CoinController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    const API_KEY = '61a9f27136829a258209655a1484a5363b8e1bd305dc6b54e6a3ec3d31548892';
+
     public function index()
     {
         $data = Coin::paginate(50);
@@ -41,10 +43,10 @@ class CoinController extends Controller
         else{
 
             //Para precios
-            $url = 'https://min-api.cryptocompare.com/data/pricemultifull?fsyms='.$coin->symbol.'&tsyms=USD,BTC';
+            $url = 'https://min-api.cryptocompare.com/data/pricemultifull?fsyms='.$coin->symbol.'&tsyms=USD,BTC&api_key='.self::API_KEY;
             $data = json_decode( file_get_contents($url), true );
             //para informacion general
-            $url_general = 'https://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id='.$coin->id_coin;
+            $url_general = 'https://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id='.$coin->id_coin.'&api_key='.self::API_KEY;
             $curl = curl_init($url_general);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($curl, CURLOPT_HTTPGET, 1);
@@ -122,28 +124,41 @@ class CoinController extends Controller
     }
 
     public static function cronUpdate(){
-    
-        foreach($coin as $item){
-             
-            $url = 'https://min-api.cryptocompare.com/data/pricemultifull?fsyms='.$item->symbol.'&tsyms=USD,BTC';
+
+        Coin::CHUNK(1000, function($coin) {
+
+            $symbols = $coin->pluck('symbol')->toArray();
+            $symbols_string = implode(',',$symbols);
+            // echo '<pre>';
+            //  var_dump($symbols_string);
+            // echo '</pre>';
+
+            $url = 'https://min-api.cryptocompare.com/data/pricemultifull?fsyms='.$symbols_string.'&tsyms=USD,BTC&api_key='.self::API_KEY;
             $data = json_decode( file_get_contents($url), true );
-
-            $item->price = $data['RAW'][$item->symbol]['USD']['PRICE'];
-            $item->f_price = $data['DISPLAY'][$item->symbol]['USD']['PRICE'];      
-            $item->percent_change_24h = round($data['RAW'][$item->symbol]['USD']['CHANGEPCT24HOUR'],2); 
-            $item->volume_24h = round($data['RAW'][$item->symbol]['USD']['TOTALVOLUME24HTO'],5);
-            $item->f_volume_24h = $data['DISPLAY'][$item->symbol]['USD']['TOTALVOLUME24HTO'];      
-            $item->market_cap = round($data['RAW'][$item->symbol]['USD']['MKTCAP'],5);
-            $item->f_market_cap = $data['DISPLAY'][$item->symbol]['USD']['MKTCAP'];
-            $item->image_url = "https://www.cryptocompare.com".$data['DISPLAY'][$item->symbol]['USD']['IMAGEURL'];
-         
-            $item->btc_price = $data['DISPLAY'][$item->symbol]['BTC']['PRICE'];
             
-            $item->save();
+            foreach($coin as $item){
+             
+    
+                $item->price = $data['RAW'][$item->symbol]['USD']['PRICE'];
+                $item->f_price = $data['DISPLAY'][$item->symbol]['USD']['PRICE'];      
+                $item->percent_change_24h = round($data['RAW'][$item->symbol]['USD']['CHANGEPCT24HOUR'],2); 
+                $item->volume_24h = round($data['RAW'][$item->symbol]['USD']['TOTALVOLUME24HTO'],5);
+                $item->f_volume_24h = $data['DISPLAY'][$item->symbol]['USD']['TOTALVOLUME24HTO'];      
+                $item->market_cap = round($data['RAW'][$item->symbol]['USD']['MKTCAP'],5);
+                $item->f_market_cap = $data['DISPLAY'][$item->symbol]['USD']['MKTCAP'];
+                $item->image_url = "https://www.cryptocompare.com".$data['DISPLAY'][$item->symbol]['USD']['IMAGEURL'];
+             
+                $item->btc_price = $data['DISPLAY'][$item->symbol]['BTC']['PRICE'];
+                
+                $item->save();
+    
+            }
 
-        }
+        });
+        
 
     }
+
     public static function reasignRank(){
         $coin = Coin::Where('status','=',1)->orderBy('rank', 'ASC')->get();
         foreach ($coin as $index => $item) {
@@ -156,7 +171,7 @@ class CoinController extends Controller
     public static function rank(){
 
        
-        $url = 'https://min-api.cryptocompare.com/data/top/mktcapfull?limit=100&tsym=USD';
+        $url = 'https://min-api.cryptocompare.com/data/top/mktcapfull?limit=100&tsym=USD&api_key='.self::API_KEY;
         $data = json_decode( file_get_contents($url), true );
         
         // $url_price = 'https://min-api.cryptocompare.com/data/top/mktcapfull?limit=100&tsym=BTC';
@@ -194,7 +209,7 @@ class CoinController extends Controller
                 // $coin->btc_price = $prices_btc['Data'][$index]['DISPLAY']['BTC']['PRICE'];
                 $coin->btc_price = 0;
 
-                $url_general = 'https://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id='.$coin->id_coin;
+                $url_general = 'https://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id='.$coin->id_coin.'&api_key='.self::API_KEY;
                 $curl = curl_init($url_general);
                 curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
                 curl_setopt($curl, CURLOPT_HTTPGET, 1);
