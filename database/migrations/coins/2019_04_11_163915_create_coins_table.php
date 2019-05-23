@@ -30,6 +30,15 @@ class CreateCoinsTable extends Migration
             
             $table->string('btc_price');
             $table->integer('status');
+
+            $table->string('website');
+            $table->string('algorithm');
+            $table->string('prooftype');
+            $table->string('total_supply');
+            $table->longText('description');
+            $table->longText('features');
+            $table->longText('technology');
+
             $table->timestamps();
         });
     }

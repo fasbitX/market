@@ -39,9 +39,21 @@ class CoinController extends Controller
         $verify = Coin::where('symbol','=',$request->symbol)->first();
         if($verify) return 'error';
         else{
+
+            //Para precios
             $url = 'https://min-api.cryptocompare.com/data/pricemultifull?fsyms='.$coin->symbol.'&tsyms=USD,BTC';
             $data = json_decode( file_get_contents($url), true );
-          
+            //para informacion general
+            $url_general = 'https://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id='.$coin->id_coin;
+            $curl = curl_init($url_general);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($curl, CURLOPT_HTTPGET, 1);
+            $success = curl_exec($curl);
+            $data_2 = json_decode($success, false);
+            $general_data = $data_2->Data->General;
+
+
+            //guardando precios
             $coin->price = $data['RAW'][$coin->symbol]['USD']['PRICE'];
             $coin->f_price = $data['DISPLAY'][$coin->symbol]['USD']['PRICE'];      
             $coin->percent_change_24h = round($data['RAW'][$coin->symbol]['USD']['CHANGEPCT24HOUR'],2); 
@@ -53,7 +65,18 @@ class CoinController extends Controller
             $coin->btc_price = $data['DISPLAY'][$coin->symbol]['BTC']['PRICE'];
             $coin->status = 1;
             $coin->rank = 9999;
-          
+             
+            //guardando general info
+            $coin->website = $general_data->Website;
+            $coin->algorithm = $general_data->Algorithm;
+            $coin->prooftype = $general_data->ProofType;
+            $coin->total_supply = $general_data->TotalCoinSupply;
+            $coin->description = $general_data->Description;
+            $coin->features = $general_data->Features;
+            $coin->technology = $general_data->Technology;
+
+     
+        
             $coin->save();
             
             return 'success';
@@ -84,7 +107,8 @@ class CoinController extends Controller
         $coin->status = 1;
         $coin->save();
         self::reasignRank();
-        return redirect('/admin/ccoins');    }
+        return redirect('/admin/ccoins');    
+    }
 
      public static function desactivate_coin($id)
     {
@@ -125,7 +149,6 @@ class CoinController extends Controller
         foreach ($coin as $index => $item) {
             $item->rank = $index+1;
             $item->save();
-            
         }
         
     }
@@ -135,9 +158,10 @@ class CoinController extends Controller
        
         $url = 'https://min-api.cryptocompare.com/data/top/mktcapfull?limit=100&tsym=USD';
         $data = json_decode( file_get_contents($url), true );
-
-        $url_price = 'https://min-api.cryptocompare.com/data/top/mktcapfull?limit=100&tsym=BTC';
-        $prices_btc = json_decode( file_get_contents($url_price), true );
+        
+        // $url_price = 'https://min-api.cryptocompare.com/data/top/mktcapfull?limit=100&tsym=BTC';
+        // $prices_btc = json_decode( file_get_contents($url_price), true );
+      
 
         DB::update('update coins set rank = ?',[9999]);
         $aux_rank = 0;
@@ -146,11 +170,13 @@ class CoinController extends Controller
            
             $verify = Coin::where('id_coin',"=",$item['CoinInfo']['Id'])->first();
             $aux_rank = $index+1;
+
             if(!$verify){
+                
                 $coin = new Coin();
             
                 $coin->id_coin = $item['CoinInfo']['Id'];
-                $coin->rank = $index+1;
+                $coin->rank = $aux_rank;
                 $coin->symbol = $item['CoinInfo']['Name'];
                 
                 $coin->name = $item['CoinInfo']['FullName'];
@@ -165,26 +191,35 @@ class CoinController extends Controller
                 $coin->image_url = "https://www.cryptocompare.com".$item['DISPLAY']['USD']['IMAGEURL'];
                 
                     
-                $coin->btc_price = $prices_btc['Data'][$index]['DISPLAY']['BTC']['PRICE'];
+                // $coin->btc_price = $prices_btc['Data'][$index]['DISPLAY']['BTC']['PRICE'];
+                $coin->btc_price = 0;
+
+                $url_general = 'https://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id='.$coin->id_coin;
+                $curl = curl_init($url_general);
+                curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($curl, CURLOPT_HTTPGET, 1);
+                $success = curl_exec($curl);
+                $data_2 = json_decode($success, false);
+                $general_data = $data_2->Data->General;
+                 //guardando general info
+                $coin->website = $general_data->Website;
+                $coin->algorithm = $general_data->Algorithm;
+                $coin->prooftype = $general_data->ProofType;
+                $coin->total_supply = $general_data->TotalCoinSupply;
+                $coin->description = $general_data->Description;
+                $coin->features = $general_data->Features;
+                $coin->technology = $general_data->Technology;
+
+
                 $coin->status = 1;
                 $coin->save();
             
 
 
             }
-            else{
-                $verify->price = $item['RAW']['USD']['PRICE'];
-                $verify->f_price = $item['DISPLAY']['USD']['PRICE'];      
-                $verify->percent_change_24h = round($item['RAW']['USD']['CHANGEPCT24HOUR'],2); 
-                $verify->volume_24h = round($item['RAW']['USD']['TOTALVOLUME24HTO'],5);
-                $verify->f_volume_24h = $item['DISPLAY']['USD']['TOTALVOLUME24HTO'];      
-                $verify->market_cap = round($item['RAW']['USD']['MKTCAP'],5);
-                $verify->f_market_cap = $item['DISPLAY']['USD']['MKTCAP'];
-                $verify->image_url = "https://www.cryptocompare.com".$item['DISPLAY']['USD']['IMAGEURL'];
-                $verify->btc_price = $prices_btc['Data'][$index]['DISPLAY']['BTC']['PRICE'];
-               
-                $verify->rank = $aux_rank;
-                $verify->save();
+            else {
+                    $verify->rank = $aux_rank;
+                    $verify->save();
             }
             
         }
@@ -195,6 +230,8 @@ class CoinController extends Controller
             $item->rank = $aux_rank+$index+1;
             $item->save();
         }
+
+        self::reasignRank();
 
     }
 

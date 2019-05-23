@@ -90,7 +90,7 @@
                 <div class="col-md-4">
                     <p class="text-span-single-coin">
                         <span class="badge badge-primary span-single-coin">Rank {{ $data->rank }}</span>
-                        <span class="badge badge-info span-single-coin-2"><a href="#">{!! $core_data->Website !!}</a></span>
+                        <span class="badge badge-info span-single-coin-2">{!! $data->website !!}</span>
                     </p>
                 </div>
 
@@ -116,30 +116,30 @@
                         </div>
 
 
-                        @if($core_data->Algorithm)
+                        @if($data->algorithm)
                             <div class="col-lg-6  col-md-6 col-sm-6 col-xs-12 data-coin-table">
-                                <h5 class="data-coin-table-header">Algorithm</h5>
+                                <h5 class="data-coin-table-header">algorithm</h5>
                                 <div class="data-coin-table-detail">
                                     <span>
-                                        <span>{{ $core_data->Algorithm }}</span>
+                                        <span>{{ $data->algorithm }}</span>
                                     </span>
                                 </div>
                             </div>
                         @endif
                         
-                        @if($core_data->ProofType)
+                        @if($data->prooftype)
                             <div class="col-lg-6  col-md-6 col-sm-6 col-xs-12 data-coin-table">
                                 <h5 class="data-coin-table-header">Proof Type</h5>
                                 <div class="data-coin-table-detail">
                                     <span>
-                                        <span>{{ $core_data->ProofType }}</span>
+                                        <span>{{ $data->prooftype }}</span>
                                     </span>
                                 </div>
                             </div>
                         @endif
 
-                        @if($core_data->TotalCoinSupply)
-                            @if(($core_data->Algorithm && $core_data->ProofType) || (!$core_data->Algorithm && !$core_data->ProofType))
+                        @if($data->total_supply)
+                            @if(($data->algorithm && $data->prooftype) || (!$data->algorithm && !$data->prooftype))
                                 <div class="col-lg-12  col-md-12 col-sm-12 col-xs-12 data-coin-table">
                             @else
                                 <div class="col-lg-6  col-md-6 col-sm-6 col-xs-12 data-coin-table"> 
@@ -147,7 +147,7 @@
                                 <h5 class="data-coin-table-header">Total Coin Supply</h5>
                                     <div class="data-coin-table-detail">
                                         <span>
-                                            <span> {{ round($core_data->TotalCoinSupply,2) }}</span>
+                                            <span> {{ round($data->total_supply,2) }}</span>
                                         </span>
                                     </div>
                                 </div>
@@ -166,30 +166,30 @@
 
         <div class="third-section-single-coin">
             <h2>About {{ $data->name }}</h2>
-            @if($core_data->Description)
-                {!! $core_data->Description !!}
+            @if($data->description)
+                {!! $data->description !!}
             @endif
         </div>
         <div class="third-section-single-coin row">
-            @if($core_data->Features && $core_data->Technology) 
+            @if($data->features && $data->technology) 
                 <div class="col-md-6">
-                    <h2>Features</h2>
-                    <div>{!! $core_data->Features !!}</div>
+                    <h2>features</h2>
+                    <div>{!! $data->features !!}</div>
                 </div>
 
                 <div class="col-md-6">
-                    <h2>Technology</h2>
-                    <div>{!! $core_data->Technology !!}</div>
+                    <h2>technology</h2>
+                    <div>{!! $data->technology !!}</div>
                 </div>
-            @elseif($core_data->Features)
+            @elseif($data->features)
                 <div class="col-md-12">
-                    <h2>Features</h2>
-                    <div>{!! $core_data->Features !!}</div>
+                    <h2>features</h2>
+                    <div>{!! $data->features !!}</div>
                 </div>
-            @elseif($core_data->Technology)
+            @elseif($data->technology)
                 <div class="col-md-12">
-                    <h2>Technology</h2>
-                    <div>{!! $core_data->Technology !!}</div>
+                    <h2>technology</h2>
+                    <div>{!! $data->technology !!}</div>
                 </div>
             @endif
         </div>
