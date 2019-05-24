@@ -214,32 +214,38 @@ Highcharts.theme = {
 			// 	// 	click: afterSetExtremes,
             //     // }
                 
-			// }, 
+            // }, 
+            
+        {
+            type: 'day',
+            count: 3,
+            text: '3D'
+        },
         {
             type: 'week',
             count: 1,
-            text: '1w'
+            text: '7D'
         },
         
         {
             type: 'month',
             count: 1,
-            text: '1m'
+            text: '1M'
         }, {
             type: 'month',
             count: 3,
-            text: '3m'
+            text: '3M'
         }, {
             type: 'month',
             count: 6,
-            text: '6m'
+            text: '6M'
         }, {
             type: 'ytd',
             text: 'YTD'
         }, {
             type: 'year',
             count: 1,
-            text: '1y'
+            text: '1Y'
         }, {
             type: 'all',
             text: 'All'

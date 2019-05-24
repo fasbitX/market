@@ -1,4 +1,4 @@
-<div class="scroller">
+<!--div class="scroller">
   <script async defer type="text/javascript">
     baseUrl = "https://widgets.cryptocompare.com/";
     var scripts = document.getElementsByTagName("script");
@@ -15,7 +15,7 @@
     embedder.parentNode.appendChild(s);
     })();
   </script>
-</div>
+</div-->
 
 <nav class="navbar navbar-expand-lg navbar-static-top mynav">
   <div class="container">

@@ -83,7 +83,13 @@ Route::group(['prefix' => 'admin'] , function() {
 		Route::GET('ccoins/desactivate/{id}','CoinController@desactivate_coin');
 		Route::GET('ccoins/activate/{id}','CoinController@activate_coin');
 		Route::GET('ccoins/rank','CoinController@rank');
+		Route::GET('ccoins/cron','CoinController@cronUpdate');
 	});
+});
+
+//User login group
+Route::group(['middleware' => ['cors']], function() {
+	Route::get('/','CryptoController@index');
 });
 
 
