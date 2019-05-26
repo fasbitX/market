@@ -87,12 +87,6 @@ Route::group(['prefix' => 'admin'] , function() {
 	});
 });
 
-//User login group
-Route::group(['middleware' => ['cors']], function() {
-	Route::get('/','CryptoController@index');
-});
-
-
 //Public Routes
 Route::GET('/logout',function(Request $request)
 {
