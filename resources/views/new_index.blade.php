@@ -88,9 +88,9 @@
                                         </td>
                                         <td class="tbl-col-md change-period clickable-coin-td">
                                             @if($item->percent_change_24h < 0)
-                                                <span id="p_down" class="tbl-price pr-change delta-859 price down">{{$item->percent_change_24h}}%</span>
+                                                <span id="p_down" class="tbl-price pr-change delta-859 price down">{{number_format($item->percent_change_24h, 2, '.', ',')}}%</span>
                                             @else
-                                                <span id="p_up" class="tbl-price pr-change delta-859 price up">{{$item->percent_change_24h}}%</span>
+                                                <span id="p_up" class="tbl-price pr-change delta-859 price up">{{number_format($item->percent_change_24h, 2, '.', ',')}}%</span>
                                             @endif
                                             <span class="small-chart-container">
                                                 <div class="small-chart small-live-chart">
