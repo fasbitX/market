@@ -122,6 +122,7 @@ Route::get('/sign_up',function(){
 
 //Route::get('/','DashboardController@index');
 Route::get('/','CryptoController@index');
+Route::GET('/dbData', 'CryptoController@dbData');
 Route::GET('/coin/{coin}', 'CryptoController@singleCoin');
 Route::get('/get-data','DashboardController@get_data');
 Route::post('/add_user','LoginController@sign_up');

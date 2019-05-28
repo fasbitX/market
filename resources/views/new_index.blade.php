@@ -66,8 +66,8 @@
                                         </td>
                                         <td class="clickable-coin-td">
                                             <div class="tbl-currency">
-                                                <a href="/coin/{{$item->symbol}}">{{$item->name}}</a>
-                                                <span class="tbl-coin-abbrev">[{{$item->symbol}}]</span>
+                                                <a id="name" href="/coin/{{$item->symbol}}">{{$item->name}}</a>
+                                                <span id="symbol" class="tbl-coin-abbrev">[{{$item->symbol}}]</span>
                                             </div>
                                             <div class="d-lg-none tbl-mob-info smaller">
                                                 <span class="mob-info-title">Mkt Cap:&nbsp;</span>
@@ -77,11 +77,11 @@
                                             </div>
                                         </td>
                                         <td class="clickable-coin-td">
-                                            <span class="tbl-price avgprice-859 price">{{$item->f_price}}</span>
-                                            <span class="tbl-price small price avgprice-145-859 dimmed">{{$item->btc_price}}</span>
+                                            <span id="price" class="tbl-price avgprice-859 price">{{$item->f_price}}</span>
+                                            <span id="btc_price" class="tbl-price small price avgprice-145-859 dimmed">{{$item->btc_price}}</span>
                                         </td>
                                         <td class="d-none d-lg-table-cell clickable-coin-td">
-                                            <span class="tbl-price price dimmed marketcap-859" data="{{$item->market_cap}}">{{$item->f_market_cap}}</span>
+                                            <span id="market_cap" class="tbl-price price dimmed marketcap-859" data="{{$item->market_cap}}">{{$item->f_market_cap}}</span>
                                         </td>
                                         <td class="d-none d-lg-table-cell clickable-coin-td">
                                             <span class="tbl-price price dimmed volume-859" data="{{$item->volume_24h}}">{{$item->f_volume_24h}}</span>

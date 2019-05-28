@@ -17,8 +17,14 @@ class CryptoController extends Controller
         $ads1 = DB::table('ads')->where('id',7)->first();
         $meta_description = DB::table('settings')->where('name','meta_description')->first();
         $meta_keyword = DB::table('settings')->where('name','meta_keyword')->first();
-        
+
         return view('new_index',['data'=>$data,'ads'=>$ads,'ads1'=>$ads1,'title'=>$title,'meta_description'=>$meta_description,'meta_keyword'=>$meta_keyword]);
+    }
+
+    public function dbData(){
+        $data = Coin::Where('status','=',1)->orderBy('rank', 'ASC')->get();
+        //var_dump($data->toArray()); //die();
+        return $data->toArray();
     }
 
     public function singleCoin($name){

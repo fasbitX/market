@@ -1,6 +1,4 @@
-
 Highcharts.SparkLine = function (a, b) {
-    // console.log(b.series[0].color);
      options = b,
      defaultOptions = {
       
@@ -18,12 +16,9 @@ Highcharts.SparkLine = function (a, b) {
                  overflow: 'visible'
              },
 
-
              skipClone: true
          }, 
-
-     
-         
+                  
          title: {
              text: ''
          },
@@ -60,9 +55,6 @@ Highcharts.SparkLine = function (a, b) {
              enabled: false
          },
          tooltip: {
-            
-              
-             
              hideDelay: 0,
              outside: true,
              shared: true,
@@ -132,6 +124,7 @@ Highcharts.SparkLine = function (a, b) {
 
 $tr_coin = $('tr[coin_id]');
 len = $tr_coin.length;
+//console.log($tr_coin + " " + len);
  
  
 for ( let i = 0; i < len; i += 1) {
@@ -140,10 +133,9 @@ for ( let i = 0; i < len; i += 1) {
      let $tr_i = $($tr_coin[i]);
      let symbol_coin = $tr_i.attr('coin_href').substring(6);
      $.getJSON('https://min-api.cryptocompare.com/data/histohour?fsym='+symbol_coin+'&tsym=USD&limit=24', function (data) {
-
+         //console.log(symbol_coin);
          $td = $tr_i.find('#highcharts-q6qp1d2-0');
          sign = $tr_i.find('span.price.up').text();
-
          
          if(sign){
              line_color = '#26da71';
@@ -156,11 +148,12 @@ for ( let i = 0; i < len; i += 1) {
          data.Data.forEach(item => {
             price.push([(item.time*1000),item.close]);
          });
-     
+         
          
          $td.highcharts('SparkLine', {
              
              series: [{
+                
                  type: 'area',
                  data: price,
                  color: line_color,//'#FF0000', //#00B600
@@ -175,9 +168,8 @@ for ( let i = 0; i < len; i += 1) {
          
                  //headerFormat: '<span style="font-size: 10px">{point.x}:</span><br/>',
                
-                pointFormat: '<b>{point.y}</b> $'
-             }
- 
+                pointFormat: '<b>'+symbol_coin+' {point.y}</b> $'
+             }, 
          });
 
      
@@ -185,3 +177,45 @@ for ( let i = 0; i < len; i += 1) {
  });
 
 }
+
+setInterval(function () {
+    $tr_coin = $('tr[coin_id]');
+    len = $tr_coin.length;
+    console.log($tr_coin + " " + len);
+    
+    
+    
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        method: 'GET',
+        url: '/dbData',
+        success: function(response) {
+            for (let index = 0; index < response.length; index++) {
+               for ( let i = 0; i < len; i += 1) {
+                    let $tr_i = $($tr_coin[i]);
+                    if(response[index].name == $tr_i.find('#name').text()){
+                        price = $tr_i.find('#price').text(response[index].f_price);
+                        btc_price = $tr_i.find('#btc_price').text(response[index].btc_price);
+                        market_cap = $tr_i.find('#market_cap').text(response[index].f_market_cap);
+                        volume = $tr_i.find('span.volume-859').text(response[index].f_volume_24h);
+                        if(response[index].percent_change_24h < 0){
+                            percentage = $tr_i.find('#p_down').text(response[index].percent_change_24h.toFixed(2) + "%");
+                        }else{
+                            percentage = $tr_i.find('#p_up').text(response[index].percent_change_24h.toFixed(2) + "%");
+                        }
+                        
+                        //console.log("AJAX UPDATED");
+                    }
+                    
+                }     
+            }
+            //
+        },
+        error: function(){
+            console.log("ERROR");
+        }
+    });
+},(5*1000));
