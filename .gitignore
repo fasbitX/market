@@ -1,5 +1,8 @@
 .htaccess
 .env
+/vendor
+/.idea
+/.vagrant
 storage/framework/sessions/*
 storage/logs/laravel.log
 storage/framework/views/*
