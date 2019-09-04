@@ -34,12 +34,12 @@
       <ul class="navbar-nav ml-auto float-right">
 
       @if(Session::get( 'user_name' ) =="")
-        <!--li class="nav-item">
+        <li class="nav-item">
           <a class="nav-link" href="{{URL('/')}}/sign_in">Sign in</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{URL('/')}}/sign_up">Sign up</a>
-        </li -->
+        </li>
 
       @else
 
