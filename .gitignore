@@ -1,5 +1,6 @@
 .htaccess
 .env
+package.json
 /vendor
 /.idea
 /.vagrant

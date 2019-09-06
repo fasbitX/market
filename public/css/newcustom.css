@@ -5,7 +5,6 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, label{
 /***** HEADER STYLES *****/
 .market{
     padding: 0 30px 0 10px;
-    margin-top: -15px;
     font-size: 13px !important;
 }
 /*#top .navbar-static-top, #top .navbar{
@@ -18,6 +17,17 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, label{
 .menu-front-mobile{
     display: none !important;
 }
+.sort-buttton{
+    width: 400px;
+    height: 40px;
+    background-color: #003B53;
+    border: none;
+    border-radius: 10px;
+    color: #fff; 
+}
+.space-button{
+    margin-left: 20px;
+}
 .navbar-nav .nav-link{
     font-size: 13px !important;
 }
@@ -26,8 +36,28 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, label{
     font-size: initial !important;
 }
 #navbarToggler{
-    margin-left: 65px;
+    margin-left: 0px;
 }
+.principal-menu{
+    margin-bottom: 5px !important; 
+    margin-top: -10px !important;
+}
+.padding-button-sort{
+    padding: 20px;
+}
+.sort-buttton:focus {
+    background-color: #003B53;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    outline: 0px;
+}
+.sort-buttton:hover{
+    background-color: #000B15;
+    border-color: white;
+    border: 1px solid;
+}
+
 
 @media screen and (max-width: 991px){
     .menu-front-desktop{
@@ -667,6 +697,10 @@ footer{
 
 .span-single-coin-2 a:hover{
     text-decoration: none;
+}
+.slogan{
+    font-style: italic;
+    font-size: 15px;
 }
 
 #container-chart{
