@@ -68,7 +68,6 @@ Cryptocompare dashboard
                             <div class="skin_mint skin_size b_t_r"></div>
                             <div class="skin_mint_border skin_shaddow skin_size b_b_r"></div>
                         </div>
-                        <!--</div>-->
                         <div class="skin_btn skinsingle_btn skin_blue b_r height_40 skin_shaddow"
                              onclick="javascript:loadjscssfile('blue_skin.css','css')"></div>
                         <div class="skin_btn skinsingle_btn skin_green b_r height_40 skin_shaddow"

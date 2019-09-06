@@ -20,16 +20,23 @@
 
  @section('content')
 
-     <div class="container">
+    <div class="container">
         @if($ads->status == 1)
             <img class="banner-img" src="{{url('/')}}/public/ad.jpg">
         @endif
-            <div class="row">
+            
+            <div class="row"> 
                 @if($ads1->status == 1)
-                    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 min-add-div" style="display: inline-block;width: 100%;">   
+                    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 min-add-div" style="display: inline-block;width: 100%;"> 
                 @else
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 min-add-div" style="display: inline-block;width: 100%;">   
                 @endif
+            </div>
+            <div class="row padding-button-sort">
+                <div class="col-lg-4" style="display: flex;">
+                    <button class="sort-buttton "> 1st Tier </button>
+                    <button class="sort-buttton space-button"> 2nd Tier </button>
+                </div>  
             </div>
             <div class="dark container">
                 <div class="tab-content">
@@ -94,10 +101,8 @@
                                             @endif
                                             <span class="small-chart-container">
                                                 <div class="small-chart small-live-chart">
-                                                    <div id="highcharts-q6qp1d2-0" class="highcharts-container " style="overflow: hidden; text-align: left;">
-                                                        
-                                                        
-                                                    
+                                                    <div id="highcharts-q6qp1d2-0" class="highcharts-container" style="overflow: hidden; text-align: left;">
+                                                                  
                                                     </div>
                                                 </div>
                                             </span>
@@ -143,9 +148,8 @@ $(document).ready(function(){
 });
 </script>
 <script type="text/javascript" src="{{ URL::asset("public/js/sort_table.js") }}"></script>
-
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script type="text/javascript" src='{{ URL::asset("public/js/chart.1.js") }}'></script>
+<script type="text/javascript" src="{{ URL::asset("public/js/jquery-3.1.1.min.js") }}"></script>
+<script type="text/javascript" src='{{ URL::asset("public/js/highcharts.js") }}' ></script>
+<script type="text/javascript" src='{{ URL::asset("public/js/chart.1.js") }}' ></script>
 <!--<script type="text/javascript" async src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5afec5426d44f1e2"></script>-->
 @endsection

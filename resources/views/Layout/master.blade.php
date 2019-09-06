@@ -70,7 +70,7 @@ z-index: 999999">
 </div>
 
 <!-- global scripts end-->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.js"></script>
+<script type="text/javascript" src="{{ URL::asset("public/js/jquery.fancybox.js") }}"></script>
 <script type="text/javascript">
   $('#example1').data();
   $("a.grouped_elements").fancybox();

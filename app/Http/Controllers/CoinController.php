@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Log;
 use App\Coin;
 use DB;
 class CoinController extends Controller
@@ -126,19 +127,11 @@ class CoinController extends Controller
     public static function cronUpdate(){
 
         Coin::CHUNK(1000, function($coin) {
-
             $symbols = $coin->pluck('symbol')->toArray();
             $symbols_string = implode(',',$symbols);
-            // echo '<pre>';
-            //  var_dump($symbols_string);
-            // echo '</pre>';
-
             $url = 'https://min-api.cryptocompare.com/data/pricemultifull?fsyms='.$symbols_string.'&tsyms=USD,BTC&api_key='.self::API_KEY;
             $data = json_decode( file_get_contents($url), true );
-            
-            foreach($coin as $item){
-             
-    
+            foreach($coin as $key => $item){
                 $item->price = $data['RAW'][$item->symbol]['USD']['PRICE'];
                 $item->f_price = $data['DISPLAY'][$item->symbol]['USD']['PRICE'];      
                 $item->percent_change_24h = round($data['RAW'][$item->symbol]['USD']['CHANGEPCT24HOUR'],2); 
@@ -147,11 +140,13 @@ class CoinController extends Controller
                 $item->market_cap = round($data['RAW'][$item->symbol]['USD']['MKTCAP'],5);
                 $item->f_market_cap = $data['DISPLAY'][$item->symbol]['USD']['MKTCAP'];
                 $item->image_url = "https://www.cryptocompare.com".$data['DISPLAY'][$item->symbol]['USD']['IMAGEURL'];
-             
-                $item->btc_price = $data['DISPLAY'][$item->symbol]['BTC']['PRICE'];
+                if(isset($data['DISPLAY'][$item->symbol]['BTC'])==true){
+                    $item->btc_price = $data['DISPLAY'][$item->symbol]['BTC']['PRICE'];
+                }else{
+                    $item->btc_price = 0;
+                } 
                 
                 $item->save();
-    
             }
 
         });

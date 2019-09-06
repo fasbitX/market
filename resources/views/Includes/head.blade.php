@@ -27,10 +27,14 @@
       <a class="navbar-brand content-image-header" href="{{url('/')}}/">
           <img src="{{$global_logo}}" alt="logo">
           <p><strong>Fasbit</strong></p>
+          <div class="market menu-front-desktop">MARKET WATCH</div>
+      </a>
+      <a class="navbar-brand" href="{{url('/')}}/">
+        <p class="slogan">"Your friend in the crypto-space"</p>
       </a>
    </div>
 
-  <div class="col-6 menu-front-desktop">
+  <div class="col-6 menu-front-desktop p-0">
       <ul class="navbar-nav ml-auto float-right">
 
       @if(Session::get( 'user_name' ) =="")
@@ -62,24 +66,23 @@
 </div>
 
 <div class="container">
-   <div class="collapse navbar-collapse justify-content-md-center" id="navbarToggler">
-    <div class="market menu-front-desktop">MARKET WATCH</div>
-    <ul class="navbar-nav mr-auto" style="margin-bottom: 5px !important; margin-top: -10px !important;">
-      <li class="nav-item">
-        <a class="nav-link" href="{{url('/')}}/">Crypto-Currency</a>
-      </li>
-      <!--li class="nav-item">
-        <a class="nav-link" href="{{url('/stock')}}/">STOCKS</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{url('/forex')}}/">FOREX</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{url('/')}}/">TECHNICAL INDICATORS</a>
-      </li-->
-      <!--<li class="nav-item">
-        <a class="nav-link" href="{{url('/')}}/ico">ICO</a>
-      </li>-->
+   <div class="collapse navbar-collapse" id="navbarToggler" style="justify-content: flex-end;">
+      <ul class="navbar-nav principal-menu">
+        <li class="nav-item">
+          <a class="nav-link" href="{{url('/')}}/">Crypto-Currency</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url('/stock')}}/">Stock</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url('/forex')}}/">Futures</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url('/')}}/">Options</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url('/')}}/ico">Buy / Sell Signals</a>
+        </li>
 
       <ul class="navbar-nav menu-front-mobile">
         @if(Session::get( 'user_name' ) =="")

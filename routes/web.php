@@ -120,7 +120,6 @@ Route::get('/sign_up',function(){
 	return view('sign-up',['title'=>$title]);
 });
 
-//Route::get('/','DashboardController@index');
 Route::get('/','CryptoController@index');
 Route::GET('/dbData', 'CryptoController@dbData');
 Route::GET('/coin/{coin}', 'CryptoController@singleCoin');
@@ -140,9 +139,12 @@ Route::get('/getItemAjax/exchange/load','DashboardController@exchange_ajax');
 Route::get('/admin/new_ico', function(){
 		return view('Admin.new_ico');
 });	
-//Route::GET('test', function(){return view('test');});
+
 Route::get('/user/logout','LoginController@logout_user');
 /* Route::GET('/{crypto}','DashboardController@single_coin');*/
 Route::GET('/coin/{crypto}','DashboardController@single_coin_new');
 Route::GET('stock/{symbol}', 'StockController@dataCharts');
 Route::GET('forex/{coins}', 'ForexController@dataCharts');
+
+//route for testing
+// Route::GET('test','CoinController@cronUpdate');
