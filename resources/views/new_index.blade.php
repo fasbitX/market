@@ -45,6 +45,7 @@
                             {{ $data->links() }}
                         </div>
                         <table id="coin-table" class="table coinlist">
+                            @if(Session::get( 'user_name' ) =="")
                             <thead>
                                 <tr>
                                     <th class="tbl-col-sm"></th>
@@ -56,6 +57,24 @@
                                     <th class="text-right">24H PERFORMENCE</th>
                                 </tr>
                             </thead>
+                            @else
+                            <thead>
+                                <tr>
+                                    <th class="tbl-col-sm"></th>
+                                    <th onclick="sortTable(1,this)" ><span class="d-none d-sm-block">Rank<i class="fa fa-fw fa-sort"></i></span></th>
+                                    <th colspan="2">Name</th>
+                                    <th class="text-right">Price</th>
+                                    <th class="d-none d-lg-table-cell text-right" onclick="sortTable(5,this)"> Market cap<i class="fa fa-fw fa-sort"></i> </th>
+                                    <th class="d-none d-lg-table-cell text-right" onclick="sortTable(6,this)"> Volume<i class="fa fa-fw fa-sort"></i></th>
+                                    <th class="text-right">24H PERFORMENCE</th>
+                                    <th class="text-right">7D</th>
+                                    <th class="text-right">14D</th>
+                                    <th class="text-right">30D</th>
+                                    <th class="text-right">90D</th>
+                                </tr>
+                            </thead> 
+
+                            @endif
                             <tbody>
 
                                 @foreach ($data as $index => $item)
