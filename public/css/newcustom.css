@@ -60,7 +60,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, label{
 .slogan {
     font-style: italic;
     font-size: 15px;
-    margin: 13px 15px 12px;
+ 
 }
 
 
@@ -422,7 +422,6 @@ button,html [type="button"]{-webkit-appearance:button;}
 .slogan {
     font-style: italic;
     font-size: 15px;
-    margin: 13px 15px 12px;
 }
 }
 @media (min-width:1200px){
@@ -747,11 +746,6 @@ footer{
 
 .span-single-coin-2 a:hover{
     text-decoration: none;
-}
-.slogan{
-    font-style: italic;
-    font-size: 15px;
-    margin: 13px 15px;
 }
 
 .crypto-currency{
