@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <footer>
-  <div class="top-footer">
+  <div class="top-footer" style="text-align: left;">
     <div class="container">
       <i type="light" class="fa fa-exclamation-triangle text-lg text-danger mr-1"></i>
       <span class="disclaimer"><a class="text-danger text-xs underline" href="{{URL('/')}}/disclaimer">Read the Disclaimer:</a></span>
