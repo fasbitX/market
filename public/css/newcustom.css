@@ -76,11 +76,38 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, label{
     .navbar-nav .nav-link{
         font-size: initial !important;
     }
+    .sort-buttton{
+        width: 330px;
+        height: 40px;
+        background-color: #003B53;
+        border: none;
+        border-radius: 10px;
+        color: #fff; 
+    }
+    .slogan {
+        font-style: italic;
+        font-size: 15px;
+        margin: 13px 15px 12px;
+    }
 }
 @media screen and (max-width: 420px){
     .content-image-header p{
         font-size: 18px;
     }
+    .sort-buttton{
+        width: 170px;
+        height: 40px;
+        background-color: #003B53;
+        border: none;
+        border-radius: 10px;
+        color: #fff; 
+    }
+    .slogan {
+        font-style: italic;
+        font-size: 15px;
+        margin: 13px 15px 12px;
+    }
+
 }
 /*************************/
 .home-table .table td{
@@ -206,6 +233,19 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, label{
     }
     .ico-mobile-display{
         display: block;
+    }
+    .sort-buttton{
+        width: 330px;
+        height: 40px;
+        background-color: #003B53;
+        border: none;
+        border-radius: 10px;
+        color: #fff; 
+    }
+    .slogan {
+        font-style: italic;
+        font-size: 15px;
+        margin: 13px 15px 12px;
     }
 }
 
@@ -374,6 +414,11 @@ button,html [type="button"]{-webkit-appearance:button;}
 }
 @media (min-width:992px){
 .container{max-width:960px;}
+.slogan {
+    font-style: italic;
+    font-size: 15px;
+    margin: 13px 15px 12px;
+}
 }
 @media (min-width:1200px){
 .container{max-width:1140px;}
@@ -751,6 +796,19 @@ th[onClick] {
     .text-span-single-coin{
         text-align: center;
         margin-bottom: 30px;
+    }
+    .sort-buttton{
+        width: 240px;
+        height: 40px;
+        background-color: #003B53;
+        border: none;
+        border-radius: 10px;
+        color: #fff; 
+    }
+    .slogan {
+        font-style: italic;
+        font-size: 15px;
+        margin: 13px 15px 12px;
     }
 }
 
