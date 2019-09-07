@@ -19,10 +19,13 @@
               <h3 class="text-white">Fasbit Market Watch</h3>
           </div>
           <div class="text-xs text-muted text-white">
-            <span class="text-white">Fasbit Market Watch aims to collect all the data required to quantitatively and qualitatively rank the potential of an altcoin. We plan to benchmark the coins based on our algorithm to determine how valuable a coin is compared to its peers.</span></div>
+            <span class="text-white">Fasbit Market Watch collects all of the data required to 
+              quantitatively and qualitatively rank currencies and securities listed on this site. 
+              We benchmark and rank these instruments based on comparisons to other instruments of 
+              like-kind and quality.</span></div>
           </div>
           
-          <div class="col-12 col-lg-5 my-2">
+          <div class="col-12 col-lg-5 my-2" style="display: none;">
             <div class="font-semibold text-sm mb-3">
               <h3 class="text-white">Donations</h3>
             </div>
@@ -59,7 +62,7 @@
           </div>
 
 
-          <div class="col-12 col-lg-3 my-2 text"> 
+          <div class="col-12 col-lg-3 my-2 text" style="display: none;"> 
             <div class="font-semibold text-sm mb-3">
               <h3 class="text-white">Follow Us</h3>
             </div>

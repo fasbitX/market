@@ -129,9 +129,13 @@ class CoinController extends Controller
         Coin::CHUNK(1000, function($coin) {
             $symbols = $coin->pluck('symbol')->toArray();
             $symbols_string = implode(',',$symbols);
+           
             $url = 'https://min-api.cryptocompare.com/data/pricemultifull?fsyms='.$symbols_string.'&tsyms=USD,BTC&api_key='.self::API_KEY;
+            
             $data = json_decode( file_get_contents($url), true );
+           
             foreach($coin as $key => $item){
+
                 $item->price = $data['RAW'][$item->symbol]['USD']['PRICE'];
                 $item->f_price = $data['DISPLAY'][$item->symbol]['USD']['PRICE'];      
                 $item->percent_change_24h = round($data['RAW'][$item->symbol]['USD']['CHANGEPCT24HOUR'],2); 

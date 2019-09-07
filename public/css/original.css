@@ -167,13 +167,6 @@ button,
     cursor: pointer;
 }
 
-
-
-
-
-
-
-
 /*=================== End of different card styles=============*/
 
 
@@ -2504,7 +2497,7 @@ footer h3 {
     background-color: #3f3f3f;
     padding: 20px 0px;
     font-size: 12px;
-    text-align: center;
+    text-align: left;
 }
 
 .bottomfooter {
