@@ -119,59 +119,98 @@ Highcharts.SparkLine = function (a, b) {
     
 };
 
+let $tr_coin = $('tr[coin_id]');
+let len = $tr_coin.length;
+let array_symbols_fail = []; 
 
+function get_url(){
+    let arrUrl = [];
+    for ( let i = 0; i < len; i += 1) {       
+        let $tr_i = $($tr_coin[i]);
+        let symbol_coin = $tr_i.attr('coin_href').substring(6);    
+        arrUrl.push(symbol_coin);
+    }
+    return arrUrl;
+}
 
-
-$tr_coin = $('tr[coin_id]');
-len = $tr_coin.length;
-//console.log($tr_coin + " " + len);
- 
- 
-for ( let i = 0; i < len; i += 1) {  
-      
-     let $tr_i = $($tr_coin[i]);
-     let symbol_coin = $tr_i.attr('coin_href').substring(6);
-    
-     setInterval(function (){
-        $.getJSON('https://min-api.cryptocompare.com/data/histohour?fsym='+symbol_coin+'&tsym=USD&limit=20', function (data) {
-            //console.log(symbol_coin);
-            $td = $tr_i.find('#highcharts-q6qp1d2-0');
-            sign = $tr_i.find('span.price.up').text();
-            
+function renderGraph(price,$td, symbol_coin, line_color){
+    $td.highcharts('SparkLine', {
+        series: [{
+            type: 'area',
+            data: price,
+            color: line_color,//'#FF0000', //#00B600
+            marker: {
+                enabled: false
+            }
+        }],
+        tooltip: {
+            pointFormat: '<b>'+symbol_coin+' {point.y}</b> $'
+        }, 
+    });
+}
+get_url().forEach(function(symbol_coin, i){
+    let $tr_i = $($tr_coin[i]);
+    let $td = $tr_i.find('#highcharts-q6qp1d2-0');
+    setTimeout(() => {
+        $.getJSON('https://min-api.cryptocompare.com/data/histohour?fsym='+symbol_coin+'&tsym=USD&limit=20', function(data) {
+            let price = [];    
+            // let symbol_coin = $tr_i.attr('coin_href').substring(6);
+            console.log(data);
+            data.Data.forEach(item => {
+                price.push([(item.time*1000),item.close]);
+            });
+            console.log($td);
+            sign = $tr_i.find('span.price.up').text();            
             if(sign){
                 line_color = '#26da71';
             }
             else {
                 line_color = '#FF0000';
             }
-            var price = [];
-           
-            if(data.Data.length !== 0){
-               console.log(symbol_coin);
-               data.Data.forEach(item => {
-                   price.push([(item.time*1000),item.close]);
-                });
-            }else{
-                console.log(symbol_coin);
-            }
-            
-               $td.highcharts('SparkLine', {
-                   series: [{
-                       type: 'area',
-                       data: price,
-                       color: line_color,//'#FF0000', //#00B600
-                       marker: {
-                           enabled: false
-                       }
-                   }],
-                   tooltip: {
-                       //headerFormat: '<span style="font-size: 10px">{point.x}:</span><br/>',
-                       pointFormat: '<b>'+symbol_coin+' {point.y}</b> $'
-                   }, 
-               });
-           });
-     },5000);   
-}
+            renderGraph(price, $td, symbol_coin,line_color);
+        });
+    }, 500 * (i));
+});
+// for ( let i = 0; i < len; i += 1) {        
+//      let $tr_i = $($tr_coin[i]);
+//      let symbol_coin = $tr_i.attr('coin_href').substring(6);    
+//      setInterval(function (){
+//         $.getJSON('https://min-api.cryptocompare.com/data/histohour?fsym='+symbol_coin+'&tsym=USD&limit=20', function (data) {
+//             //console.log(symbol_coin);
+//             $td = $tr_i.find('#highcharts-q6qp1d2-0');
+//             sign = $tr_i.find('span.price.up').text();            
+//             if(sign){
+//                 line_color = '#26da71';
+//             }
+//             else {
+//                 line_color = '#FF0000';
+//             }
+//             var price = [];           
+//             if(data.Data.length !== 0){
+//                console.log(symbol_coin);
+//                data.Data.forEach(item => {
+//                    price.push([(item.time*1000),item.close]);
+//                 });
+//             }else{
+//                 console.log(symbol_coin);
+//             }           
+//                $td.highcharts('SparkLine', {
+//                    series: [{
+//                        type: 'area',
+//                        data: price,
+//                        color: line_color,//'#FF0000', //#00B600
+//                        marker: {
+//                            enabled: false
+//                        }
+//                    }],
+//                    tooltip: {
+//                        //headerFormat: '<span style="font-size: 10px">{point.x}:</span><br/>',
+//                        pointFormat: '<b>'+symbol_coin+' {point.y}</b> $'
+//                    }, 
+//                });
+//            });
+//      },5000);   
+// }
 
 setInterval(function () {
     $tr_coin = $('tr[coin_id]');
