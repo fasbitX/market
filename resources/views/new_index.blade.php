@@ -9,9 +9,7 @@
 @section('meta')
 
 <meta name="title" content=" Cryptocurrency Price,Volume, Traded Exchanges, Market Capital, ICO Reviews and Bitcoin News">
-<!-- <meta name="description" content="All Live Prices of Cryptocurrency, Volume, Charts, Market capitalisation, ICO Reviews, News present in one place. With Forum and community discussion, advice">
-<meta name="keywords" content="Cryptocurrency Price,Cryptocurrency Trade volume, Cryptocurrency compare,Cryptocurrency News, ICO review">
- -->
+
  <?php echo $meta_description->value; ?>
  <?php echo $meta_keyword->value; ?>
 
@@ -33,7 +31,7 @@
                 @endif
             </div>
             <div class="row padding-button-sort">
-                <div class="col-lg-4" style="display: flex;">
+                <div class="col-lg-4 d-flex">
                     <a href="https://fasbit.com?page=1"  class="sort-buttton " > 1st Tier </a>
                     <a href="https://fasbit.com?page=2"  class="sort-buttton space-button" >2nd Tier </a> 
                 </div>  
@@ -130,9 +128,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <div class="pull-right mt-4">
-                            {{ $data->links() }}
-                        </div>
+                       
                     </div>
                 </div>
             </div>
