@@ -155,11 +155,11 @@ get_url().forEach(function(symbol_coin, i){
         $.getJSON('https://min-api.cryptocompare.com/data/histohour?fsym='+symbol_coin+'&tsym=USD&limit=20', function(data) {
             let price = [];    
             // let symbol_coin = $tr_i.attr('coin_href').substring(6);
-            console.log(data);
+            // console.log(data);
             data.Data.forEach(item => {
                 price.push([(item.time*1000),item.close]);
             });
-            console.log($td);
+            // console.log($td);
             sign = $tr_i.find('span.price.up').text();            
             if(sign){
                 line_color = '#26da71';
