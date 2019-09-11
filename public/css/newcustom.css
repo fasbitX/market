@@ -24,6 +24,8 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, label{
     border: none;
     border-radius: 10px;
     color: #fff; 
+    text-align: center;
+    padding: 5px;
 }
 .space-button{
     margin-left: 20px;
@@ -51,11 +53,15 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, label{
     border-radius: 10px;
     color: #fff;
     outline: 0px;
+    text-align: center;
+    padding: 5px;
 }
 .sort-buttton:hover{
     background-color: #000B15;
     border-color: white;
     border: 1px solid;
+    text-align: center;
+    padding: 5px;
 }
 .slogan {
     font-style: italic;
@@ -88,6 +94,8 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, label{
         border: none;
         border-radius: 10px;
         color: #fff; 
+        text-align: center;
+        padding: 5px;
     }
     .slogan {
         font-style: italic;
@@ -106,6 +114,8 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, label{
         border: none;
         border-radius: 10px;
         color: #fff; 
+        text-align: center;
+        padding: 5px;
     }
     .slogan {
         font-style: italic;
@@ -246,6 +256,8 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, label{
         border: none;
         border-radius: 10px;
         color: #fff; 
+        text-align: center;
+        padding: 5px;
     }
     .slogan {
     font-style: italic;
@@ -829,6 +841,8 @@ th[onClick] {
         border: none;
         border-radius: 10px;
         color: #fff; 
+        text-align: center;
+        padding: 5px;
     }
     .slogan {
         font-style: italic;

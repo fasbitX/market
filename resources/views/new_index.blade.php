@@ -34,16 +34,16 @@
             </div>
             <div class="row padding-button-sort">
                 <div class="col-lg-4" style="display: flex;">
-                    <button class="sort-buttton "> 1st Tier </button>
-                    <button class="sort-buttton space-button"> 2nd Tier </button>
+                    <a href="https://fasbit.com?page=1"  class="sort-buttton " > 1st Tier </a>
+                    <a href="https://fasbit.com?page=2"  class="sort-buttton space-button" >2nd Tier </a> 
                 </div>  
             </div>
             <div class="dark container">
                 <div class="tab-content">
                     <div class="tab-pane active" id="top" role="tabpanel">
-                        <div class="pull-right mb-1">
+                        {{-- <div class="pull-right mb-1">
                             {{ $data->links() }}
-                        </div>
+                        </div> --}}
                         <table id="coin-table" class="table coinlist">
                             @if(Session::get( 'user_name' ) =="")
                             <thead>
