@@ -69,20 +69,24 @@
    <div class="collapse navbar-collapse" id="navbarToggler">
       <ul class="navbar-nav principal-menu">
         <li class="nav-item">
-          <a class="nav-link" href="{{url('/')}}/ico">Buy / Sell Signals</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{url('/stock')}}/">Stock</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{url('/forex')}}/">Futures</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{url('/')}}/">Options</a>
-        </li>
-        <li class="nav-item">
           <a class="crypto-currency" href="{{url('/')}}/">Crypto-Currency</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Stock</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Forex</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Options</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Futures</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Buy / Sell Signals</a>
+        </li>
+       
 
       <ul class="navbar-nav menu-front-mobile">
         @if(Session::get( 'user_name' ) =="")

@@ -169,7 +169,7 @@ get_url().forEach(function(symbol_coin, i){
             }
             renderGraph(price, $td, symbol_coin,line_color);
         });
-    }, 500 * (i));
+    }, 550 * (i));
 });
 // for ( let i = 0; i < len; i += 1) {        
 //      let $tr_i = $($tr_coin[i]);
