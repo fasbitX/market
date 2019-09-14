@@ -249,5 +249,108 @@ class CoinController extends Controller
 
     }
 
+    public static function newAPI(){
+        //API key for www.alphavantage.co
+        $APIKEYA = "GS853EHQT1R8ET7J";
+        ///API key for www.nomics.com
+        $APIKEYN = "e612f7b0f124b709451a0ccb0e29752b";
+        // $url_alpha = "https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=ETH&to_currency=USD&apikey=demo".$APIKEYA;
+        $band = 1;
+        $symbols_string = "";
+        $currencies = "";
+        // $data_alpha = json_decode( file_get_contents($url_alpha), true );
+        
+        // echo date("Y-m-d H:i:s");
+        // die();
+        // $testurl = "https://api.nomics.com/v1/volume/history?key=".$APIKEYN."&start=2019-09-03T20:40:32&end=2019-09-10T20:40:32";
+        // $data_test = json_decode( file_get_contents($testurl), true );
+        // var_dump($data_test[2914]);
+        // var_dump($data_test[2915]);
+        // var_dump($data_test[2916]);
+        // die();
+
+        // //Open the file.
+        // $fileHandle = fopen("digital_currency_list.csv", "r");  
+        // //Loop through the CSV rows.
+        // while (($row = fgetcsv($fileHandle, 0, ",")) !== FALSE) {
+        //     if($band > 3 ){
+        //         $symbols_string .= $row[0].",";
+        //     }
+        //    $band += 1;
+        // }
+        // Read File
+
+        $jsonString = file_get_contents(base_path('api-names.json'));
+        $data = json_decode($jsonString, true);
+        foreach($data as $item){
+            $symbols_string .= $item['name'].",";
+        }
+        $url_nomics = "https://api.nomics.com/v1/currencies/ticker?key=".$APIKEYN."&ids=".$symbols_string."&interval=1d,7d,30d&convert=USD";
+        $currencies = json_decode( file_get_contents($url_nomics), true );
+        foreach ($currencies as $key => $currency ){  
+            $verify = Coin::where('symbol','=',$currency['currency'])->first();
+            if(!$verify){
+                $coin = new Coin();
+                $coin->rank = $currency['rank'];
+                $coin->symbol =$currency['symbol'];
+                $coin->name = $currency['name'];;
+                $coin->price = round($currency['price'],2);
+
+                $coin->percent_change_24h = isset($currency['1d']['price_change_pct']) ? (double)round($currency['1d']['price_change_pct'],2) : 0;
+                $coin->volume_24h =  isset($currency['1d']['volume'])  ? (double)round($currency['1d']['volume'],2) : 0;
+               
+                $coin->percent_change7d = isset($currency['7d']['price_change_pct']) ? (double)round($currency['7d']['price_change_pct'],2) : 0;
+                $coin->volume_7d  =  isset($currency['7d']['volume'])  ? (double)round($currency['7d']['volume'],2) : 0;
+                
+                $coin->percent_change14d = isset($currency['14d']['price_change_pct']) ? (double)round($currency['14d']['price_change_pct'],2) : 0;
+                $coin->volume_14d =  isset($currency['14d']['volume'])  ? (double)round($currency['14d']['volume'],2) : 0;
+                
+                $coin->percent_change30d = isset($currency['30d']['price_change_pct']) ? (double)round($currency['30d']['price_change_pct'],2) : 0;
+                $coin->volume_30d =  isset($currency['30d']['volume'])  ? (double)round($currency['30d']['volume'],2) : 0;
+                
+                $coin->percent_change90d = isset($currency['90d']['price_change_pct']) ? (double)round($currency['90d']['price_change_pct'],2) : 0;
+                $coin->volume_90d =  isset($currency['90d']['volume'])  ? (double)round($currency['90d']['volume'],2) : 0;
+                      
+                $coin->market_cap = round($currency['market_cap']);
+                $coin->image_url = isset($currency['logo_url']) ? $currency['logo_url'] : " ";
+                $coin->total_supply = isset($currency['max_supply']) ? $currency['max_supply'] : " ";;
+                // $coin->btc_price = 0;
+                $url_general = "https://api.nomics.com/v1/currencies?key=".$APIKEYN."&ids=".$currency['symbol']."&attributes=website_url,description";
+                $data_2 = json_decode( file_get_contents($url_general), true );
+                //save general info  
+                if(isset($data_2[0])){
+                    $coin->description = $data_2[0]['description'];
+                    $coin->website = $data_2[0]['website_url'];
+                }else{
+                    $coin->description = "Not Available";
+                    $coin->website = "#";
+                }
+                sleep(50);
+                $url_info_crypto = 'https://min-api.cryptocompare.com/data/coin/generalinfo?fsyms='.$currency['symbol'].'&tsym=XMR';
+                $dataCrypto = json_decode( file_get_contents($url_info_crypto), true );
+             
+                if(isset($dataCrypto['Data'][0])){
+                    $coin->id_coin = $dataCrypto['Data'][0]['CoinInfo']['Id'];
+                    $coin->algorithm =$dataCrypto['Data'][0]['CoinInfo']['Algorithm'];
+                    $coin->prooftype = $dataCrypto['Data'][0]['CoinInfo']['ProofType'];
+                }else{
+                    $coin->id_coin = 9999;
+                    $coin->algorithm = "Not Available";
+                    $coin->prooftype = "Not Available";
+                }
+                  
+                $coin->features = "0";
+                $coin->technology = "0";
+                $coin->status = 1;
+                $coin->f_volume_24h = "1";
+                $coin->btc_price = "1";
+                $coin->f_market_cap = "1";
+                $coin->f_price = "1"; 
+                $coin->save();
+                echo "guardo". $key;
+            }     
+        }
+    }
+
     
 }

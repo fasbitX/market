@@ -135,7 +135,6 @@ class AdminController extends BaseController
         $insert_data['kyc'] = $request->kyc;
         $insert_data['images'] = "";
         $insert_data['ico_id'] = $last_id->id;
-        //print_r($insert_data); exit;
         $insert = DB::table('token')->insert($insert_data);
 
         return back()->with('success','New ico added successfully');

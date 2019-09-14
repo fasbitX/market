@@ -291,7 +291,9 @@ class DashboardController extends BaseController
      $volume_24h=$coinData[0]->$temp;
         $ads = DB::table('ads')->where('id',3)->first();
         $ads1 = DB::table('ads')->where('id',10)->first();
-        return view('single-coin')->with('crypto',$id)->with('data',$data->Data)->with('exchange_data',$exchange_data->Data->Exchanges)->with('ads',$ads)
+        return view('single-coin')->with('crypto',$id)->with('data',$data->Data)
+        ->with('exchange_data',$exchange_data->Data->Exchanges)
+        ->with('ads',$ads)
         ->with('ads1',$ads1)
         ->with('markat_cap',$marget_cap)
         ->with('name',$name)
