@@ -26,7 +26,7 @@
                 
                     <div class="price-usd" style="  display: flex;    flex-direction: column;">
                         <span class="font-size-price" style="flex-shrink: 2;">
-                            <span>{{ $data->f_price }}</span>
+                            <span>{{ $data->price }}</span>
                             <span class="text-large">USD</span>
                         </span>
                         <span class="price-btc">
@@ -35,8 +35,6 @@
                         </span>
                     </div>
                     <div class="price-btc" style=" display: flex;flex-direction: column; justify-content: flex-end;    padding-left: 1em;">
-
-    
                         @if($data->percent_change_24h >= 0)
                         <span class="font-size-price price up"style="font-size: 25px;">
                             (<span>{{ $data->percent_change_24h }}</span>%)
@@ -101,7 +99,7 @@
                             <h5 class="data-coin-table-header">Market Cap</h5>
                             <div class="data-coin-table-detail">
                                 <span>
-                                    <span>{{ $data->f_market_cap }}</span>
+                                    <span>{{ $data->market_cap }}</span>
                                 </span>
                             </div>
                         </div>
@@ -110,7 +108,7 @@
                             <h5 class="data-coin-table-header">Volume (24h)</h5>
                             <div class="data-coin-table-detail">
                                 <span>
-                                    <span>{{ $data->f_volume_24h }}</span>
+                                    <span>{{ $data->volume_24h }}</span>
                                 </span>
                             </div>
                         </div>
@@ -138,7 +136,7 @@
                             </div>
                         @endif
 
-                        @if($data->total_supply)
+                        @if($data->total_supply!=0)
                             @if(($data->algorithm && $data->prooftype) || (!$data->algorithm && !$data->prooftype))
                                 <div class="col-lg-12  col-md-12 col-sm-12 col-xs-12 data-coin-table">
                             @else

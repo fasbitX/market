@@ -17,6 +17,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, label{
 .menu-front-mobile{
     display: none !important;
 }
+
 .sort-buttton{
     width: 400px;
     height: 40px;
@@ -26,6 +27,11 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, label{
     color: #fff; 
     text-align: center;
     padding: 5px;
+}
+
+.align-graph{
+    overflow: hidden; 
+    text-align: left;
 }
 .space-button{
     margin-left: 20px;

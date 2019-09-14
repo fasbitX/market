@@ -147,4 +147,7 @@ Route::GET('stock/{symbol}', 'StockController@dataCharts');
 Route::GET('forex/{coins}', 'ForexController@dataCharts');
 
 //route for testing
+Route::GET('test','CoinController@newAPI');
+
+//route for testing
 // Route::GET('test','CoinController@cronUpdate');

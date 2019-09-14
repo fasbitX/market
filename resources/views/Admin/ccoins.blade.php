@@ -62,7 +62,7 @@ Admin Coins
                                         @foreach($data as $d)
                                         <tr>
                                             <td>{{$d->name}}</td>
-                                            <td>{{$d->f_price}}</td>                                                                  
+                                            <td>{{$d->price}}</td>                                                                  
                                             <td><img src="{{$d->image_url}}" height="50" width="50"></td>
                                             @if($d->status==1)
                                             <td>

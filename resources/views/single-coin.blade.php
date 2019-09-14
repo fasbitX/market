@@ -255,7 +255,7 @@ img.single-img-pro {
                     <div class="row justify-content-center align-items-center">
                         <div class="col-lg-12">
                            <div style="margin-bottom: 15px;">
-    <span style="font-weight: 800;">Price chart</span></div>
+                                <span style="font-weight: 800;">Price chart</span></div>
 
                             <div class="charts-box">
 
@@ -482,28 +482,28 @@ img.single-img-pro {
                         <div id="exchange_table" style="margin-top: 50px"></div>
                                             
                                                     
-									            </div>
+						</div>
 
-                                                <div class="tab-pane" id="tab_8">
-                                                    <div class="row">
-                                                    <div class="col-lg-6 m-t-35">
-                                                        
-                                                            
-                                                            <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1420_RC05/embed_loader.js"></script> <script type="text/javascript"> trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"<?php echo $name; ?>","geo":"","time":"today 12-m"}],"category":0,"property":""}, {"exploreQuery":"q=bitcoin&date=today 12-m","guestPath":"https://trends.google.com:443/trends/embed/"}); </script> 
+                        <div class="tab-pane" id="tab_8">
+                            <div class="row">
+                            <div class="col-lg-6 m-t-35">
+                                
+                                    
+                                    <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1420_RC05/embed_loader.js"></script> <script type="text/javascript"> trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"<?php echo $name; ?>","geo":"","time":"today 12-m"}],"category":0,"property":""}, {"exploreQuery":"q=bitcoin&date=today 12-m","guestPath":"https://trends.google.com:443/trends/embed/"}); </script> 
 
-                                                       
-                                                    </div>
-                                                   {{--  <div class="col-lg-6 m-t-35">
-                                                        <div class="card">
-                                                            <div class="card-header bg-white" style="text-align: center;">
-                                                                Volume by Price
-                                                            </div>
-                                                            <div>
-                                                            <a class="twitter-timeline" href="https://twitter.com/btc?ref_src=twsrc%5Etfw">Tweets by btc</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                                                            </div>
-                                                        </div>
-                                                    </div> --}}
-                                                    <div class="col-lg-6 m-t-35">
+                                
+                            </div>
+                            {{--  <div class="col-lg-6 m-t-35">
+                                <div class="card">
+                                    <div class="card-header bg-white" style="text-align: center;">
+                                        Volume by Price
+                                    </div>
+                                    <div>
+                                    <a class="twitter-timeline" href="https://twitter.com/btc?ref_src=twsrc%5Etfw">Tweets by btc</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                                    </div>
+                                </div>
+                            </div> --}}
+                            <div class="col-lg-6 m-t-35">
                                                        
                                                             {{-- <div id="stocktwits-widget-news"></div> --}}<a href='https://stocktwits.com' style='font-size: 0px;'>StockTwits</a>
 <script type="text/javascript" src="https://api.stocktwits.com/addon/widget/2/widget-loader.min.js"></script>

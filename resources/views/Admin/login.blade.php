@@ -29,26 +29,27 @@
     <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/pages/tables.css") }}"/>
     <link type="text/css" rel="stylesheet" href="{{ URL::asset("public/css/pages/form_elements.css") }}"/>
     <link type="text/css" rel="stylesheet" href="#" id="skin_change"/>
+    
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!--End of page level styles-->
 </head>
 <body>
-<div class="preloader" style=" position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 100000;
-  backface-visibility: hidden;
-  background: #ffffff;">
+<div class="preloader" style="position: fixed;
+                            width: 100%;
+                            height: 100%;
+                            top: 0;
+                            left: 0;
+                            z-index: 100000;
+                            backface-visibility: hidden;
+                            background: #ffffff;">
     <div class="preloader_img" style="width: 200px;
-  height: 200px;
-  position: absolute;
-  left: 48%;
-  top: 48%;
-  background-position: center;
-z-index: 999999">
+                                        height: 200px;
+                                        position: absolute;
+                                        left: 48%;
+                                        top: 48%;
+                                        background-position: center;
+                                        z-index: 999999">
         <img src="{{url('/')}}/public/img/loader.gif" style=" width: 40px;" alt="loading...">
     </div>
 </div>
@@ -59,7 +60,7 @@ z-index: 999999">
                 <div class="col-lg-8 push-lg-2 col-md-10 push-md-1 col-sm-12">
                   
                     <div class="bg-white login_content login_border_radius">
-                        <form action="" id="login_validator" method="post" class="login_validator">
+                        <form action="{{ action('AdminController@check_login') }}" id="login_validator" method="post" class="login_validator">
                             <input type="hidden" name="_token" value="{{csrf_token()}}">
                             <div class="form-group">
                                 <label for="email" class="col-form-label"> E-mail</label>
@@ -69,7 +70,6 @@ z-index: 999999">
                                     <input type="text" class="form-control  form-control-md" id="email" name="username" placeholder="E-mail">
                                 </div>
                             </div>
-                            <!--</h3>-->
                             <div class="form-group">
                                 <label for="password" class="col-form-label">Password</label>
                                 <div class="input-group">
