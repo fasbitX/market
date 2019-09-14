@@ -136,8 +136,8 @@ class CoinController extends Controller
            
             foreach($coin as $key => $item){
 
-                $item->price = $data['RAW'][$item->symbol]['USD']['PRICE'];
-                $item->f_price = $data['DISPLAY'][$item->symbol]['USD']['PRICE'];      
+                $item->price = $data['DISPLAY'][$item->symbol]['USD']['PRICE'];
+                $item->f_price =  $data['RAW'][$item->symbol]['USD']['PRICE'];     
                 $item->percent_change_24h = round($data['RAW'][$item->symbol]['USD']['CHANGEPCT24HOUR'],2); 
                 $item->volume_24h = round($data['RAW'][$item->symbol]['USD']['TOTALVOLUME24HTO'],5);
                 $item->f_volume_24h = $data['DISPLAY'][$item->symbol]['USD']['TOTALVOLUME24HTO'];      
