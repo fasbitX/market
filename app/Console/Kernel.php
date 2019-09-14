@@ -32,8 +32,8 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
         //$schedule->command('update:weeklyprices')->weekly();
         //$schedule->command('update:dailyprices')->daily();
-        $schedule->command('coins:update')->everyMinute();
-        $schedule->command('coins:top')->everyFiveMinutes();
+        //$schedule->command('coins:update')->everyMinute();
+        //$schedule->command('coins:top')->everyFiveMinutes();
 
     }
 
