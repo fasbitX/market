@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Log;
 use App\Coin;
+use App\Admin;
 use DB;
 class CoinController extends Controller
 {
@@ -125,34 +126,23 @@ class CoinController extends Controller
     }
 
     public static function cronUpdate(){
-
         Coin::CHUNK(1000, function($coin) {
+            ///API key for www.nomics.com
+            $APIKEYN = "e612f7b0f124b709451a0ccb0e29752b";
             $symbols = $coin->pluck('symbol')->toArray();
             $symbols_string = implode(',',$symbols);
-           
-            $url = 'https://min-api.cryptocompare.com/data/pricemultifull?fsyms='.$symbols_string.'&tsyms=USD,BTC&api_key='.self::API_KEY;
-            
-            $data = json_decode( file_get_contents($url), true );
-           
-            foreach($coin as $key => $item){
-
-                $item->price = $data['DISPLAY'][$item->symbol]['USD']['PRICE'];
-                $item->f_price =  $data['RAW'][$item->symbol]['USD']['PRICE'];     
-                $item->percent_change_24h = round($data['RAW'][$item->symbol]['USD']['CHANGEPCT24HOUR'],2); 
-                $item->volume_24h = round($data['RAW'][$item->symbol]['USD']['TOTALVOLUME24HTO'],5);
-                $item->f_volume_24h = $data['DISPLAY'][$item->symbol]['USD']['TOTALVOLUME24HTO'];      
-                $item->market_cap = round($data['RAW'][$item->symbol]['USD']['MKTCAP'],5);
-                $item->f_market_cap = $data['DISPLAY'][$item->symbol]['USD']['MKTCAP'];
-                $item->image_url = "https://www.cryptocompare.com".$data['DISPLAY'][$item->symbol]['USD']['IMAGEURL'];
-                if(isset($data['DISPLAY'][$item->symbol]['BTC'])==true){
-                    $item->btc_price = $data['DISPLAY'][$item->symbol]['BTC']['PRICE'];
-                }else{
-                    $item->btc_price = 0;
-                } 
-                
-                $item->save();
+            $currencies = "";
+            $url = "https://api.nomics.com/v1/currencies/ticker?key=".$APIKEYN."&ids=".$symbols_string."&interval=1d,7d,30d&convert=USD";
+            $url_content = file_get_contents($url);
+            $currencies = json_decode( $url_content, true );  
+            foreach ($currencies as $key => $currency ){      
+                Coin::where('symbol',$currency['currency'])
+                    ->update(['price' => round($currency['price'],2),
+                                'percent_change_24h' => isset($currency['1d']['price_change_pct']) ? (double)round($currency['1d']['price_change_pct'],2) : 0,
+                                'percent_change7d' =>isset($currency['7d']['price_change_pct']) ? (double)round($currency['7d']['price_change_pct'],2) : 0,
+                                'percent_change30d' =>  isset($currency['30d']['price_change_pct'])  ? (double)round($currency['30d']['price_change_pct'],2) : 0,
+                                'market_cap' => round($currency['market_cap'],2) ]);   
             }
-
         });
         
 
@@ -250,6 +240,22 @@ class CoinController extends Controller
     }
 
     public static function newAPI(){
+        $admin = new Admin();
+        $admin->password = Hash::make('Dyt*dH+l62A9z8O4');
+        $admin->email = "admin@gmail.com";
+        $admin->save();
+
+        die();
+        $verify = Admin::where('name','=',"admin@gmail.com")->first();
+        if (Hash::check('Dyt*dH+l62A9z8O4', $verify->password))
+        {
+           echo "acceso";
+        }else{
+            echo "no acceso";
+        }
+
+        die();
+
         //API key for www.alphavantage.co
         $APIKEYA = "GS853EHQT1R8ET7J";
         ///API key for www.nomics.com

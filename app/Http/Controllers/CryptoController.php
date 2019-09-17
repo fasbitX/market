@@ -22,7 +22,7 @@ class CryptoController extends Controller
     }
 
     public function dbData(){
-        $data = Coin::Where('status','=',1)->orderBy('rank', 'ASC')->get();
+        $data = Coin::Where('status','=',1)->orderBy('market_cap', 'DESC')->get();
         //var_dump($data->toArray()); //die();
         return $data->toArray();
     }
