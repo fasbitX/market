@@ -32,12 +32,12 @@
             </div>
             <div class="row padding-button-sort">
                 <div class="col-lg-4 d-flex">
-                    <a href="https://fasbit.com?page=1"  class="sort-buttton " > 1st Tier </a>
-                    <a href="https://fasbit.com?page=2"  class="sort-buttton space-button" >2nd Tier </a> 
-                    <a href="https://fasbit.com?page=3"  class="sort-buttton space-button" >3rd Tier </a> 
-                    <a href="https://fasbit.com?page=4"  class="sort-buttton space-button" >4th Tier </a> 
-                    <a href="https://fasbit.com?page=5"  class="sort-buttton space-button" >5th Tier </a> 
-                </div>  
+                    <a href="https://fasbit.com/?page=1"  class="sort-buttton " > 1st Tier </a>
+                    <a href="https://fasbit.com/?page=2"  class="sort-buttton space-button" >2nd Tier </a> 
+                    <a href="https://fasbit.com/?page=3"  class="sort-buttton space-button" >3rd Tier </a> 
+                    <a href="https://fasbit.com/?page=4"  class="sort-buttton space-button" >4th Tier </a> 
+                    <a href="https://fasbit.com/?page=5"  class="sort-buttton space-button" >5th Tier </a> 
+              </div>  
             </div>
             <div class="dark container">
                 <div class="tab-content">
@@ -58,13 +58,18 @@
                                     <th class="text-center">90D</th>
                                 </tr>
                             </thead>
+                            
                             <tbody>
                                 @foreach ($data as $index => $item) 
                                     <tr coin_id="{{$item->id}}" coin_href="/coin/{{$item->symbol}}">
                                         <td class="tbl-col-sm"></td>  
                                         <td class="tbl-col-sm" >
                                             <span class="tbl-rank">
-                                                {{ $index+1 /*$item->rank*/ }}
+                                                @if(app('request')->input('page'))
+                                                   {{ ($index+1)+( (  app('request')->input('page') - 1)*100) /*$item->rank*/ }}
+                                                @else
+                                                {{ ($index+1) /*$item->rank*/ }}
+                                                @endif  
                                             </span>
                                         </td>
                                         <td class="fit clickable-coin-td">
