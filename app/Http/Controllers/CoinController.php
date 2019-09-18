@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Log;
+use Hash;
 use App\Coin;
 use App\Admin;
 use DB;
@@ -240,22 +241,6 @@ class CoinController extends Controller
     }
 
     public static function newAPI(){
-        $admin = new Admin();
-        $admin->password = Hash::make('Dyt*dH+l62A9z8O4');
-        $admin->email = "admin@gmail.com";
-        $admin->save();
-
-        die();
-        $verify = Admin::where('name','=',"admin@gmail.com")->first();
-        if (Hash::check('Dyt*dH+l62A9z8O4', $verify->password))
-        {
-           echo "acceso";
-        }else{
-            echo "no acceso";
-        }
-
-        die();
-
         //API key for www.alphavantage.co
         $APIKEYA = "GS853EHQT1R8ET7J";
         ///API key for www.nomics.com

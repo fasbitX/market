@@ -66,7 +66,6 @@ Route::group(['prefix' => 'admin'] , function() {
 		Route::GET('basic_settings','AdminController@basic_settings');
 		Route::POST('footer-update','DashboardController@footer_update');
 	
-	
 		Route::GET('stocks', 'StockController@indexAdmin');
 		Route::GET('stocks/delete/{id}', 'StockController@deleteStocks');
 		Route::POST('stocks', 'StockController@addStocks');
@@ -75,7 +74,6 @@ Route::group(['prefix' => 'admin'] , function() {
 		Route::GET('forex', 'ForexController@indexForexAdmin');
 		Route::POST('forex/add', 'ForexController@addForex');
 		Route::GET('forex/delete/{id}', 'ForexController@deleteForexes');
-
 
 		Route::POST('ccoins','CoinController@store');
 		Route::GET('ccoins','CoinController@index');

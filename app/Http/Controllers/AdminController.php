@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\LiveData;
 use App\Stock;
+use Hash;
+use App\Admin;
 use DB;
 
 class AdminController extends BaseController
@@ -166,19 +168,16 @@ class AdminController extends BaseController
 
     public static function check_login(Request $request)
     {   
-    	# code...
-    	$check_login = DB::table('admin')
-    					->where('email',$request->username)
-    					->where('password',$request->password)
-    					->first();
-        //var_dump($check_login); die();
-    	if ($check_login == NULL) {
-    		return back()->with('error','Wrong username or password');
-    	} else {
-            $request->session()->put('user_id',$check_login->id); 
-    		return redirect()->route('admin_index');
-    	}
-    	
+        # code...
+        $verify = " ";   
+        if ($verify = Admin::where('email','=',$request->username)->first()){
+            if(Hash::check($request->password, $verify->password)){
+                $request->session()->put('user_id',$verify->id); 
+                return redirect()->route('admin_index');
+            } 
+        }else{
+            return back()->with('error','Wrong username or password');
+        }
     }
 
     public static function coins(Request $request)
