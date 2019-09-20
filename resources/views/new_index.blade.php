@@ -125,7 +125,7 @@
                                         </div>
                                     </td>
                                     <td class="clickable-coin-td">
-                                        <span id="price" class="tbl-price avgprice-859 price">{{$item->price}}</span>
+                                        <span id="price" class="tbl-price avgprice-859 price">${{$item->price}}</span>
                                     </td>
                                     <td class="d-none d-lg-table-cell clickable-coin-td">
                                         <span id="market_cap" class="tbl-price price dimmed marketcap-859" data="{{$item->market_cap}}">{{$item->market_cap}}</span>
