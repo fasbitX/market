@@ -74,9 +74,15 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, label{
     font-size: 15px;
  
 }
+.perc_none{
+  display: block;
+}
 
 
 @media screen and (max-width: 991px){
+    .perc_none{
+        display: none !important;
+    }
     .menu-front-desktop{
         display: none;
     }
@@ -256,7 +262,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, label{
         display: block;
     }
     .sort-buttton{
-        width: 330px;
+        width: 120px;
         height: 40px;
         background-color: #003B53;
         border: none;
@@ -692,6 +698,9 @@ footer{
     margin-top: 50px;
     margin-bottom: 50px;
 }
+.content-buttons-box{
+    display: flex;
+}
 
 .name-details-coin{
     font-size: 30px;
@@ -835,6 +844,9 @@ th[onClick] {
     .prices-details-coin-2{
         padding-left: 40px;
     }
+    .content-buttons-box{
+        display: block;
+    }
     
     .text-span-single-coin{
         text-align: center;
@@ -849,11 +861,12 @@ th[onClick] {
         color: #fff; 
         text-align: center;
         padding: 5px;
+        margin: 30px 0px 0px 20px
     }
     .slogan {
         font-style: italic;
-        font-size: 15px;
-        margin: 13px 15px 12px;
+        font-size: 9px;
+        margin: 15px 15px 12px;
     }
 }
 
