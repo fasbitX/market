@@ -174,8 +174,7 @@
                                         {{-- Graph 
                                         <span class="small-chart-container">
                                             <div class="small-chart small-live-chart">
-                                                <div id="highcharts-q6qp1d2-0" class="highcharts-container align-graph">
-                                                                
+                                                <div id="highcharts-q6qp1d2-0" class="highcharts-container align-graph">               
                                                 </div>
                                             </div>
                                         </span> --}}
