@@ -72,19 +72,19 @@
           <a class="crypto-currency" href="{{url('/')}}/">Crypto-Currency</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Stock</a>
+          <a class="nav-link" style="color: grey;">Stock</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Forex</a>
+          <a class="nav-link" style="color: grey;">Forex</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Options</a>
+          <a class="nav-link" style="color: grey;">Options</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Futures</a>
+          <a class="nav-link" style="color: grey;">Futures</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Buy / Sell Signals</a>
+            <a class="nav-link" style="color: grey;">Buy / Sell Signals</a>
         </li>
        
 
