@@ -22,7 +22,15 @@ class CreateCoinsTable extends Migration
             $table->decimal('price',24,5);
             $table->string('f_price');
             $table->float('percent_change_24h');
+            $table->double('percent_change_7d',8,2);
+            $table->double('percent_change_14d',8,2);
+            $table->double('percent_change_30d',8,2);
+            $table->double('percent_change_90d',8,2);
             $table->decimal('volume_24h',24,5);
+            $table->decimal('volume_7d',24,5);
+            $table->decimal('volume_14d',24,5);
+            $table->decimal('volume_30d',24,5);
+            $table->decimal('volume_90d',24,5);
             $table->string('f_volume_24h');
             $table->decimal('market_cap',24,2);
             $table->string('f_market_cap');
