@@ -7,7 +7,6 @@
         </a>
 
         <div class="float-right">
-
             <div class="btn-group">
                 <div class="user-settings no-bg">
                     <button class="navbar-toggler collapsed" type="button" id="admin-menu-btn">
@@ -15,8 +14,6 @@
                     </button>
                 </div>
             </div>
-
-        </div>
-        
+        </div>        
     </div>
 </nav>
