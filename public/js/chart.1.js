@@ -212,6 +212,19 @@ function renderGraph(price,$td, symbol_coin, line_color){
 //      },5000);   
 // }
 
+function currencyFormat(number) {
+    let num = parseInt(number, 10);
+    return '$' + num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
+function marketFormat(number) {
+    let num = parseInt(number, 10);
+    return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
+function roundFormatQuantity(quantity){
+ let number = parseFloat(quantity);
+ return number.toFixed(2);
+}
+
 setInterval(function () {
     $tr_coin = $('tr[coin_id]');
     len = $tr_coin.length;
@@ -227,34 +240,34 @@ setInterval(function () {
                for ( let i = 0; i < len; i += 1) {
                     let $tr_i = $($tr_coin[i]);
                     if(response[index].name == $tr_i.find('#name').text()){
-                        price = $tr_i.find('#price').text(response[index].price);
+                        price = $tr_i.find('#price').text(currencyFormat(response[index].price));
                         btc_price = $tr_i.find('#btc_price').text(response[index].btc_price);
-                        market_cap = $tr_i.find('#market_cap').text(response[index].market_cap);
-                        volume = $tr_i.find('span.volume-859').text(response[index].volume_24h);
-                        if(response[index].percent_change_24h < 0){
-                            percentage = $tr_i.find('#p_down').text(response[index].percent_change_24h.toFixed(2) + "%");
+                        market_cap = $tr_i.find('#market_cap').text(marketFormat(response[index].market_cap));
+                        volume = $tr_i.find('span.volume-859').text(marketFormat(response[index].volume_24h));
+                        if(response[index].percent_change_24h < 0){    
+                            percentage = $tr_i.find('#p_down').text(roundFormatQuantity(response[index].percent_change_24h*100) + "%");
                         }else{
-                            percentage = $tr_i.find('#p_up').text(response[index].percent_change_24h.toFixed(2) + "%");
+                            percentage = $tr_i.find('#p_up').text(roundFormatQuantity(response[index].percent_change_24h*100) + "%");
                         }
                         if(response[index].percent_change7d < 0){
-                            percentage = $tr_i.find('#p_down_7').text(response[index].percent_change7d.toFixed(2) + "%");
+                            percentage = $tr_i.find('#p_down_7').text(roundFormatQuantity(response[index].percent_change7d*100) + "%");
                         }else{
-                            percentage = $tr_i.find('#p_up_7').text(response[index].percent_change7d.toFixed(2) + "%");
+                            percentage = $tr_i.find('#p_up_7').text(roundFormatQuantity(response[index].percent_change7d*100) + "%");
                         }
                         if(response[index].percent_change14d < 0){
-                            percentage = $tr_i.find('#p_down_14').text(response[index].percent_change14d.toFixed(2) + "%");
+                            percentage = $tr_i.find('#p_down_14').text(roundFormatQuantity(response[index].percent_change14d*100) + "%");
                         }else{
-                            percentage = $tr_i.find('#p_up_14').text(response[index].percent_change14d.toFixed(2) + "%");
+                            percentage = $tr_i.find('#p_up_14').text(roundFormatQuantity(response[index].percent_change14d*100) + "%");
                         }
                         if(response[index].percent_change30d < 0){
-                            percentage = $tr_i.find('#p_down_30').text(response[index].percent_change30d.toFixed(2) + "%");
+                            percentage = $tr_i.find('#p_down_30').text(roundFormatQuantity(response[index].percent_change30d*100) + "%");
                         }else{
-                            percentage = $tr_i.find('#p_up_30').text(response[index].percent_change30d.toFixed(2) + "%");
+                            percentage = $tr_i.find('#p_up_30').text(roundFormatQuantity(response[index].percent_change30d*100) + "%");
                         }
                         if(response[index].percent_change90d < 0){
-                            percentage = $tr_i.find('#p_down_90').text(response[index].percent_change90d.toFixed(2) + "%");
+                            percentage = $tr_i.find('#p_down_90').text(roundFormatQuantity(response[index].percent_change90d*100) + "%");
                         }else{
-                            percentage = $tr_i.find('#p_up_90').text(response[index].percent_change90d.toFixed(2) + "%");
+                            percentage = $tr_i.find('#p_up_90').text(roundFormatQuantity(response[index].percent_change90d*100) + "%");
                         }
                     }                  
                 }     

@@ -530,7 +530,7 @@ a:hover,a>*:hover{color:#074387;}
 .tbl-col-md{width:200px;}
 .tbl-rank{color:#999;font-size:12px;font-weight:600;}
 .tbl-icon{float:left;width:30px;height:30px;}
-.tbl-currency{display:block;margin-top:4px;}
+.tbl-currency{display:block;}
 .tbl-coin-abbrev{color:#999;font-size:12px;font-weight:500;}
 .tbl-price{display:block;text-align:right;white-space:nowrap;}
 .tbl-price.small{color:#999;font-size:11px;}

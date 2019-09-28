@@ -17,12 +17,11 @@ class CreateCoinsHistoryTable extends Migration
             $table->increments('id');
             $table->string('symbol');
             $table->decimal('price',24,5);
-            $table->float('percent_change_1d');
-            $table->double('percent_change_7d',8,2);
-            $table->double('percent_change_30d',8,2);
-            $table->decimal('volume_24h',24,5);
-            $table->decimal('volume_7d',24,5);
-            $table->decimal('volume_30d',24,5);
+            $table->decimal('score_1d',24,5);
+            $table->decimal('score_7d',24,5);
+            $table->decimal('score_14d',24,5);
+            $table->decimal('score_30d',24,5);
+            $table->decimal('score_90d',24,5);
             $table->date("Date");
             $table->timestamps();
         });

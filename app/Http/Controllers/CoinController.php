@@ -9,6 +9,7 @@ use Hash;
 use App\Coin;
 use App\coins_history;
 use DB;
+use Carbon\Carbon;
 class CoinController extends Controller
 {
     /**
@@ -109,10 +110,14 @@ class CoinController extends Controller
         $coin->save();    
         self::reasignRank();
         return redirect('/admin/ccoins');
+        
     }
 
     public static function cronUpdate(){
+        
         Coin::CHUNK(1000, function($coin) {
+            $ninetyDaysAgo = Carbon::now()->subDays(90);
+            $fortyDaysAgo  = Carbon::now()->subDays(14);
             ///API key for www.nomics.com
             $APIKEYN = "e612f7b0f124b709451a0ccb0e29752b";
             $symbols = $coin->pluck('symbol')->toArray();
@@ -121,25 +126,36 @@ class CoinController extends Controller
             $url = "https://api.nomics.com/v1/currencies/ticker?key=".$APIKEYN."&ids=".$symbols_string."&interval=1d,7d,30d&convert=USD";
             $url_content = file_get_contents($url);
             $currencies = json_decode( $url_content, true );  
-            foreach ($currencies as $key => $currency ){      
-                Coin::where('symbol',$currency['currency'])
-                    ->update(['price' => round($currency['price'],2),
-                                'percent_change_24h' => isset($currency['1d']['price_change_pct']) ? (double)round($currency['1d']['price_change_pct'],2) : 0,
-                                'percent_change7d' =>isset($currency['7d']['price_change_pct']) ? (double)round($currency['7d']['price_change_pct'],2) : 0,
-                                'percent_change30d' =>  isset($currency['30d']['price_change_pct'])  ? (double)round($currency['30d']['price_change_pct'],2) : 0,
-                                'market_cap' => round($currency['market_cap'],2) ]);  
+            foreach ($currencies as $key => $currency ){
+                $last14Coin = coins_history::where('symbol',$currency['currency'])
+                              ->where('Date',substr($fortyDaysAgo,0,10))->first(); 
+                $last90Coin = coins_history::where('symbol',$currency['currency'])
+                              ->where('Date',substr($ninetyDaysAgo,0,10))->first();              
                 //save prices and historical data
                 $history = new coins_history();
                 $history->symbol = $currency['currency'];
                 $history->price  = round($currency['price'],2);
-                $history->percent_change_1d  = isset($currency['1d']['price_change_pct']) ? (double)round($currency['1d']['price_change_pct'],2) : 0; 
-                $history->percent_change_7d  = isset($currency['7d']['price_change_pct']) ? (double)round($currency['1d']['price_change_pct'],2) : 0; 
-                $history->percent_change_30d = isset($currency['30d']['price_change_pct']) ? (double)round($currency['1d']['price_change_pct'],2) : 0;      
-                $history->volume_24h = isset($currency['1d']['volume_change_pct']) ? (double)round($currency['1d']['volume_change_pct'],2) : 0;
-                $history->volume_7d  = isset($currency['7dd']['volume_change_pct']) ? (double)round($currency['7dd']['volume_change_pct'],2) : 0;;
-                $history->volume_30d = isset($currency['30d']['volume_change_pct']) ? (double)round($currency['30d']['volume_change_pct'],2) : 0;;
-                $history->date       = date('Y-m-d H:i:s');
+                $history->score_1d =isset($currency['1d']['price_change_pct']) ? (double)$currency['1d']['price_change_pct']*1.05 : 0; 
+                $history->score_14d=isset($last14Coin) ? ((round($currency['price'],2)-($last14Coin->price))/($last14Coin->price))*1.2 : 0;
+                $history->score_7d =isset($currency['7d']['price_change_pct']) ? (double)$currency['7d']['price_change_pct']*1.1 : 0; 
+                $history->score_30d=isset($currency['30d']['price_change_pct'])  ? (double)$currency['30d']['price_change_pct']*1.3 : 0;
+                $history->score_90d=isset($last90Coin) ? ((round($currency['price'],2)-($last90Coin->price))/($last90Coin->price))*1.35 : 0;
+                $history->date   = date('Y-m-d H:i:s');
                 $history->save();
+                             
+                Coin::where('symbol',$currency['currency'])
+                        ->update(['price' => round($currency['price'],2),
+                                'percent_change_24h' => isset($currency['1d']['price_change_pct']) ? (double)$currency['1d']['price_change_pct'] : 0,
+                                'percent_change7d' =>isset($currency['7d']['price_change_pct']) ? (double)$currency['7d']['price_change_pct'] : 0,
+                                'percent_change14d'=>isset($last14Coin) ? (round($currency['price'],2)-($last14Coin->price))/($last14Coin->price) : 0,
+                                'percent_change30d'=>isset($currency['30d']['price_change_pct'])  ? (double)$currency['30d']['price_change_pct'] : 0,
+                                'percent_change90d'=>isset($last90Coin) ? (round($currency['price'],2)-($last90Coin->price))/($last90Coin->price) : 0,
+                                'score_1d' =>isset($currency['1d']['price_change_pct']) ? (double)$currency['1d']['price_change_pct']*1.05 : 0,
+                                'score_14d'=>isset($last14Coin) ? ((round($currency['price'],2)-($last14Coin->price))/($last14Coin->price))*1.2 : 0,
+                                'score_7d' =>isset($currency['7d']['price_change_pct']) ? (double)$currency['7d']['price_change_pct']*1.1 : 0, 
+                                'score_30d'=>isset($currency['30d']['price_change_pct'])  ? (double)$currency['30d']['price_change_pct']*1.3 : 0,
+                                'score_90d'=>isset($last90Coin) ? ((round($currency['price'],2)-($last90Coin->price))/($last90Coin->price))*1.35 : 0,
+                                'market_cap' => round($currency['market_cap'],4) ]);  
             }
         });
         
@@ -220,6 +236,23 @@ class CoinController extends Controller
         $band = 1;
         $symbols_string = "";
         $currencies = "";
+        // $url = "https://api.nomics.com/v1/currencies/sparkline?key=".$APIKEYN."&start=2019-06-01T00:00:00Z&end=2019-06-30T00:01:00Z";
+        // $contentUrl = file_get_contents($url);
+        // $JsonResponse = json_decode($contentUrl,true);
+        // foreach($JsonResponse as $band => $currency){   
+        //     if($band > 826){
+        //         foreach($currency['timestamps'] as $key=>$time){    
+        //             $history = new coins_history();
+        //             $history->symbol = $currency['currency'];
+        //             $history->Date   = date('Y-m-d',substr(strtotime($time),0,10));
+        //             $history->price  = $currency['prices'][$key];
+        //             var_dump($currency['prices'][$key]);
+        //             var_dump( $history->Date );
+        //             $history->save(); 
+        //         }
+        //     }    
+        // }
+        // die();
         Coin::CHUNK(1000, function($coin) {
             $APIKEYN = "e612f7b0f124b709451a0ccb0e29752b";
             $symbols = $coin->pluck('symbol')->toArray();
@@ -290,5 +323,5 @@ class CoinController extends Controller
                 }     
             }
         }); 
-    }   
+    }  
 }

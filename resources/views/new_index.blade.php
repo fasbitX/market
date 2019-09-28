@@ -36,7 +36,7 @@
                 <a href="https://fasbit.com/?page=3"  class="sort-buttton space-button" >3rd Tier </a> 
                 <a href="https://fasbit.com/?page=4"  class="sort-buttton space-button" >4th Tier </a> 
                 <a href="https://fasbit.com/?page=5"  class="sort-buttton space-button" >5th Tier </a> 
-            </div>  
+            </div> 
         </div>
         <div class="dark container">
             <div class="tab-content">
@@ -125,19 +125,27 @@
                                         </div>
                                     </td>
                                     <td class="clickable-coin-td">
-                                        <span id="price" class="tbl-price avgprice-859 price">${{$item->price}}</span>
+                                        <span id="price" class="tbl-price avgprice-859 price">${{number_format($item->price,0,".",",")}}</span>
                                     </td>
                                     <td class="d-none d-lg-table-cell clickable-coin-td">
-                                        <span id="market_cap" class="tbl-price price dimmed marketcap-859" data="{{$item->market_cap}}">{{$item->market_cap}}</span>
+                                        <span id="market_cap" class="tbl-price price dimmed marketcap-859" data="{{$item->market_cap}}">{{number_format($item->market_cap,0,".",",")}}</span>
                                     </td>
                                     <td class="d-none d-lg-table-cell clickable-coin-td">
-                                        <span id="market_cap" class="tbl-price price dimmed marketcap-859" data="{{$item->volume_24h}}">{{$item->volume_24h}}</span>
+                                        <span id="market_cap" class="tbl-price price dimmed marketcap-859" data="{{$item->volume_24h}}">{{number_format($item->volume_24h,0,".",",")}}</span>
                                     </td>
-                                    <td class="tbl-col-md change-period clickable-coin-td">
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right">
                                         @if($item->percent_change_24h < 0)
-                                            <span id="p_down" class="tbl-price pr-change delta-859 price down perc_none">{{number_format($item->percent_change_24h, 2, '.', ',')}}%</span>
+                                            <span id="p_down" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change_24h*100 > -10)
+                                                {{substr_replace(number_format($item->percent_change_24h*100,2,".",","),"0",1,0)}}
+                                                @else 
+                                                {{number_format($item->percent_change_24h*100,2,".",",")}}
+                                                @endif %</span>
                                         @else
-                                            <span id="p_up" class="tbl-price pr-change delta-859 price up perc_none">{{number_format($item->percent_change_24h, 2, '.', ',')}}%</span>
+                                            <span id="p_up" class="tbl-price pr-change delta-859 price up perc_none p-0">@if($item->percent_change_24h*100 < 10)
+                                                0{{number_format($item->percent_change_24h*100,2,".",",")}}   
+                                            @else
+                                                {{number_format($item->percent_change_24h*100,2,".",",")}} 
+                                            @endif%</span>
                                         @endif
                                         {{-- Graph
                                         <span class="small-chart-container">
@@ -148,11 +156,19 @@
                                             </div>
                                         </span> --}}
                                     </td>
-                                    <td class="tbl-col-md change-period clickable-coin-td">
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right">
                                         @if($item->percent_change7d < 0)
-                                            <span id="p_down_7" class="tbl-price pr-change delta-859 price down perc_none">{{number_format($item->percent_change7d, 2, '.', ',')}}%</span>
+                                            <span id="p_down_7" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change7d*100 > -10) 
+                                                {{substr_replace(number_format($item->percent_change7d*100,2,".",","),"0",1,0)}}
+                                                @else
+                                                {{number_format($item->percent_change7d*100, 2, '.', ',')}}
+                                                @endif %</span>
                                         @else
-                                            <span id="p_up_7" class="tbl-price pr-change delta-859 price up perc_none">{{number_format($item->percent_change7d, 2, '.', ',')}}%</span>
+                                            <span id="p_up_7" class="tbl-price pr-change delta-859 price up perc_none p-0">@if($item->percent_change7d*100<10)
+                                                0{{number_format($item->percent_change7d*100, 2, '.', ',')}}
+                                                @else 
+                                                {{number_format($item->percent_change7d*100, 2, '.', ',')}}
+                                                @endif %</span>
                                         @endif
                                         {{-- Graph
                                         <span class="small-chart-container">
@@ -163,13 +179,20 @@
                                             </div>
                                         </span> --}}
                                     </td>
-                                    <td class="tbl-col-md change-period clickable-coin-td" >
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right" >
                                         @if($item->percent_change14d < 0)
-                                            <span id="p_up_14" class="tbl-price pr-change delta-859 price down perc_none">--%</span>
-                                            {{-- <span id="p_up_14" class="tbl-price pr-change delta-859 price down perc_none">{{number_format($item->percent_change14d, 2, '.', ',')}}%</span> --}}
+                                             <span id="p_up_14" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change14d*100 > -10) 
+                                                {{substr_replace(number_format($item->percent_change14d*100,2,".",","),"0",1,0)}} 
+                                                @else 
+                                                {{number_format($item->percent_change14d*100, 2, '.', ',')}}
+                                                 @endif
+                                                 %</span>
                                         @else
-                                            <span id="p_up_14" class="tbl-price pr-change delta-859 price up perc_none">--%</span>
-                                            {{-- <span id="p_up_14" class="tbl-price pr-change delta-859 price up perc_none">{{number_format($item->percent_change14d, 2, '.', ',')}}%</span> --}}
+                                            <span id="p_up_14" class="tbl-price pr-change delta-859 price up perc_none p-0">@if ($item->percent_change14d*100 < 10) 
+                                                0{{number_format($item->percent_change14d*100, 2, '.', ',')}}
+                                                @else 
+                                                {{number_format($item->percent_change14d*100, 2, '.', ',')}}
+                                                @endif %</span>
                                         @endif
                                         {{-- Graph 
                                         <span class="small-chart-container">
@@ -179,11 +202,19 @@
                                             </div>
                                         </span> --}}
                                     </td>
-                                    <td class="tbl-col-md change-period clickable-coin-td" >
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right" >
                                         @if($item->percent_change30d < 0)
-                                            <span id="p_down_30" class="tbl-price pr-change delta-859 price down perc_none">{{number_format($item->percent_change30d, 2, '.', ',')}}%</span>    
+                                            <span id="p_down_30" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change30d*100 > -10) 
+                                                {{substr_replace(number_format($item->percent_change30d*100,2,".",","),"0",1,0)}} 
+                                                @else 
+                                                {{number_format($item->percent_change30d*100, 2, '.', ',')}}
+                                                @endif %</span>    
                                         @else
-                                            <span id="p_up_30" class="tbl-price pr-change delta-859 price up perc_none">{{number_format($item->percent_change30d, 2, '.', ',')}}%</span>
+                                            <span id="p_up_30" class="tbl-price pr-change delta-859 price up perc_none p-0"> @if($item->percent_change30d*100 < 10) 
+                                                0{{number_format($item->percent_change30d*100, 2, '.', ',')}}
+                                                @else 
+                                                {{number_format($item->percent_change30d*100, 2, '.', ',')}}
+                                                @endif%</span>
                                         @endif
                                         {{-- Graph 
                                         <span class="small-chart-container">
@@ -194,13 +225,20 @@
                                             </div>
                                         </span> --}}
                                     </td>
-                                    <td class="tbl-col-md change-period clickable-coin-td" >
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right" >
                                         @if($item->percent_change90d < 0)
-                                            {{-- <span id="p_down" class="tbl-price pr-change delta-859 price down perc_none">{{number_format($item->percent_change90d, 2, '.', ',')}}%</span> --}}
-                                            <span id="p_up_90" class="tbl-price pr-change delta-859 price down perc_none">--%</span>
+                                            <span id="p_down" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change90d*100 > -10) 
+                                                {{substr_replace(number_format($item->percent_change90d*100,2,".",","),"0",1,0)}} 
+                                                @else 
+                                                {{number_format($item->percent_change90d*100, 2, '.', ',')}}
+                                                @endif 
+                                                %</span>
                                         @else
-                                            <span id="p_up_90" class="tbl-price pr-change delta-859 price down perc_none">--%</span>
-                                            {{-- <span id="p_up_90" class="tbl-price pr-change delta-859 price up perc_none">{{number_format($item->percent_change90d, 2, '.', ',')}}%</span> --}}
+                                            <span id="p_up_90" class="tbl-price pr-change delta-859 price up perc_none p-0">@if($item->percent_change90d*100 < 10) 
+                                                0{{number_format($item->percent_change90d*100, 2, '.', ',')}}
+                                                @else 
+                                                {{number_format($item->percent_change90d*100, 2, '.', ',')}}
+                                                @endif %</span>
                                         @endif
                                         {{-- Graph 
                                         <span class="small-chart-container">
