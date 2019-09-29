@@ -115,7 +115,7 @@ class CoinController extends Controller
 
     public static function cronUpdate(){
         
-        Coin::CHUNK(1000, function($coin) {
+        Coin::CHUNK(500, function($coin) {
             $ninetyDaysAgo = Carbon::now()->subDays(90);
             $fortyDaysAgo  = Carbon::now()->subDays(14);
             ///API key for www.nomics.com
@@ -136,10 +136,10 @@ class CoinController extends Controller
                 $history->symbol = $currency['currency'];
                 $history->price  = round($currency['price'],2);
                 $history->score_1d =isset($currency['1d']['price_change_pct']) ? (double)$currency['1d']['price_change_pct']*1.05 : 0; 
-                $history->score_14d=isset($last14Coin) ? ((round($currency['price'],2)-($last14Coin->price))/($last14Coin->price))*1.2 : 0;
+                $history->score_14d=isset($last14Coin) ? ((round($currency['price'],4)-($last14Coin->price))/($last14Coin->price))*1.2 : 0;
                 $history->score_7d =isset($currency['7d']['price_change_pct']) ? (double)$currency['7d']['price_change_pct']*1.1 : 0; 
                 $history->score_30d=isset($currency['30d']['price_change_pct'])  ? (double)$currency['30d']['price_change_pct']*1.3 : 0;
-                $history->score_90d=isset($last90Coin) ? ((round($currency['price'],2)-($last90Coin->price))/($last90Coin->price))*1.35 : 0;
+                $history->score_90d=isset($last90Coin) ? ((round($currency['price'],4)-($last90Coin->price))/($last90Coin->price))*1.35 : 0;
                 $history->date   = date('Y-m-d H:i:s');
                 $history->save();
                              
@@ -147,14 +147,14 @@ class CoinController extends Controller
                         ->update(['price' => round($currency['price'],2),
                                 'percent_change_24h' => isset($currency['1d']['price_change_pct']) ? (double)$currency['1d']['price_change_pct'] : 0,
                                 'percent_change7d' =>isset($currency['7d']['price_change_pct']) ? (double)$currency['7d']['price_change_pct'] : 0,
-                                'percent_change14d'=>isset($last14Coin) ? (round($currency['price'],2)-($last14Coin->price))/($last14Coin->price) : 0,
+                                'percent_change14d'=>isset($last14Coin) ? (round($currency['price'],4)-($last14Coin->price))/($last14Coin->price) : 0,
                                 'percent_change30d'=>isset($currency['30d']['price_change_pct'])  ? (double)$currency['30d']['price_change_pct'] : 0,
-                                'percent_change90d'=>isset($last90Coin) ? (round($currency['price'],2)-($last90Coin->price))/($last90Coin->price) : 0,
+                                'percent_change90d'=>isset($last90Coin) ? (round($currency['price'],4)-($last90Coin->price))/($last90Coin->price) : 0,
                                 'score_1d' =>isset($currency['1d']['price_change_pct']) ? (double)$currency['1d']['price_change_pct']*1.05 : 0,
-                                'score_14d'=>isset($last14Coin) ? ((round($currency['price'],2)-($last14Coin->price))/($last14Coin->price))*1.2 : 0,
+                                'score_14d'=>isset($last14Coin) ? ((round($currency['price'],4)-($last14Coin->price))/($last14Coin->price))*1.2 : 0,
                                 'score_7d' =>isset($currency['7d']['price_change_pct']) ? (double)$currency['7d']['price_change_pct']*1.1 : 0, 
                                 'score_30d'=>isset($currency['30d']['price_change_pct'])  ? (double)$currency['30d']['price_change_pct']*1.3 : 0,
-                                'score_90d'=>isset($last90Coin) ? ((round($currency['price'],2)-($last90Coin->price))/($last90Coin->price))*1.35 : 0,
+                                'score_90d'=>isset($last90Coin) ? ((round($currency['price'],4)-($last90Coin->price))/($last90Coin->price))*1.35 : 0,
                                 'market_cap' => round($currency['market_cap'],4) ]);  
             }
         });

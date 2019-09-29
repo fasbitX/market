@@ -31,11 +31,11 @@
         </div>
         <div class="row padding-button-sort">
             <div class="col-lg-4 content-buttons-box">
-                <a href="https://fasbit.com/?page=1"  class="sort-buttton" > 1st Tier </a>
-                <a href="https://fasbit.com/?page=2"  class="sort-buttton space-button" >2nd Tier </a> 
-                <a href="https://fasbit.com/?page=3"  class="sort-buttton space-button" >3rd Tier </a> 
-                <a href="https://fasbit.com/?page=4"  class="sort-buttton space-button" >4th Tier </a> 
-                <a href="https://fasbit.com/?page=5"  class="sort-buttton space-button" >5th Tier </a> 
+                <a href="http://cryptocompare.local?page=1"  class="sort-buttton" > 1st Tier </a>
+                <a href="http://cryptocompare.local/?page=2"  class="sort-buttton space-button" >2nd Tier </a> 
+                <a href="http://cryptocompare.local/?page=3"  class="sort-buttton space-button" >3rd Tier </a> 
+                <a href="http://cryptocompare.local/?page=4"  class="sort-buttton space-button" >4th Tier </a> 
+                <a href="http://cryptocompare.local/?page=5"  class="sort-buttton space-button" >5th Tier </a> 
             </div> 
         </div>
         <div class="dark container">
@@ -67,7 +67,7 @@
                                             @if(app('request')->input('page'))
                                                 {{ ($index+1)+( (  app('request')->input('page') - 1)*100) /*$item->rank*/ }}
                                             @else
-                                            {{ ($index+1) /*$item->rank*/ }}
+                                            {{ ($index+1) }}
                                             @endif  
                                         </span>
                                     </td>
