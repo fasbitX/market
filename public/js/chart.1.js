@@ -222,7 +222,7 @@ function marketFormat(number) {
 }
 function roundFormatQuantity(quantity){
  let number = parseFloat(quantity);
- return number.toFixed(2);
+ return Math.round10(number, -2); 
 }
 
 setInterval(function () {
