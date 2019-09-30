@@ -112,24 +112,33 @@ class CoinController extends Controller
         return redirect('/admin/ccoins');
         
     }
-    public static function saveHistoricalData($currencies){
-        foreach ($currencies as $key => $currency ){
-            $last14Coin = coins_history::where('symbol',$currency['currency'])
-                          ->where('Date',substr(Carbon::now()->subDays(14),0,10))->first(); 
-            $last90Coin = coins_history::where('symbol',$currency['currency'])
-                          ->where('Date',substr(Carbon::now()->subDays(90),0,10))->first();              
-            // save prices and historical data
-            $history = new coins_history();
-            $history->symbol = $currency['currency'];
-            $history->price  = round($currency['price'],8);
-            $history->score_1d =isset($currency['1d']['price_change_pct']) ? (double)$currency['1d']['price_change_pct']*1.05 : 0; 
-            $history->score_14d=isset($last14Coin) ? ((round($currency['price'],4)-($last14Coin->price))/($last14Coin->price))*1.2 : 0;
-            $history->score_7d =isset($currency['7d']['price_change_pct']) ? (double)$currency['7d']['price_change_pct']*1.1 : 0; 
-            $history->score_30d=isset($currency['30d']['price_change_pct'])  ? (double)$currency['30d']['price_change_pct']*1.3 : 0;
-            $history->score_90d=isset($last90Coin) ? ((round($currency['price'],4)-($last90Coin->price))/($last90Coin->price))*1.35 : 0;
-            $history->date   = date('Y-m-d H:i:s');
-            $history->save();
-        }
+    public static function saveHistoricalData(){
+        Coin::CHUNK(500, function($coin) { 
+            $APIKEYN = "e612f7b0f124b709451a0ccb0e29752b";
+            $symbols = $coin->pluck('symbol')->toArray();
+            $symbols_string = implode(',',$symbols);
+            $currencies = "";
+            $url = "https://api.nomics.com/v1/currencies/ticker?key=".$APIKEYN."&ids=".$symbols_string."&interval=1d,7d,30d&convert=USD";
+            $url_content = file_get_contents($url);
+            $currencies = json_decode( $url_content, true );
+            foreach ($currencies as $key => $currency ){
+                $last14Coin = coins_history::where('symbol',$currency['currency'])
+                            ->where('Date',substr(Carbon::now()->subDays(14),0,10))->first(); 
+                $last90Coin = coins_history::where('symbol',$currency['currency'])
+                            ->where('Date',substr(Carbon::now()->subDays(90),0,10))->first();              
+                // save prices and historical data
+                $history = new coins_history();
+                $history->symbol = $currency['currency'];
+                $history->price  = round($currency['price'],8);
+                $history->score_1d =isset($currency['1d']['price_change_pct']) ? (double)$currency['1d']['price_change_pct']*1.05 : 0; 
+                $history->score_14d=isset($last14Coin) ? ((round($currency['price'],4)-($last14Coin->price))/max($last14Coin->price,0.001))*1.2 : 0;
+                $history->score_7d =isset($currency['7d']['price_change_pct']) ? (double)$currency['7d']['price_change_pct']*1.1 : 0; 
+                $history->score_30d=isset($currency['30d']['price_change_pct'])  ? (double)$currency['30d']['price_change_pct']*1.3 : 0;
+                $history->score_90d=isset($last90Coin) ? ((round($currency['price'],4)-($last90Coin->price))/max($last90Coin->price,0.001))*1.35 : 0;
+                $history->date   = date('Y-m-d H:i:s');
+                $history->save();
+            }
+        });
     }
 
     public static function cronUpdate(){
@@ -143,7 +152,6 @@ class CoinController extends Controller
             $url = "https://api.nomics.com/v1/currencies/ticker?key=".$APIKEYN."&ids=".$symbols_string."&interval=1d,7d,30d&convert=USD";
             $url_content = file_get_contents($url);
             $currencies = json_decode( $url_content, true );
-            self::saveHistoricalData($currencies);
 
             foreach ($currencies as $key => $currency ){
                 $last14Coin = coins_history::where('symbol',$currency['currency'])
