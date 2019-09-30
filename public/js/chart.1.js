@@ -213,7 +213,7 @@ function renderGraph(price,$td, symbol_coin, line_color){
 // }
 
 function priceFormat(number){
-    let num = parseInt(number, 10);
+    let num = parseFloat(number, 10);
     return '$' + num.toFixed(8).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
 function currencyFormat(number) {
@@ -225,8 +225,27 @@ function marketFormat(number) {
     return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
 function roundFormatQuantity(quantity){
- let number = parseFloat(quantity);
- return Math.round10(number, -2); 
+    let number = parseFloat(quantity);
+    number = number.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    let string = number.toString();
+    if(number < 10 && number > 0){   
+        string = `0${string}`;
+        return string;
+    }else{
+        if(number > -10 && number < 0){  
+            string =  string.slice(1);
+            string = `-0${string}`;
+            // parseInt(string,10) < 1.10 ? true : false;
+            return string;
+        }else{
+            if(number == 0){
+                string = `-0${string}`;
+                return string; 
+            }
+        }
+    }  
+    //console.log(string);
+    return string; 
 }
 
 setInterval(function () {
