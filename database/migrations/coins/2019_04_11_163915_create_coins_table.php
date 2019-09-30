@@ -19,7 +19,7 @@ class CreateCoinsTable extends Migration
             $table->integer('rank');
             $table->string('symbol');
             $table->string('name');
-            $table->decimal('price',24,5);
+            $table->decimal('price',24,8);
             $table->string('f_price');
             $table->double('percent_change_24h',8,6);
             $table->double('percent_change_7d',8,6);
@@ -31,11 +31,11 @@ class CreateCoinsTable extends Migration
             $table->decimal('volume_14d',24,5);
             $table->decimal('volume_30d',24,5);
             $table->decimal('volume_90d',24,5);
-            $table->decimal('score_1d',24,5);
-            $table->decimal('score_7d',24,5);
-            $table->decimal('score_14d',24,5);
-            $table->decimal('score_30d',24,5);
-            $table->decimal('score_90d',24,5);
+            $table->decimal('score_1d',24,8);
+            $table->decimal('score_7d',24,8);
+            $table->decimal('score_14d',24,8);
+            $table->decimal('score_30d',24,8);
+            $table->decimal('score_90d',24,8);
             $table->string('f_volume_24h');
             $table->decimal('market_cap',24,2);
             $table->string('f_market_cap');

@@ -212,6 +212,10 @@ function renderGraph(price,$td, symbol_coin, line_color){
 //      },5000);   
 // }
 
+function priceFormat(number){
+    let num = parseInt(number, 10);
+    return '$' + num.toFixed(8).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
 function currencyFormat(number) {
     let num = parseInt(number, 10);
     return '$' + num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
@@ -240,7 +244,7 @@ setInterval(function () {
                for ( let i = 0; i < len; i += 1) {
                     let $tr_i = $($tr_coin[i]);
                     if(response[index].name == $tr_i.find('#name').text()){
-                        price = $tr_i.find('#price').text(currencyFormat(response[index].price));
+                        price = $tr_i.find('#price').text(priceFormat(response[index].price));
                         btc_price = $tr_i.find('#btc_price').text(response[index].btc_price);
                         market_cap = $tr_i.find('#market_cap').text(marketFormat(response[index].market_cap));
                         volume = $tr_i.find('span.volume-859').text(marketFormat(response[index].volume_24h));

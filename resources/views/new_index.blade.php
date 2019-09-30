@@ -55,6 +55,7 @@
                                 <th class="d-none d-lg-table-cell text-right">14D</th>
                                 <th class="d-none d-lg-table-cell text-right">30D</th>
                                 <th class="d-none d-lg-table-cell text-right">90D</th>
+                                <th class="d-none d-lg-table-cell text-right" onclick="sortTable(12,this)">Score<i class="fa fa-fw fa-sort"></i></th>
                             </tr>
                         </thead>
                         
@@ -125,7 +126,7 @@
                                         </div>
                                     </td>
                                     <td class="clickable-coin-td">
-                                        <span id="price" class="tbl-price avgprice-859 price">${{number_format($item->price,0,".",",")}}</span>
+                                        <span id="price" class="tbl-price avgprice-859 price">${{number_format($item->price,8,".",",")}}</span>
                                     </td>
                                     <td class="d-none d-lg-table-cell clickable-coin-td">
                                         <span id="market_cap" class="tbl-price price dimmed marketcap-859" data="{{$item->market_cap}}">{{number_format($item->market_cap,0,".",",")}}</span>
@@ -248,6 +249,9 @@
                                                 </div>
                                             </div>
                                         </span> --}}
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right" >
+                                       <span id="p_down" class="tbl-price pr-change delta-859 perc_none p-0"> {{number_format($item->score_1d, 6, '.', ',')}} </span>
                                     </td>
                                 </tr>
                             @endforeach
