@@ -131,10 +131,10 @@ class CoinController extends Controller
                 $history->symbol = $currency['currency'];
                 $history->price  = round($currency['price'],8);
                 $history->score_1d =isset($currency['1d']['price_change_pct']) ? (double)$currency['1d']['price_change_pct']*1.05 : 0; 
-                $history->score_14d=isset($last14Coin) ? ((round($currency['price'],4)-($last14Coin->price))/max($last14Coin->price,0.001))*1.2 : 0;
                 $history->score_7d =isset($currency['7d']['price_change_pct']) ? (double)$currency['7d']['price_change_pct']*1.1 : 0; 
+                $history->score_14d=isset($last14Coin->price) ? ((round($currency['price'],4)-($last14Coin->price))/max($last14Coin->price,0.001))*1.2 : 0;
                 $history->score_30d=isset($currency['30d']['price_change_pct'])  ? (double)$currency['30d']['price_change_pct']*1.3 : 0;
-                $history->score_90d=isset($last90Coin) ? ((round($currency['price'],4)-($last90Coin->price))/max($last90Coin->price,0.001))*1.35 : 0;
+                $history->score_90d=isset($last90Coin->price) ? ((round($currency['price'],4)-($last90Coin->price))/max($last90Coin->price,0.001))*1.35 : 0;
                 $history->date   = date('Y-m-d H:i:s');
                 $history->save();
             }
