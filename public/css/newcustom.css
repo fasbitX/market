@@ -7,6 +7,9 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, label{
     padding: 0 30px 0 10px;
     font-size: 13px !important;
 }
+.text-white{
+    color: white;
+}
 /*#top .navbar-static-top, #top .navbar{
     background: none !important;
 }*/

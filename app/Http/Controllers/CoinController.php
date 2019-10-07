@@ -141,6 +141,127 @@ class CoinController extends Controller
         });
     }
 
+    public static function changePercentDays($symbol,$priceNow,$constNum){
+        switch($constNum){
+            case 1:
+                $lastPrice = coins_history::where('symbol',$symbol)
+                ->where('Date',substr(Carbon::now()->subDays(1),0,10))->first(); 
+                $returnNum = 0;
+                $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.0001);
+                return $returnNum;
+                break;
+            case 2:
+                $lastPrice = coins_history::where('symbol',$symbol)
+                ->where('Date',substr(Carbon::now()->subDays(7),0,10))->first(); 
+                $returnNum = 0;
+                if(isset($lastPrice->price)){
+                    $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.0001);
+                    return $returnNum;
+                }else{
+                    $returnNum = ($priceNow - $priceNow*1.0069) / max($priceNow*1.23,0.0001);
+                    return $returnNum;
+                }
+                break;
+            case 3:
+                $lastPrice = coins_history::where('symbol',$symbol)
+                ->where('Date',substr(Carbon::now()->subDays(14),0,10))->first(); 
+                $returnNum = 0;
+                if(isset($lastPrice->price)){
+                    $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.0001);
+                    return $returnNum;
+                }else{
+                    $returnNum = ($priceNow - $priceNow*1.23) / max($priceNow*1.23,0.0001);
+                    return $returnNum;
+                }
+               
+                break;
+            case 4:
+                $lastPrice = coins_history::where('symbol',$symbol)
+                ->where('Date',substr(Carbon::now()->subDays(30),0,10))->first(); 
+                $returnNum = 0;
+                if(isset($lastPrice->price)){
+                    $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.0001);
+                    return $returnNum;
+                }else{
+                    $returnNum = ($priceNow - $priceNow*1.245) / max($priceNow*1.23,0.0001);
+                    return $returnNum;
+                }
+                break;        
+            case 5:
+                $lastPrice = coins_history::where('symbol',$symbol)
+                ->where('Date',substr(Carbon::now()->subDays(90),0,10))->first(); 
+                $returnNum = 0;
+                if(isset($lastPrice->price)){
+                    $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.0001);
+                    return $returnNum;
+                }else{
+                    $returnNum = ($priceNow - $priceNow*1.35) / max($priceNow*1.23,0.0001);
+                    return $returnNum;
+                }
+                break;
+        }
+    }
+    public static function scoreUpdate($symbol,$priceNow,$constNum){
+        switch($constNum){
+            case 1:
+                $lastPrice = coins_history::where('symbol',$symbol)
+                ->where('Date',substr(Carbon::now()->subDays(1),0,10))->first(); 
+                $returnNum = 0;
+                $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.0001);
+                return $returnNum*1.05;
+                break;
+            case 2:
+                $lastPrice = coins_history::where('symbol',$symbol)
+                ->where('Date',substr(Carbon::now()->subDays(7),0,10))->first(); 
+                $returnNum = 0;
+                if(isset($lastPrice->price)){
+                    $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.0001); 
+                    return $returnNum*1.1;
+                }else{
+                    $returnNum = ($priceNow - $priceNow*1.0069) / max($priceNow*1.23,0.0001);
+                    return $returnNum*1.1;
+                }
+                break;
+            case 3:
+                $lastPrice = coins_history::where('symbol',$symbol)
+                ->where('Date',substr(Carbon::now()->subDays(14),0,10))->first(); 
+                $returnNum = 0;
+                if(isset($lastPrice->price)){
+                    $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.0001);
+                    return $returnNum*1.2;
+                }else{
+                    $returnNum = ($priceNow - $priceNow*1.23) / max($priceNow*1.23,0.0001);
+                    return $returnNum*1.2;
+                }
+               
+                break;
+            case 4:
+                $lastPrice = coins_history::where('symbol',$symbol)
+                ->where('Date',substr(Carbon::now()->subDays(30),0,10))->first(); 
+                $returnNum = 0;
+                if(isset($lastPrice->price)){
+                    $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.0001);
+                    return $returnNum*1.3;
+                }else{
+                    $returnNum = ($priceNow - $priceNow*1.245) / max($priceNow*1.23,0.0001);
+                    return $returnNum*1.3;
+                }
+                break;        
+            case 5:
+                $lastPrice = coins_history::where('symbol',$symbol)
+                ->where('Date',substr(Carbon::now()->subDays(90),0,10))->first(); 
+                $returnNum = 0;
+                if(isset($lastPrice->price)){
+                    $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.0001);
+                    return $returnNum*1.35;
+                }else{
+                    $returnNum = ($priceNow - $priceNow*1.35) / max($priceNow*1.23,0.0001);
+                    return $returnNum*1.35;
+                }
+                break;
+        }
+    }
+
     public static function cronUpdate(){
         
         Coin::CHUNK(500, function($coin) {
@@ -161,16 +282,16 @@ class CoinController extends Controller
                              
                 Coin::where('symbol',$currency['currency'])
                     ->update(['price' => round($currency['price'],8),
-                            'percent_change_24h' => isset($currency['1d']['price_change_pct']) ? (double)$currency['1d']['price_change_pct'] : 0,
-                            'percent_change7d' =>isset($currency['7d']['price_change_pct']) ? (double)$currency['7d']['price_change_pct'] : 0,
-                            'percent_change14d'=>isset($last14Coin) ? (round($currency['price'],4)-($last14Coin->price))/max($last14Coin->price,0.001) : 0,
-                            'percent_change30d'=>isset($currency['30d']['price_change_pct'])  ? (double)$currency['30d']['price_change_pct'] : 0,
-                            'percent_change90d'=>isset($last90Coin) ? (round($currency['price'],4)-($last90Coin->price))/max($last90Coin->price,0.001) : 0,
-                            'score_1d' =>isset($currency['1d']['price_change_pct']) ? (double)$currency['1d']['price_change_pct']*1.05 : 0,
-                            'score_14d'=>isset($last14Coin) ? ((round($currency['price'],8)-($last14Coin->price))/max($last14Coin->price,0.001))*1.2 : 0,
-                            'score_7d' =>isset($currency['7d']['price_change_pct']) ? (double)$currency['7d']['price_change_pct']*1.1 : 0, 
-                            'score_30d'=>isset($currency['30d']['price_change_pct'])  ? (double)$currency['30d']['price_change_pct']*1.3 : 0,
-                            'score_90d'=>isset($last90Coin) ? ((round($currency['price'],8)-($last90Coin->price))/max($last90Coin->price,0.001))*1.35 : 0,
+                            'percent_change_24h' => isset($currency['1d']['price_change_pct']) ? (double)$currency['1d']['price_change_pct'] : self::changePercentDays($currency['currency'],$currency['price'],1),
+                            'percent_change7d' =>isset($currency['7d']['price_change_pct']) ? (double)$currency['7d']['price_change_pct'] : self::changePercentDays($currency['currency'],$currency['price'],2),
+                            'percent_change14d'=>isset($last14Coin) ? (round($currency['price'],4)-($last14Coin->price))/max($last14Coin->price,0.001) : self::changePercentDays($currency['currency'],$currency['price'],3),
+                            'percent_change30d'=>isset($currency['30d']['price_change_pct'])  ? (double)$currency['30d']['price_change_pct'] : self::changePercentDays($currency['currency'],$currency['price'],4),
+                            'percent_change90d'=>isset($last90Coin) ? (round($currency['price'],4)-($last90Coin->price))/max($last90Coin->price,0.001) : self::changePercentDays($currency['currency'],$currency['price'],5),
+                            'score_1d' =>isset($currency['1d']['price_change_pct']) ? (double)$currency['1d']['price_change_pct']*1.05 : self::scoreUpdate($currency['currency'],$currency['price'],1),
+                            'score_14d'=>isset($last14Coin) ? ((round($currency['price'],8)-($last14Coin->price))/max($last14Coin->price,0.001))*1.2 : self::scoreUpdate($currency['currency'],$currency['price'],2),
+                            'score_7d' =>isset($currency['7d']['price_change_pct']) ? (double)$currency['7d']['price_change_pct']*1.1 : self::scoreUpdate($currency['currency'],$currency['price'],3), 
+                            'score_30d'=>isset($currency['30d']['price_change_pct'])  ? (double)$currency['30d']['price_change_pct']*1.3 : self::scoreUpdate($currency['currency'],$currency['price'],4),
+                            'score_90d'=>isset($last90Coin) ? ((round($currency['price'],8)-($last90Coin->price))/max($last90Coin->price,0.001))*1.35 : self::scoreUpdate($currency['currency'],$currency['price'],5),
                             'market_cap' => round($currency['market_cap'],4) ]);  
             }
         });
@@ -251,28 +372,23 @@ class CoinController extends Controller
         $band = 1;
         $symbols_string = "";
         $currencies = "";
-        // $url = "https://api.nomics.com/v1/currencies/sparkline?key=".$APIKEYN."&start=2019-06-01T00:00:00Z&end=2019-06-30T00:01:00Z";
-        // $contentUrl = file_get_contents($url);
-        // $JsonResponse = json_decode($contentUrl,true);
+        $url = "https://api.nomics.com/v1/currencies/sparkline?key=".$APIKEYN."&start=2019-06-01T00:00:00Z&end=2019-06-30T00:01:00Z";
+        $contentUrl = file_get_contents($url);
+        $JsonResponse = json_decode($contentUrl,true);
+        // var_dump($JsonResponse);
+        // die();
         // foreach($JsonResponse as $band => $currency){   
-        //     if($band > 826){
-        //         foreach($currency['timestamps'] as $key=>$time){    
-        //             $history = new coins_history();
-        //             $history->symbol = $currency['currency'];
-        //             $history->Date   = date('Y-m-d',substr(strtotime($time),0,10));
-        //             $history->price  = $currency['prices'][$key];
-        //             var_dump($currency['prices'][$key]);
-        //             var_dump( $history->Date );
-        //             $history->save(); 
-        //         }
-        //     }    
+        //      if($currency['currency'] == 'RISE'){
+        //         var_dump($currency);
+        //         die();
+        //      }
         // }
         // die();
         Coin::CHUNK(1000, function($coin) {
             $APIKEYN = "e612f7b0f124b709451a0ccb0e29752b";
             $symbols = $coin->pluck('symbol')->toArray();
             $symbols_string = implode(',',$symbols);
-            $url_nomics = "https://api.nomics.com/v1/currencies/ticker?key=".$APIKEYN."&ids=".$symbols_string."&interval=1d,7d,30d&convert=USD";
+            $url_nomics = "https://api.nomics.com/v1/currencies/ticker?key=".$APIKEYN."&ids=".'HSR'."&interval=1d,7d,30d&convert=USD";
             $currencies = json_decode( file_get_contents($url_nomics), true );
             var_dump($currencies);
             die();
