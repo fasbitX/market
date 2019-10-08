@@ -33,7 +33,7 @@
             <div class="col-lg-2 content-buttons-box d-block">
                 <label class="space-button"> Choose sort basis</label>
                 <div class="row">
-                <a href="{{url('/')}}//?order-by=market" class="sort-buttton space-button text-white"> Market Cap </a>         
+                <a href="{{url('/')}}/?order-by=market" class="sort-buttton space-button text-white"> Market Cap </a>         
                 </div>
                 <div class="row">
                     <a href="{{url('/')}}/?order-by=score" class="sort-buttton space-button second-section-single-coin text-white" >Investment Quality </a>                
