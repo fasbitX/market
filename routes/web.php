@@ -39,11 +39,9 @@ Route::group(['middleware' => ['auth_user']], function() {
 
 //Admin group
 Route::group(['prefix' => 'admin'] , function() {
-	
 	Route::GET('login','AdminController@login')->name('admin_login');
 	Route::POST('login','AdminController@check_login');
 	Route::GET('logout','LoginController@logout');
-
 	Route::group(['middleware' => ['admin']], function () {
 		Route::GET('footer',function(){
 			$data = DB::table('settings')->where('name','footer')->first();
@@ -65,16 +63,13 @@ Route::group(['prefix' => 'admin'] , function() {
 		Route::post('update_basic_settings','AdminController@update_basic_settings');
 		Route::GET('basic_settings','AdminController@basic_settings');
 		Route::POST('footer-update','DashboardController@footer_update');
-	
 		Route::GET('stocks', 'StockController@indexAdmin');
 		Route::GET('stocks/delete/{id}', 'StockController@deleteStocks');
 		Route::POST('stocks', 'StockController@addStocks');
-
 		Route::POST('forex', 'ForexController@searchForex');
 		Route::GET('forex', 'ForexController@indexForexAdmin');
 		Route::POST('forex/add', 'ForexController@addForex');
 		Route::GET('forex/delete/{id}', 'ForexController@deleteForexes');
-
 		Route::POST('ccoins','CoinController@store');
 		Route::GET('ccoins','CoinController@index');
 		Route::GET('ccoins/delete/{id}', ['uses' => 'CoinController@destroy', 'as' => 'coin.delete']);
@@ -94,12 +89,11 @@ Route::GET('/logout',function(Request $request)
 });
 
 Route::GET('/ico/ico-new',function(){
-return view('ico-new');
+	return view('ico-new');
 });
 
 Route::GET('/ads/status-update/{status}/{id}','AdminController@ajax_status_update');
 Route::GET('/mining','DashboardController@mining');
-
 Route::get('/disclaimer',function(){
 	return view('disclaimer');
 });
@@ -119,6 +113,7 @@ Route::get('/sign_up',function(){
 });
 
 Route::get('/','CryptoController@index');
+Route::get('/sortScore','CryptoController@sortScore')->name('sort.score');
 Route::GET('/dbData', 'CryptoController@dbData');
 Route::GET('/coin/{coin}', 'CryptoController@singleCoin');
 Route::get('/get-data','DashboardController@get_data');
@@ -146,6 +141,3 @@ Route::GET('forex/{coins}', 'ForexController@dataCharts');
 
 //route for testing
 Route::GET('test','CoinController@newAPI');
-
-//route for testing
-// Route::GET('test','CoinController@cronUpdate');

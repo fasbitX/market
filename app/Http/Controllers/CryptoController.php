@@ -20,6 +20,17 @@ class CryptoController extends Controller
 
         return view('new_index',['data'=>$data,'ads'=>$ads,'ads1'=>$ads1,'title'=>$title,'meta_description'=>$meta_description,'meta_keyword'=>$meta_keyword]);
     }
+    public function sortScore(Request $request){
+        $data = DB::table('coins')->select(DB::raw(' *, score_1d + score_7d + score_14d + score_30d + score_90d as sum'))->orderBy('sum', 'DESC')->paginate(100);     
+        $title = DB::table('settings')->where('name','title')->first();
+        $settings = DB::table('settings')->where('name','logo')->first();      
+        $ads = DB::table('ads')->where('id',6)->first();
+        $ads1 = DB::table('ads')->where('id',7)->first();
+        $meta_description = DB::table('settings')->where('name','meta_description')->first();
+        $meta_keyword = DB::table('settings')->where('name','meta_keyword')->first();
+
+        return view('new_index',['data'=>$data,'ads'=>$ads,'ads1'=>$ads1,'title'=>$title,'meta_description'=>$meta_description,'meta_keyword'=>$meta_keyword]);
+    }
 
     public function dbData(){
         $data = Coin::Where('status','=',1)->orderBy('market_cap', 'DESC')->get();

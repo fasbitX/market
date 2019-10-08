@@ -30,35 +30,36 @@
             @endif
         </div>
         <div class="row padding-button-sort">
-            {{-- <div class="col-lg-2 content-buttons-box" style="display:block;">
+            <div class="col-lg-2 content-buttons-box d-block">
+                <label class="space-button"> Choose sort basis</label>
                 <div class="row">
-                    <button class="sort-buttton space-button">
-                        <a href="" class="text-white" > Market Cap </a>         
-                    </button>
+                <a href="{{url('/')}}/" class="sort-buttton space-button text-white"> Market Cap </a>         
                 </div>
                 <div class="row">
-                    <button class="sort-buttton space-button second-section-single-coin">
-                        <a href="#" class="text-white" >Investment Quality </a>
-                    </button>                    
+                    <a href="{{route('sort.score')}}" class="sort-buttton space-button second-section-single-coin text-white" >Investment Quality </a>                
                 </div>
-            </div> --}}
-            <div class="col-lg-4 content-buttons-box">
-                <button class="sort-buttton">
-                    <a href="https://fasbit.com/?page=1" class="text-white"> 1st Tier </a>
-                </button>
-                <button class="sort-buttton space-button">
-                    <a href="https://fasbit.com/?page=2" class="text-white" >2nd Tier </a> 
-                </button>
-                <button class="sort-buttton space-button">
-                    <a href="https://fasbit.com/?page=3" class="text-white">3rd Tier </a> 
-                </button>
-                <button class="sort-buttton space-button">
-                    <a href="https://fasbit.com/?page=4" class="text-white">4th Tier </a> 
-                </button>
-                <button class="sort-buttton space-button">
-                    <a href="https://fasbit.com/?page=5" class="text-white">5th Tier </a> 
-                </button>
-                                        
+            </div>
+            <div class="col-lg-4 content-buttons-box d-block">
+                <label> Choose a Tier </label>
+                <div class="row">
+                    <div class="col-lg-12 d-flex">
+                        <a href="https://fasbit.com/?page=1" class="text-white sort-buttton">
+                            1st Tier 
+                        </a>
+                        <a href="https://fasbit.com/?page=2" class="text-white sort-buttton space-button" >
+                           2nd Tier
+                        </a> 
+                        <a href="https://fasbit.com/?page=3" class="text-white sort-buttton space-button"> 
+                           3rd Tier
+                        </a> 
+                        <a href="https://fasbit.com/?page=4" class="text-white sort-buttton space-button">
+                           4th Tier
+                        </a> 
+                        <a href="https://fasbit.com/?page=5" class="text-white sort-buttton space-button">
+                           5th Tier
+                        </a>
+                    </div>       
+                </div>                  
               </div> 
         </div>
         <div class="dark container">

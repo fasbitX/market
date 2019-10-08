@@ -373,8 +373,8 @@ class CoinController extends Controller
         $symbols_string = "";
         $currencies = "";
         $url = "https://api.nomics.com/v1/currencies/sparkline?key=".$APIKEYN."&start=2019-06-01T00:00:00Z&end=2019-06-30T00:01:00Z";
-        $contentUrl = file_get_contents($url);
-        $JsonResponse = json_decode($contentUrl,true);
+        // $contentUrl = file_get_contents($url);
+        // $JsonResponse = json_decode($contentUrl,true);
         // var_dump($JsonResponse);
         // die();
         // foreach($JsonResponse as $band => $currency){   
