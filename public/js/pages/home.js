@@ -74,9 +74,6 @@ $(document).ready(() => {
     var api_url = window.location.protocol + "//" + window.location.host + "/getItemAjax";
     var api_url1 = window.location.protocol + "//" + window.location.host + "/";
 
-    // var api_url = "http://coincap.levelten.org/getItemAjax";
-    // var api_url1 = "http://coincap.levelten.org/";
-
     var start = '0';
     var g_data;
     let saveOrder = '';
@@ -90,7 +87,6 @@ $(document).ready(() => {
             dataType: 'json',
             success: function(data) {
                 start = data.start;
-
                 //Fix data
                 data.data.forEach(function(element){
                     if(element.price){

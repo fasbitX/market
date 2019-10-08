@@ -33,29 +33,29 @@
             <div class="col-lg-2 content-buttons-box d-block">
                 <label class="space-button"> Choose sort basis</label>
                 <div class="row">
-                <a href="{{url('/')}}/" class="sort-buttton space-button text-white"> Market Cap </a>         
+                <a href="{{url('/')}}//?order-by=market" class="sort-buttton space-button text-white"> Market Cap </a>         
                 </div>
                 <div class="row">
-                    <a href="{{route('sort.score')}}" class="sort-buttton space-button second-section-single-coin text-white" >Investment Quality </a>                
+                    <a href="{{url('/')}}/?order-by=score" class="sort-buttton space-button second-section-single-coin text-white" >Investment Quality </a>                
                 </div>
             </div>
             <div class="col-lg-4 content-buttons-box d-block">
                 <label> Choose a Tier </label>
                 <div class="row">
                     <div class="col-lg-12 d-flex">
-                        <a href="https://fasbit.com/?page=1" class="text-white sort-buttton">
+                        <a href="{{url('/')}}/?page=1" class="text-white sort-buttton">
                             1st Tier 
                         </a>
-                        <a href="https://fasbit.com/?page=2" class="text-white sort-buttton space-button" >
+                        <a href="{{url('/')}}/?page=2" class="text-white sort-buttton space-button" >
                            2nd Tier
                         </a> 
-                        <a href="https://fasbit.com/?page=3" class="text-white sort-buttton space-button"> 
+                        <a href="{{url('/')}}/?page=3" class="text-white sort-buttton space-button"> 
                            3rd Tier
                         </a> 
-                        <a href="https://fasbit.com/?page=4" class="text-white sort-buttton space-button">
+                        <a href="{{url('/')}}/?page=4" class="text-white sort-buttton space-button">
                            4th Tier
                         </a> 
-                        <a href="https://fasbit.com/?page=5" class="text-white sort-buttton space-button">
+                        <a href="{{url('/')}}/?page=5" class="text-white sort-buttton space-button">
                            5th Tier
                         </a>
                     </div>       
@@ -90,7 +90,7 @@
                                     <td class="tbl-col-sm">
                                         <span class="tbl-rank">
                                             @if(app('request')->input('page'))
-                                                {{ ($index+1)+( (  app('request')->input('page') - 1)*100) /*$item->rank*/ }}
+                                                {{ ($index+1)+( (  app('request')->input('page') - 1)*100) }}
                                             @else
                                             {{ ($index+1) }}
                                             @endif  
