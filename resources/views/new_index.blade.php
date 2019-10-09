@@ -31,12 +31,12 @@
         </div>
         <div class="row padding-button-sort">
             <div class="col-lg-2 content-buttons-box d-block">
-                <label class="space-button"> Choose sort basis</label>
+                <label class="pl-8"> Choose sort basis</label>
                 <div class="row">
-                <a href="{{url('/')}}/?order-by=market" class="sort-buttton space-button text-white"> Market Cap </a>         
+                <a href="{{url('/')}}/?order-by=market" class="basis-button space-button text-white "> Market Cap </a>         
                 </div>
                 <div class="row">
-                    <a href="{{url('/')}}/?order-by=score" class="sort-buttton space-button second-section-single-coin text-white" >Investment Quality </a>                
+                    <a href="{{url('/')}}/?order-by=score" class="space-button second-section-single-coin text-white basis-button" >Investment Quality </a>                
                 </div>
             </div>
             <div class="col-lg-4 content-buttons-box d-block">
@@ -141,11 +141,11 @@
                                             @endif
                                             <span class="mob-info-title">90D: </span>
                                             @if($item->percent_change90d < 0)
-                                                {{-- <span id="p_down" class="tbl-price pr-change delta-859 price down">{{number_format($item->percent_change90d, 2, '.', ',')}}%</span> --}}
-                                                <span id="p_up_90" class="tbl-price pr-change delta-859 price down  mob-info-value volume-859 p-0">--%</span>
+                                                <span id="p_down" class="tbl-price pr-change delta-859 price  mob-info-value volume-859 down p-0">{{number_format($item->percent_change90d, 2, '.', ',')}}%</span>
+                                                {{-- <span id="p_up_90" class="tbl-price pr-change delta-859 price down  mob-info-value volume-859 p-0">--%</span> --}}
                                             @else
-                                                <span id="p_up_90" class="tbl-price pr-change delta-859 price down  mob-info-value volume-859 p-0">--%</span>
-                                                {{-- <span id="p_up_90" class="tbl-price pr-change delta-859 price up">{{number_format($item->percent_change90d, 2, '.', ',')}}%</span> --}}
+                                                {{-- <span id="p_up_90" class="tbl-price pr-change delta-859 price down  mob-info-value volume-859 p-0">--%</span> --}}
+                                                <span id="p_up_90" class="tbl-price pr-change delta-859 price up mob-info-value volume-859 p-0">{{number_format($item->percent_change90d, 2, '.', ',')}}%</span>
                                             @endif
                                         </div>
                                     </td>
