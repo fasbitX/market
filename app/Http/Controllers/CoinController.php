@@ -158,7 +158,7 @@ class CoinController extends Controller
                     $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.0001);
                     return $returnNum;
                 }else{
-                    $returnNum = ($priceNow - $priceNow*1.0069) / max($priceNow*1.23,0.0001);
+                    $returnNum = ($priceNow - $priceNow*1.0069) / max($priceNow*1.0069,0.0001);
                     return $returnNum;
                 }
                 break;
@@ -167,10 +167,10 @@ class CoinController extends Controller
                 ->where('Date',substr(Carbon::now()->subDays(14),0,10))->first(); 
                 $returnNum = 0;
                 if(isset($lastPrice->price)){
-                    $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.0001);
+                    $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.01);
                     return $returnNum;
                 }else{
-                    $returnNum = ($priceNow - $priceNow*1.23) / max($priceNow*1.23,0.0001);
+                    $returnNum = ($priceNow - $priceNow*1.23) / max($priceNow*1.23,0.01);
                     return $returnNum;
                 }
                
@@ -180,10 +180,10 @@ class CoinController extends Controller
                 ->where('Date',substr(Carbon::now()->subDays(30),0,10))->first(); 
                 $returnNum = 0;
                 if(isset($lastPrice->price)){
-                    $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.0001);
+                    $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.001);
                     return $returnNum;
                 }else{
-                    $returnNum = ($priceNow - $priceNow*1.245) / max($priceNow*1.23,0.0001);
+                    $returnNum = ($priceNow - $priceNow*1.245) / max($priceNow*1.245,0.001);
                     return $returnNum;
                 }
                 break;        
@@ -192,10 +192,10 @@ class CoinController extends Controller
                 ->where('Date',substr(Carbon::now()->subDays(90),0,10))->first(); 
                 $returnNum = 0;
                 if(isset($lastPrice->price)){
-                    $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.0001);
+                    $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.001);
                     return $returnNum;
                 }else{
-                    $returnNum = ($priceNow - $priceNow*1.35) / max($priceNow*1.23,0.0001);
+                    $returnNum = ($priceNow - $priceNow*1.35) / max($priceNow*1.35,0.001);
                     return $returnNum;
                 }
                 break;
@@ -218,7 +218,7 @@ class CoinController extends Controller
                     $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.0001); 
                     return $returnNum*1.1;
                 }else{
-                    $returnNum = ($priceNow - $priceNow*1.0069) / max($priceNow*1.23,0.0001);
+                    $returnNum = ($priceNow - $priceNow*1.0069) / max($priceNow*1.0069,0.0001);
                     return $returnNum*1.1;
                 }
                 break;
@@ -227,10 +227,10 @@ class CoinController extends Controller
                 ->where('Date',substr(Carbon::now()->subDays(14),0,10))->first(); 
                 $returnNum = 0;
                 if(isset($lastPrice->price)){
-                    $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.0001);
+                    $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.001);
                     return $returnNum*1.2;
                 }else{
-                    $returnNum = ($priceNow - $priceNow*1.23) / max($priceNow*1.23,0.0001);
+                    $returnNum = ($priceNow - $priceNow*1.23) / max($priceNow*1.23,0.001);
                     return $returnNum*1.2;
                 }
                
@@ -240,10 +240,10 @@ class CoinController extends Controller
                 ->where('Date',substr(Carbon::now()->subDays(30),0,10))->first(); 
                 $returnNum = 0;
                 if(isset($lastPrice->price)){
-                    $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.0001);
+                    $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.001);
                     return $returnNum*1.3;
                 }else{
-                    $returnNum = ($priceNow - $priceNow*1.245) / max($priceNow*1.23,0.0001);
+                    $returnNum = ($priceNow - $priceNow*1.245) / max($priceNow*1.245,0.001);
                     return $returnNum*1.3;
                 }
                 break;        
@@ -252,10 +252,10 @@ class CoinController extends Controller
                 ->where('Date',substr(Carbon::now()->subDays(90),0,10))->first(); 
                 $returnNum = 0;
                 if(isset($lastPrice->price)){
-                    $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.0001);
+                    $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.001);
                     return $returnNum*1.35;
                 }else{
-                    $returnNum = ($priceNow - $priceNow*1.35) / max($priceNow*1.23,0.0001);
+                    $returnNum = ($priceNow - $priceNow*1.35) / max($priceNow*1.35,0.001);
                     return $returnNum*1.35;
                 }
                 break;
@@ -284,7 +284,8 @@ class CoinController extends Controller
                     ->update(['price' => round($currency['price'],8),
                             'percent_change_24h' => isset($currency['1d']['price_change_pct']) ? (double)$currency['1d']['price_change_pct'] : self::changePercentDays($currency['currency'],$currency['price'],1),
                             'percent_change7d' =>isset($currency['7d']['price_change_pct']) ? (double)$currency['7d']['price_change_pct'] : self::changePercentDays($currency['currency'],$currency['price'],2),
-                            'percent_change14d'=>isset($last14Coin) ? (round($currency['price'],4)-($last14Coin->price))/max($last14Coin->price,0.001) : self::changePercentDays($currency['currency'],$currency['price'],3),
+                            'percent_change14d'=>isset($last14Coin) ? (round($currency['price'],4)-($last14Coin->price))/max($last14Coin->price,0.01) : self::changePercentDays($currency['currency'],$currency['price'],3),
+                            
                             'percent_change30d'=>isset($currency['30d']['price_change_pct'])  ? (double)$currency['30d']['price_change_pct'] : self::changePercentDays($currency['currency'],$currency['price'],4),
                             'percent_change90d'=>isset($last90Coin) ? (round($currency['price'],4)-($last90Coin->price))/max($last90Coin->price,0.001) : self::changePercentDays($currency['currency'],$currency['price'],5),
                             'score_1d' =>isset($currency['1d']['price_change_pct']) ? (double)$currency['1d']['price_change_pct']*1.05 : self::scoreUpdate($currency['currency'],$currency['price'],1),
