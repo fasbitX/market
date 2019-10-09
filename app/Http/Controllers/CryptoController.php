@@ -6,11 +6,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Coin;
 use DB;
-
+session_start();
 class CryptoController extends Controller
 {
+    
     public function index(Request $request){ 
-        session_start();
+       
         
         if($request->input('order-by')){
             $_SESSION['orderby'] = $request->input('order-by');
@@ -21,7 +22,7 @@ class CryptoController extends Controller
             $data = DB::table('coins')->select(DB::raw(' *, score_1d + score_7d + score_14d + score_30d + score_90d as sum'))->orderBy('sum', 'DESC')->paginate(100);     
         }
         if($_SESSION['orderby'] == 'market'){
-                $data = Coin::Where('status','=',1)->orderBy('market_cap', 'DESC')->paginate(100); 
+            $data = Coin::Where('status','=',1)->orderBy('market_cap', 'DESC')->paginate(100); 
         }   
         $title = DB::table('settings')->where('name','title')->first();
         $settings = DB::table('settings')->where('name','logo')->first();      
@@ -34,7 +35,12 @@ class CryptoController extends Controller
     }
 
     public function dbData(){
-        $data = Coin::Where('status','=',1)->orderBy('market_cap', 'DESC')->get();
+        if($_SESSION['orderby'] == 'score'){
+            $data = DB::table('coins')->select(DB::raw(' *, score_1d + score_7d + score_14d + score_30d + score_90d as sum'))->orderBy('sum', 'DESC')->paginate(100);     
+        }
+        if($_SESSION['orderby'] == 'market'){
+            $data = Coin::Where('status','=',1)->orderBy('market_cap', 'DESC')->paginate(100); 
+        }  
         //var_dump($data->toArray()); //die();
         return $data->toArray();
     }
