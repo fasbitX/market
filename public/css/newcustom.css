@@ -20,8 +20,6 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, label{
 .menu-front-mobile{
     display: none !important;
 }
-
-
 .basis-button{
     width: 400px;
     height: 40px;
@@ -71,6 +69,22 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, label{
 }
 .padding-button-sort{
     padding: 20px;
+}
+.basis-button:focus{
+    background-color: #003B53;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    outline: 0px;
+    text-align: center;
+    padding: 5px;
+}
+.basis-button:hover{
+    background-color: #000B15;
+    border-color: white;
+    border: 1px solid;
+    text-align: center;
+    padding: 5px;
 }
 .sort-buttton:focus {
     background-color: #003B53;
