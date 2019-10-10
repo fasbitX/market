@@ -115,7 +115,7 @@ Route::get('/sign_up',function(){
 Route::get('/','CryptoController@index');
 Route::get('/sortScore','CryptoController@sortScore')->name('sort.score');
 Route::GET('/dbData', 'CryptoController@dbData');
-Route::GET('/coin/{coin}', 'CryptoController@singleCoin');
+Route::GET('/coin/{coin}/{rank}', 'CryptoController@singleCoin');
 Route::get('/get-data','DashboardController@get_data');
 Route::post('/add_user','LoginController@sign_up');
 Route::post('/user_login','LoginController@login');
@@ -134,8 +134,8 @@ Route::get('/admin/new_ico', function(){
 });	
 
 Route::get('/user/logout','LoginController@logout_user');
-/* Route::GET('/{crypto}','DashboardController@single_coin');*/
-Route::GET('/coin/{crypto}','DashboardController@single_coin_new');
+Route::GET('/{crypto}','DashboardController@single_coin');
+//Route::GET('/coin/{crypto}','DashboardController@single_coin_new');
 Route::GET('stock/{symbol}', 'StockController@dataCharts');
 Route::GET('forex/{coins}', 'ForexController@dataCharts');
 

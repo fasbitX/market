@@ -87,7 +87,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <p class="text-span-single-coin">
-                        <span class="badge badge-primary span-single-coin">Rank {{ $data->rank }}</span>
+                        <span class="badge badge-primary span-single-coin">Rank {{ $rank }}</span>
                         <span class="badge badge-info span-single-coin-2">{!! $data->website !!}</span>
                     </p>
                 </div>

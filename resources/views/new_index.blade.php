@@ -85,7 +85,7 @@
                         
                         <tbody>
                             @foreach ($data as $index => $item) 
-                                <tr coin_id="{{$item->id}}" coin_href="/coin/{{$item->symbol}}">
+                                <tr coin_id="{{$item->id}}" coin_href="/coin/{{$item->symbol}}/{{ ($index+1)+( (  app('request')->input('page') - 1)*100) }}">
                                     <td class="tbl-col-sm"></td>  
                                     <td class="tbl-col-sm">
                                         <span class="tbl-rank">
@@ -101,7 +101,7 @@
                                     </td>
                                     <td class="clickable-coin-td">
                                         <div class="tbl-currency">
-                                            <a id="name" href="/coin/{{$item->symbol}}">{{$item->name}}</a>
+                                            <a id="name" href="/coin/{{$item->symbol}}/{{ (app('request')->input('page') ) ? ($index+1)+( (  app('request')->input('page') - 1)*100) : ($index+1) }}">{{$item->name}}</a>
                                             <span id="symbol" class="tbl-coin-abbrev">[{{$item->symbol}}]</span>
                                         </div>
                                         <div class="d-lg-none tbl-mob-info smaller">

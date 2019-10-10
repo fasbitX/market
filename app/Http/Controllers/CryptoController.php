@@ -45,7 +45,8 @@ class CryptoController extends Controller
         return $data->toArray();
     }
 
-    public function singleCoin($name){
+    public function singleCoin($name,$rank){
+       
         $title = DB::table('settings')->where('name','title')->first();
         $coin = Coin::where('symbol',$name)->first();
         $ads = DB::table('ads')->where('id',3)->first();
@@ -55,6 +56,7 @@ class CryptoController extends Controller
                 ->with('title', $title)
                 ->with('data',$coin)
                 ->with('ads',$ads)
-                ->with('ads1',$ads1);
+                ->with('ads1',$ads1)
+                ->with('rank',$rank);
     }
 }
