@@ -132,9 +132,9 @@ class CoinController extends Controller
                 $history->price  = round($currency['price'],8);
                 $history->score_1d =isset($currency['1d']['price_change_pct']) ? (double)$currency['1d']['price_change_pct']*1.05 : 0; 
                 $history->score_7d =isset($currency['7d']['price_change_pct']) ? (double)$currency['7d']['price_change_pct']*1.1 : 0; 
-                $history->score_14d=isset($last14Coin->price) ? ((round($currency['price'],4)-($last14Coin->price))/max($last14Coin->price,0.001))*1.2 : 0;
+                $history->score_14d=isset($last14Coin->price) ? ((round($currency['price'],6)-($last14Coin->price))/max($last14Coin->price,0.01))*1.2 : 0;
                 $history->score_30d=isset($currency['30d']['price_change_pct'])  ? (double)$currency['30d']['price_change_pct']*1.3 : 0;
-                $history->score_90d=isset($last90Coin->price) ? ((round($currency['price'],4)-($last90Coin->price))/max($last90Coin->price,0.001))*1.35 : 0;
+                $history->score_90d=isset($last90Coin->price) ? ((round($currency['price'],6)-($last90Coin->price))/max($last90Coin->price,0.01))*1.35 : 0;
                 $history->date   = date('Y-m-d H:i:s');
                 $history->save();
             }
@@ -208,7 +208,7 @@ class CoinController extends Controller
                 ->where('Date',substr(Carbon::now()->subDays(1),0,10))->first(); 
                 $returnNum = 0;
                 $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.0001);
-                return $returnNum*1.05;
+                return $returnNum*1.15;
                 break;
             case 2:
                 $lastPrice = coins_history::where('symbol',$symbol)
@@ -216,10 +216,10 @@ class CoinController extends Controller
                 $returnNum = 0;
                 if(isset($lastPrice->price)){
                     $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.0001); 
-                    return $returnNum*1.1;
+                    return $returnNum*1.25;
                 }else{
                     $returnNum = ($priceNow - $priceNow*1.0069) / max($priceNow*1.0069,0.0001);
-                    return $returnNum*1.1;
+                    return $returnNum*1.25;
                 }
                 break;
             case 3:
@@ -228,10 +228,10 @@ class CoinController extends Controller
                 $returnNum = 0;
                 if(isset($lastPrice->price)){
                     $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.001);
-                    return $returnNum*1.2;
+                    return $returnNum*1.25;
                 }else{
                     $returnNum = ($priceNow - $priceNow*1.23) / max($priceNow*1.23,0.001);
-                    return $returnNum*1.2;
+                    return $returnNum*1.25;
                 }
                
                 break;
@@ -241,10 +241,10 @@ class CoinController extends Controller
                 $returnNum = 0;
                 if(isset($lastPrice->price)){
                     $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.001);
-                    return $returnNum*1.3;
+                    return $returnNum*1.2;
                 }else{
                     $returnNum = ($priceNow - $priceNow*1.245) / max($priceNow*1.245,0.001);
-                    return $returnNum*1.3;
+                    return $returnNum*1.2;
                 }
                 break;        
             case 5:
@@ -253,10 +253,10 @@ class CoinController extends Controller
                 $returnNum = 0;
                 if(isset($lastPrice->price)){
                     $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.001);
-                    return $returnNum*1.35;
+                    return $returnNum*1.15;
                 }else{
                     $returnNum = ($priceNow - $priceNow*1.35) / max($priceNow*1.35,0.001);
-                    return $returnNum*1.35;
+                    return $returnNum*1.15;
                 }
                 break;
         }
@@ -288,11 +288,12 @@ class CoinController extends Controller
                             
                             'percent_change30d'=>isset($currency['30d']['price_change_pct'])  ? (double)$currency['30d']['price_change_pct'] : self::changePercentDays($currency['currency'],$currency['price'],4),
                             'percent_change90d'=>isset($last90Coin) ? (round($currency['price'],4)-($last90Coin->price))/max($last90Coin->price,0.01) : self::changePercentDays($currency['currency'],$currency['price'],5),
-                            'score_1d' =>isset($currency['1d']['price_change_pct']) ? (double)$currency['1d']['price_change_pct']*1.05 : self::scoreUpdate($currency['currency'],$currency['price'],1),
-                            'score_14d'=>isset($last14Coin) ? ((round($currency['price'],8)-($last14Coin->price))/max($last14Coin->price,0.001))*1.2 : self::scoreUpdate($currency['currency'],$currency['price'],2),
-                            'score_7d' =>isset($currency['7d']['price_change_pct']) ? (double)$currency['7d']['price_change_pct']*1.1 : self::scoreUpdate($currency['currency'],$currency['price'],3), 
-                            'score_30d'=>isset($currency['30d']['price_change_pct'])  ? (double)$currency['30d']['price_change_pct']*1.3 : self::scoreUpdate($currency['currency'],$currency['price'],4),
-                            'score_90d'=>isset($last90Coin) ? ((round($currency['price'],8)-($last90Coin->price))/max($last90Coin->price,0.001))*1.35 : self::scoreUpdate($currency['currency'],$currency['price'],5),
+                            
+                            'score_1d' =>isset($currency['1d']['price_change_pct']) ? (double)$currency['1d']['price_change_pct']*1.15 : self::scoreUpdate($currency['currency'],$currency['price'],1),
+                            'score_14d'=>isset($last14Coin) ? ((round($currency['price'],8)-($last14Coin->price))/max($last14Coin->price,0.001))*1.25 : self::scoreUpdate($currency['currency'],$currency['price'],2),
+                            'score_7d' =>isset($currency['7d']['price_change_pct']) ? (double)$currency['7d']['price_change_pct']*1.25 : self::scoreUpdate($currency['currency'],$currency['price'],3), 
+                            'score_30d'=>isset($currency['30d']['price_change_pct'])  ? (double)$currency['30d']['price_change_pct']*1.2 : self::scoreUpdate($currency['currency'],$currency['price'],4),
+                            'score_90d'=>isset($last90Coin) ? ((round($currency['price'],8)-($last90Coin->price))/max($last90Coin->price,0.001))*1.15 : self::scoreUpdate($currency['currency'],$currency['price'],5),
                             'market_cap' => round($currency['market_cap'],4) ]);  
             }
         });
@@ -374,17 +375,17 @@ class CoinController extends Controller
         $symbols_string = "";
         $currencies = "";
         $url = "https://api.nomics.com/v1/currencies/sparkline?key=".$APIKEYN."&start=2019-06-01T00:00:00Z&end=2019-06-30T00:01:00Z";
-        // $contentUrl = file_get_contents($url);
-        // $JsonResponse = json_decode($contentUrl,true);
+        $contentUrl = file_get_contents($url);
+        $JsonResponse = json_decode($contentUrl,true);
         // var_dump($JsonResponse);
         // die();
-        // foreach($JsonResponse as $band => $currency){   
-        //      if($currency['currency'] == 'RISE'){
-        //         var_dump($currency);
-        //         die();
-        //      }
-        // }
-        // die();
+        foreach($JsonResponse as $band => $currency){   
+             if($currency['currency'] == 'INV'){
+                var_dump($currency);
+                die();
+             }
+        }
+        die();
         Coin::CHUNK(1000, function($coin) {
             $APIKEYN = "e612f7b0f124b709451a0ccb0e29752b";
             $symbols = $coin->pluck('symbol')->toArray();
