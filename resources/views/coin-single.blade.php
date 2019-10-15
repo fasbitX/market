@@ -159,6 +159,7 @@
         <div class="loading-chart">
             <div class="lds-facebook"><div></div><div></div><div></div></div>
         </div>
+        {{-- single coin Graph --}}
         <div id="container-chart"></div>
 
 
@@ -166,6 +167,9 @@
             <h2>About {{ $data->name }}</h2>
             @if($data->description)
                 {!! $data->description !!}
+                
+            @else
+             <p>Not available. </p>
             @endif
         </div>
         <div class="third-section-single-coin row">
@@ -197,13 +201,9 @@
 @endsection
 
 @section('scripts')
-    <script src="https://code.highcharts.com/stock/highstock.js"></script>
-
-    <script src="https://code.highcharts.com/stock/indicators/indicators-all.js"></script>
-    <script src="https://code.highcharts.com/stock/modules/drag-panes.js"></script>
-
-    <script src="https://code.highcharts.com/modules/annotations-advanced.js"></script>
-    <script src="https://code.highcharts.com/modules/price-indicator.js"></script>
-    <script src="https://code.highcharts.com/modules/full-screen.js"></script>
-    <script async type="text/javascript" src="{{ URL::asset("public/js/charts/graphic.js") }}"></script>
+    <script type="text/javascript" src="{{ URL::asset("public/js/charts/highstock.js") }}"></script>
+    <script src="{{ URL::asset("public/js/charts/data.js") }}"></script>
+    <script src="{{ URL::asset("public/js/charts/exporting.js") }}"></script>
+    <script src="{{ URL::asset("public/js/charts/export-data.js") }}"></script>
+    <script src="{{ URL::asset("public/js/charts/graphic.js")}}" ></script>
 @endsection

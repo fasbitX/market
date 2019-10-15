@@ -147,8 +147,14 @@ class CoinController extends Controller
                 $lastPrice = coins_history::where('symbol',$symbol)
                 ->where('Date',substr(Carbon::now()->subDays(1),0,10))->first(); 
                 $returnNum = 0;
-                $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.0001);
-                return $returnNum;
+                if(isset($lastPrice->price)){
+                    $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.0001);
+                    return $returnNum;
+                }else{
+                    $returnNum = ($priceNow - $priceNow*1.0113) / max($priceNow*1.0113,0.0001);
+                    return $returnNum;
+                }
+                
                 break;
             case 2:
                 $lastPrice = coins_history::where('symbol',$symbol)
@@ -207,8 +213,14 @@ class CoinController extends Controller
                 $lastPrice = coins_history::where('symbol',$symbol)
                 ->where('Date',substr(Carbon::now()->subDays(1),0,10))->first(); 
                 $returnNum = 0;
-                $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.0001);
-                return $returnNum*1.15;
+                if(isset($lastPrice->price)){
+                    $returnNum = ($priceNow - $lastPrice->price) / max($lastPrice->price,0.0001);
+                    return $returnNum*1.15;
+                }else{
+                    $returnNum = ($priceNow - $priceNow*1.0113) / max($priceNow*1.0113,0.0001);
+                    return $returnNum*1.05;
+                }
+               
                 break;
             case 2:
                 $lastPrice = coins_history::where('symbol',$symbol)
@@ -377,8 +389,6 @@ class CoinController extends Controller
         $url = "https://api.nomics.com/v1/currencies/sparkline?key=".$APIKEYN."&start=2019-06-01T00:00:00Z&end=2019-06-30T00:01:00Z";
         $contentUrl = file_get_contents($url);
         $JsonResponse = json_decode($contentUrl,true);
-        // var_dump($JsonResponse);
-        // die();
         foreach($JsonResponse as $band => $currency){   
              if($currency['currency'] == 'INV'){
                 var_dump($currency);

@@ -134,10 +134,11 @@ Route::get('/admin/new_ico', function(){
 });	
 
 Route::get('/user/logout','LoginController@logout_user');
-Route::GET('/{crypto}','DashboardController@single_coin');
+//Route::GET('/{crypto}','DashboardController@single_coin');
 //Route::GET('/coin/{crypto}','DashboardController@single_coin_new');
 Route::GET('stock/{symbol}', 'StockController@dataCharts');
 Route::GET('forex/{coins}', 'ForexController@dataCharts');
-
+//route AJAX graph
+Route::GET('graph/{name}','CryptoController@dataAjaxGraph');
 //route for testing
 Route::GET('test','CoinController@newAPI');

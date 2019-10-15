@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Coin;
+use App\coins_history;
 use DB;
 session_start();
 class CryptoController extends Controller
@@ -41,12 +42,10 @@ class CryptoController extends Controller
         if($_SESSION['orderby'] == 'market'){
             $data = Coin::Where('status','=',1)->orderBy('market_cap', 'DESC')->paginate(100); 
         }  
-        //var_dump($data->toArray()); //die();
         return $data->toArray();
     }
 
     public function singleCoin($name,$rank){
-       
         $title = DB::table('settings')->where('name','title')->first();
         $coin = Coin::where('symbol',$name)->first();
         $ads = DB::table('ads')->where('id',3)->first();
@@ -58,5 +57,13 @@ class CryptoController extends Controller
                 ->with('ads',$ads)
                 ->with('ads1',$ads1)
                 ->with('rank',$rank);
+    }
+    public function dataAjaxGraph($name){
+        $coin = coins_history::where('symbol','BTC')->first();
+        // echo "<pre>";
+        // print_r($coin);
+        // echo "</pre>";
+        // die();
+        return $coin;
     }
 }
