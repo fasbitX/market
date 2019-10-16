@@ -60,10 +60,6 @@ class CryptoController extends Controller
     }
     public function dataAjaxGraph($name){
         $coin = coins_history::where('symbol','BTC')->first();
-        // echo "<pre>";
-        // print_r($coin);
-        // echo "</pre>";
-        // die();
         return $coin;
     }
 }

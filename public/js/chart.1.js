@@ -283,9 +283,9 @@ setInterval(function () {
                             percentage = $tr_i.find('#p_up_7').text(roundFormatQuantity(response[index].percent_change7d*100) + "%");
                         }
                         if(response[index].percent_change14d < 0){
-                            percentage = $tr_i.find('#p_down_14').text(roundFormatQuantity(response[index].percent_change14d*100) + "%");
+                            percentage = $tr_i.find('#p_down_14').text(roundFormatQuantity(response[index].percent_change14d) + "%");
                         }else{
-                            percentage = $tr_i.find('#p_up_14').text(roundFormatQuantity(response[index].percent_change14d*100) + "%");
+                            percentage = $tr_i.find('#p_up_14').text(roundFormatQuantity(response[index].percent_change14d) + "%");
                         }
                         if(response[index].percent_change30d < 0){
                             percentage = $tr_i.find('#p_down_30').text(roundFormatQuantity(response[index].percent_change30d*100) + "%");
@@ -293,9 +293,9 @@ setInterval(function () {
                             percentage = $tr_i.find('#p_up_30').text(roundFormatQuantity(response[index].percent_change30d*100) + "%");
                         }
                         if(response[index].percent_change90d < 0){
-                            percentage = $tr_i.find('#p_down_90').text(roundFormatQuantity(response[index].percent_change90d*100) + "%");
+                            percentage = $tr_i.find('#p_down_90').text(roundFormatQuantity(response[index].percent_change90d) + "%");
                         }else{
-                            percentage = $tr_i.find('#p_up_90').text(roundFormatQuantity(response[index].percent_change90d*100) + "%");
+                            percentage = $tr_i.find('#p_up_90').text(roundFormatQuantity(response[index].percent_change90d) + "%");
                         }
                     }                  
                 }     
