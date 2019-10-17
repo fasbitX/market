@@ -475,14 +475,12 @@ Highcharts.setOptions(Highcharts.theme);
             /*End test*/
 
             $('.loading-chart').hide();
+            
             $("#container-chart").show();
             },
             error: function(){
                 console.log("ERROR");
             }
         });
-
-
- 
 
     });
