@@ -160,7 +160,10 @@
             <div class="lds-facebook"><div></div><div></div><div></div></div>
         </div>
         {{-- single coin Graph --}}
-        <div id="container-chart"></div>
+        {{-- <div id="container-chart"></div> --}}
+
+        {{-- single Graph --}}
+        <div id="container-chart-test"></div>
 
 
         <div class="third-section-single-coin">

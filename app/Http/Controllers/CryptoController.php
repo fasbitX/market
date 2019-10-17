@@ -59,7 +59,13 @@ class CryptoController extends Controller
                 ->with('rank',$rank);
     }
     public function dataAjaxGraph($name){
-        $coin = coins_history::where('symbol','BTC')->first();
+        //$coin = coins_history::where('symbol','BTC')->first();
+        $coin = DB::table('coins_history')
+                ->select('Date',DB::raw('AVG(price) as prom_price'))
+                ->groupBy('Date')
+                ->where('symbol',$name)
+                ->orderBy('Date','ASC')
+                ->get();
         return $coin;
     }
 }

@@ -84,15 +84,24 @@
                         </thead>
                         
                         <tbody>
-                            @foreach ($data as $index => $item) 
-                                <tr coin_id="{{$item->id}}" coin_href="/coin/{{$item->symbol}}/{{ ($index+1)+( (  app('request')->input('page') - 1)*100) }}">
+                            @foreach ($data as $index => $item)
+                                @if(app('request')->input('page'))
+                                    @php
+                                        $rank= ($index+1)+( (  app('request')->input('page') - 1)*100)  
+                                    @endphp      
+                                @else
+                                    @php 
+                                        $rank= ($index+1)
+                                    @endphp
+                                @endif   
+                                <tr coin_id="{{$item->id}}" coin_href="/coin/{{$item->symbol}}/{{$rank}}" >
                                     <td class="tbl-col-sm"></td>  
                                     <td class="tbl-col-sm">
                                         <span class="tbl-rank">
                                             @if(app('request')->input('page'))
-                                                {{ ($index+1)+( (  app('request')->input('page') - 1)*100) }}
+                                                {{ $rank }}
                                             @else
-                                            {{ ($index+1) }}
+                                                {{$rank}}
                                             @endif  
                                         </span>
                                     </td>
@@ -101,7 +110,13 @@
                                     </td>
                                     <td class="clickable-coin-td">
                                         <div class="tbl-currency">
-                                            <a id="name" href="/coin/{{$item->symbol}}/{{ (app('request')->input('page') ) ? ($index+1)+( (  app('request')->input('page') - 1)*100) : ($index+1) }}">{{$item->name}}</a>
+                                            @if(app('request')->input('page'))
+                                                <a id="name" href="/coin/{{$item->symbol}}/{{$rank}}">{{$item->name}}</a>
+                                            @else
+                                                <a id="name" href="/coin/{{$item->symbol}}/{{$rank}}" >{{$item->name}}</a>
+                                            @endif  
+                                           <!-- <a id="name" href="/coin/{{$item->symbol}}/{{ (app('request')->input('page') ) ? ($index+1)+( (  app('request')->input('page') - 1)*100) : ($index+1) }}">{{$item->name}}</a>
+                                            -->
                                             <span id="symbol" class="tbl-coin-abbrev">[{{$item->symbol}}]</span>
                                         </div>
                                         <div class="d-lg-none tbl-mob-info smaller">
@@ -205,18 +220,18 @@
                                         </span> --}}
                                     </td>
                                     <td class="tbl-col-md change-period clickable-coin-td text-right" >
-                                        @if($item->percent_change14d*100 < 0)
-                                             <span id="p_up_14" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change14d*100 > -10) 
-                                                {{substr_replace(number_format($item->percent_change14d*100,2,".",","),"0",1,0)}} 
+                                        @if($item->percent_change14d < 0)
+                                             <span id="p_up_14" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change14d > -10) 
+                                                {{substr_replace(number_format($item->percent_change14d,2,".",","),"0",1,0)}} 
                                                 @else 
-                                                {{number_format($item->percent_change14d*100, 2, '.', ',')}}
+                                                {{number_format($item->percent_change14d, 2, '.', ',')}}
                                                  @endif
                                                  %</span>
                                         @else
-                                            <span id="p_up_14" class="tbl-price pr-change delta-859 price up perc_none p-0">@if ($item->percent_change14d*100 < 10) 
-                                                0{{number_format($item->percent_change14d*100, 2, '.', ',')}}
+                                            <span id="p_up_14" class="tbl-price pr-change delta-859 price up perc_none p-0">@if ($item->percent_change14d < 10) 
+                                                0{{number_format($item->percent_change14d, 2, '.', ',')}}
                                                 @else 
-                                                {{number_format($item->percent_change14d*100, 2, '.', ',')}}
+                                                {{number_format($item->percent_change14d, 2, '.', ',')}}
                                                 @endif %</span>
                                         @endif
                                         {{-- Graph 
@@ -251,18 +266,18 @@
                                         </span> --}}
                                     </td>
                                     <td class="tbl-col-md change-period clickable-coin-td text-right" >
-                                        @if($item->percent_change90d*100 < 0)
-                                            <span id="p_down" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change90d*100 > -10) 
-                                                {{substr_replace(number_format($item->percent_change90d*100,2,".",","),"0",1,0)}} 
+                                        @if($item->percent_change90d < 0)
+                                            <span id="p_down" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change90d > -10) 
+                                                {{substr_replace(number_format($item->percent_change90d,2,".",","),"0",1,0)}} 
                                                 @else 
-                                                {{number_format($item->percent_change90d*100, 2, '.', ',')}}
+                                                {{number_format($item->percent_change90d, 2, '.', ',')}}
                                                 @endif 
                                                 %</span>
                                         @else
-                                            <span id="p_up_90" class="tbl-price pr-change delta-859 price up perc_none p-0">@if($item->percent_change90d*100 < 10) 
-                                                0{{number_format($item->percent_change90d*100, 2, '.', ',')}}
+                                            <span id="p_up_90" class="tbl-price pr-change delta-859 price up perc_none p-0">@if($item->percent_change90d < 10) 
+                                                0{{number_format($item->percent_change90d, 2, '.', ',')}}
                                                 @else 
-                                                {{number_format($item->percent_change90d*100, 2, '.', ',')}}
+                                                {{number_format($item->percent_change90d, 2, '.', ',')}}
                                                 @endif %</span>
                                         @endif
                                         {{-- Graph 
