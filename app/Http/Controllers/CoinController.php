@@ -339,16 +339,25 @@ class CoinController extends Controller
         $band = 1;
         $symbols_string = "";
         $currencies = "";
-        $url = "https://api.nomics.com/v1/currencies/sparkline?key=".$APIKEYN."&start=2019-10-01T00:00:00Z&end=2019-10-15T00:01:00Z";
+        $url = "https://api.nomics.com/v1/currencies/sparkline?key=".$APIKEYN."&start=2019-05-01T00:00:00Z&end=2019-05-31T00:01:00Z";
         $contentUrl = file_get_contents($url);
         $JsonResponse = json_decode($contentUrl,true);
-        // foreach($JsonResponse as $band => $currency){   
-        //      if($currency['currency'] == 'ZPT'){
-        //         var_dump($currency);
-        //         die();
-        //      }
-        // }
-        // die();
+        foreach($JsonResponse as $band => $currency){   
+           foreach($currency['prices'] as $key => $currencyPrice){
+            $verify = coins_history::where('symbol','=',$currency['currency'])
+                                    ->where('Date','=',substr($currency['timestamps'][$key],0,-10))
+                                    ->first();
+                if(!$verify){
+                    $coin = new coins_history();
+                    $coin->symbol = $currency['currency'];
+                    $coin->price = $currencyPrice;
+                    $coin->Date = substr($currency['timestamps'][$key],0,-10);
+                    var_dump(substr($currency['timestamps'][$key],0,-10) );
+                    $coin->save();
+                }   
+           }           
+        }
+        die();
         Coin::CHUNK(1000, function($coin) {
             $APIKEYN = "e612f7b0f124b709451a0ccb0e29752b";
             $symbols = $coin->pluck('symbol')->toArray();
