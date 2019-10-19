@@ -249,16 +249,16 @@ class CoinController extends Controller
                     ->update(['price' => round($currency['price'],8),
                             'percent_change_24h' => isset($currency['1d']['price_change_pct']) ? (double)$currency['1d']['price_change_pct'] : self::changePercentDays($currency['currency'],$currency['price'],1),
                             'percent_change7d' =>isset($currency['7d']['price_change_pct']) ? (double)$currency['7d']['price_change_pct'] : self::changePercentDays($currency['currency'],$currency['price'],2),
-                            'percent_change14d'=>isset($last14Coin) ? round($currency['price']-$last14Coin->price,6)/$last14Coin->price : self::changePercentDays($currency['currency'],$currency['price'],3),
+                            'percent_change14d'=>isset($last14Coin->price) ? round($currency['price']-$last14Coin->price,6)/$last14Coin->price : self::changePercentDays($currency['currency'],$currency['price'],3),
                             
                             'percent_change30d'=>isset($currency['30d']['price_change_pct'])  ? (double)$currency['30d']['price_change_pct'] : self::changePercentDays($currency['currency'],$currency['price'],4),
-                            'percent_change90d'=>isset($last90Coin) ? (round($currency['price'],4)-($last90Coin->price))/max($last90Coin->price,0.01) : self::changePercentDays($currency['currency'],$currency['price'],5),
+                            'percent_change90d'=>isset($last90Coin->price) ? (round($currency['price']-$last90Coin->price,6))/$last90Coin->price : self::changePercentDays($currency['currency'],$currency['price'],5),
                             
                             'score_1d' =>isset($currency['1d']['price_change_pct']) ? (double)$currency['1d']['price_change_pct']*1.15 : self::scoreUpdate($currency['currency'],$currency['price'],1),
-                            'score_14d'=>isset($last14Coin) ? ((round($currency['price'],8)-($last14Coin->price))/max($last14Coin->price,0.001))*1.25 : self::scoreUpdate($currency['currency'],$currency['price'],2),
+                            'score_14d'=>isset($last14Coin->price) ? ((round($currency['price'],8)-($last14Coin->price))/max($last14Coin->price,0.001))*1.25 : self::scoreUpdate($currency['currency'],$currency['price'],2),
                             'score_7d' =>isset($currency['7d']['price_change_pct']) ? (double)$currency['7d']['price_change_pct']*1.25 : self::scoreUpdate($currency['currency'],$currency['price'],3), 
                             'score_30d'=>isset($currency['30d']['price_change_pct'])  ? (double)$currency['30d']['price_change_pct']*1.2 : self::scoreUpdate($currency['currency'],$currency['price'],4),
-                            'score_90d'=>isset($last90Coin) ? ((round($currency['price'],8)-($last90Coin->price))/max($last90Coin->price,0.001))*1.15 : self::scoreUpdate($currency['currency'],$currency['price'],5),
+                            'score_90d'=>isset($last90Coin->price) ? ((round($currency['price'],8)-($last90Coin->price))/max($last90Coin->price,0.001))*1.15 : self::scoreUpdate($currency['currency'],$currency['price'],5),
                             'market_cap' => round($currency['market_cap'],4) ]);  
             }
         });

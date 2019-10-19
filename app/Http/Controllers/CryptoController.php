@@ -68,4 +68,12 @@ class CryptoController extends Controller
                 ->get();
         return $coin;
     }
+
+    public function dataAjaxScore($name){
+        $data = DB::table('coins_history')
+                ->select(DB::raw(' *, score_1d + score_7d + score_14d + score_30d + score_90d as sum'))
+                ->where('symbol',$name)
+                ->get();
+        return $data;
+    }
 }

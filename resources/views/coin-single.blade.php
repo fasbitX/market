@@ -159,12 +159,11 @@
         <div class="loading-chart">
             <div class="lds-facebook"><div></div><div></div><div></div></div>
         </div>
-        {{-- single coin Graph --}}
-        <div id="container-chart"></div>
-
-        {{-- single Graph --}}
+       {{-- single coin Graph price --}}
         <div id="container-chart-test"></div>
 
+         {{-- single Graph score--}}
+        <div id="container-chart"></div>
 
         <div class="third-section-single-coin">
             <h2>About {{ $data->name }}</h2>

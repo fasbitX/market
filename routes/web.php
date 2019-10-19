@@ -138,7 +138,9 @@ Route::get('/user/logout','LoginController@logout_user');
 //Route::GET('/coin/{crypto}','DashboardController@single_coin_new');
 Route::GET('stock/{symbol}', 'StockController@dataCharts');
 Route::GET('forex/{coins}', 'ForexController@dataCharts');
-//route AJAX graph
+//route AJAX graph price
 Route::GET('graph/{name}','CryptoController@dataAjaxGraph');
+//route AJAX graph score
+Route::GET('score/{name}','CryptoController@dataAjaxScore');
 //route for testing
 Route::GET('test','CoinController@newAPI');

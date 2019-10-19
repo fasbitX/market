@@ -261,104 +261,124 @@ Highcharts.setOptions(Highcharts.theme);
     volume = [];
    //-------------------------------------------     
     Highcharts.getJSON('https://min-api.cryptocompare.com/data/histoday?aggregate=1&fsym='+name+'&tsym=USD&limit=1825', function (data) {
-        let dataLength = data.Data.length,
-        i=0;
-        for (i; i < dataLength; i += 1) {
-            price.push([
-                data.Data[i].time*1000, // the date
-                data.Data[i].close // close
-            ]);
-            volume.push([
-                data.Data[i].time*1000, // the date
-                data.Data[i].volumeto // the volume
-            ]);
-        }
-
         $("#container-chart").hide();
         // Create the chart
-        Highcharts.stockChart('container-chart', {
-            rangeSelector: {
-                selected: 6,
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            title: {
-                text: name+' Price'
-            },
-            yAxis: [{
-                labels: {
-                    align: 'right',
-                    x: -3
-                },
-                title: {
-                    text: 'Price'
-                },
-                height: '60%',
-                lineWidth: 2,
-            
-            }, 
-            {
-                labels: {
-                    align: 'right',
-                    x: -3
-                },
-                title: {
-                    text: 'Volume'
-                },
-                top: '65%',
-                height: '35%',
-                offset: 0,
-                lineWidth: 2
-            }],
+            method: 'GET',
+            url: '/score/'+name,
+            success: function(response) {
+                score = [];
+                volume=[];
+                //console.log(response[0]['Date']);
+                for(let j = 0 ; j<response.length;j++ ){
+                    console.log( response[j]);
+                    let dia = new Date(response[j]['Date']).getTime() / 1000;
+                    score.push([
+                        dia*1000,
+                        parseFloat(response[j]['prom_price'])
+                    ]);
+                }
 
-            series: [{  
-                    name: name+' Price',
-                    data: price,
-                    type: 'area',
-                    threshold: null,
+
+               /*Test*/
+               // Create the chart
+               Highcharts.stockChart('container-chart', {
+                rangeSelector: {
+                    selected: 6,
+                },
+                title: {
+                    text: name+' Score'
+                },
+                yAxis: [{
+                    labels: {
+                        align: 'right',
+                        x: -3
+                    },
+                    title: {
+                        text: 'Price'
+                    },
+                    height: '60%',
+                    lineWidth: 2,
+                
+                }, 
+                /*{
+                    labels: {
+                        align: 'right',
+                        x: -3
+                    },
+                    title: {
+                        text: 'Volume'
+                    },
+                    top: '65%',
+                    height: '35%',
+                    offset: 0,
+                    lineWidth: 2
+                }*/],
+    
+                series: [{  
+                        name: name+' Price',
+                        data: score,
+                        type: 'area',
+                        threshold: null,
+                        tooltip: {
+                            valueDecimals: 4
+                        },
+                        
+                    fillColor: {
+                        linearGradient: {
+                            x1: 0,
+                            y1: 0,
+                            x2: 0,
+                            y2: 1
+                        },
+                        stops: [
+                            [0, Highcharts.getOptions().colors[0]],
+                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                        ]
+                    },
+                    dataGrouping: {
+                        enabled: false
+                    },    
+                }, 
+               /* {
+                    type: 'column',
+                    name: name+' Volume',
+                    data: volume,
+                    yAxis: 1,
                     tooltip: {
                         valueDecimals: 4
                     },
-                    
-                fillColor: {
-                    linearGradient: {
-                        x1: 0,
-                        y1: 0,
-                        x2: 0,
-                        y2: 1
+                    dataGrouping: {
+                        enabled: false
                     },
-                    stops: [
-                        [0, Highcharts.getOptions().colors[0]],
-                        [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                    ]
-                },
-                dataGrouping: {
-                    enabled: false
-                },    
-            }, 
-            {
-                type: 'column',
-                name: name+' Volume',
-                data: volume,
-                yAxis: 1,
-                tooltip: {
-                    valueDecimals: 4
-                },
-                dataGrouping: {
-                    enabled: false
-                },
-            
-            }
-            ],
-            responsive: {
-                rules: [{
-                    condition: {
-                        maxWidth: 800
-                    },
-                    chartOptions: {
-                        rangeSelector: {
-                            inputEnabled: false
+                
+                }*/
+                ],
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 800
+                        },
+                        chartOptions: {
+                            rangeSelector: {
+                                inputEnabled: false
+                            }
                         }
-                    }
-                }]
+                    }]
+                }
+            });
+
+            /*End test*/
+
+            $('.loading-chart').hide();
+            
+            $("#container-chart").show();
+            },
+            error: function(){
+                console.log("ERROR");
             }
         });
 
