@@ -71,7 +71,8 @@ class CryptoController extends Controller
 
     public function dataAjaxScore($name){
         $data = DB::table('coins_history')
-                ->select(DB::raw(' *, score_1d + score_7d + score_14d + score_30d + score_90d as sum'))
+                ->select(DB::raw(' Date, AVG(score_1d + score_7d + score_14d + score_30d + score_90d )*100 as sum'))
+                ->groupBy('Date')
                 ->where('symbol',$name)
                 ->get();
         return $data;

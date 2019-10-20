@@ -278,7 +278,7 @@ Highcharts.setOptions(Highcharts.theme);
                     let dia = new Date(response[j]['Date']).getTime() / 1000;
                     score.push([
                         dia*1000,
-                        parseFloat(response[j]['prom_price'])
+                        parseFloat(response[j]['sum'])
                     ]);
                 }
 
@@ -298,7 +298,7 @@ Highcharts.setOptions(Highcharts.theme);
                         x: -3
                     },
                     title: {
-                        text: 'Price'
+                        text: 'Score'
                     },
                     height: '60%',
                     lineWidth: 2,
@@ -319,7 +319,7 @@ Highcharts.setOptions(Highcharts.theme);
                 }*/],
     
                 series: [{  
-                        name: name+' Price',
+                        name: name+' Score',
                         data: score,
                         type: 'area',
                         threshold: null,
