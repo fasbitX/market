@@ -290,7 +290,7 @@
                                         </span> --}}
                                     </td>
                                     <td class="tbl-col-md change-period clickable-coin-td text-right" >
-                                       <span id="score" class="tbl-price pr-change delta-859 perc_none p-0"> {{(($item->percent_change_24h*1.15*100) + ($item->percent_change7d*1.25*100) + ($item->percent_change14d*1.25*100) + ($item->percent_change30d*1.2*100) + ($item->percent_change90d*1.15*100))*100}} </span>
+                                       <span id="score" class="tbl-price pr-change delta-859 perc_none p-0"> {{number_format(($item->score_1d + $item->score_7d + $item->score_14d + $item->score_30d + $item->score_90d), 6, '.', ',')}} </span>
                                     </td>
                                 </tr>
                             @endforeach
