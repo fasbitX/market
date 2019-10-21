@@ -69,17 +69,17 @@
                         <thead>
                             <tr>
                                 <th class="tbl-col-sm"></th>
-                                <th onclick="sortTable(1,this)" ><span class="d-none d-sm-block">Rank<i class="fa fa-fw fa-sort"></i></span></th>
+                                <th ><span class="d-none d-sm-block">Rank</span></th>
                                 <th colspan="2">Name</th>
                                 <th class="text-center">Price</th>
-                                <th class="d-none d-lg-table-cell text-right" onclick="sortTable(5,this)"> Market cap<i class="fa fa-fw fa-sort"></i> </th>
-                                <th class="d-none d-lg-table-cell text-right" onclick="sortTable(6,this)"> Volume<i class="fa fa-fw fa-sort"></i></th>
+                                <th class="d-none d-lg-table-cell text-right">Market cap</th>
+                                <th class="d-none d-lg-table-cell text-right">Volume</th>
                                 <th class="d-none d-lg-table-cell text-right">1D</th>
                                 <th class="d-none d-lg-table-cell text-right">7D</th>
                                 <th class="d-none d-lg-table-cell text-right">14D</th>
                                 <th class="d-none d-lg-table-cell text-right">30D</th>
                                 <th class="d-none d-lg-table-cell text-right">90D</th>
-                                <th class="d-none d-lg-table-cell text-right" onclick="sortTable(12,this)">Score<i class="fa fa-fw fa-sort"></i></th>
+                                <th class="d-none d-lg-table-cell text-right">Score</th>
                             </tr>
                         </thead>
                         
@@ -290,7 +290,7 @@
                                         </span> --}}
                                     </td>
                                     <td class="tbl-col-md change-period clickable-coin-td text-right" >
-                                       <span id="score" class="tbl-price pr-change delta-859 perc_none p-0"> {{number_format(($item->score_1d + $item->score_7d + $item->score_14d + $item->score_30d + $item->score_90d)*100, 6, '.', ',')}} </span>
+                                       <span id="score" class="tbl-price pr-change delta-859 perc_none p-0"> {{number_format((($item->percent_change_24h*1.15*100) + ($item->percent_change7d*1.25*100) + ($item->percent_change14d*1.25*100) + ($item->percent_change30d*1.2*100) + ($item->percent_change90d*1.15*100)), 6, '.', ',')}} </span>
                                     </td>
                                 </tr>
                             @endforeach
