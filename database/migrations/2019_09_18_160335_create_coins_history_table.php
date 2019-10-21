@@ -23,6 +23,7 @@ class CreateCoinsHistoryTable extends Migration
             $table->decimal('score_30d',24,5);
             $table->decimal('score_90d',24,5);
             $table->date("Date");
+            $table->double('volume',8,6);
             $table->timestamps();
         });
     }
