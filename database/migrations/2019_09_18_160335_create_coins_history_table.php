@@ -15,14 +15,14 @@ class CreateCoinsHistoryTable extends Migration
     {
         Schema::create('coins_history', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('symbol');
+            $table->string('symbol')->index();
             $table->decimal('price',24,5);
             $table->decimal('score_1d',24,5);
             $table->decimal('score_7d',24,5);
             $table->decimal('score_14d',24,5);
             $table->decimal('score_30d',24,5);
             $table->decimal('score_90d',24,5);
-            $table->date("Date");
+            $table->date("Date")->index();
             $table->double('volume',8,6);
             $table->timestamps();
         });

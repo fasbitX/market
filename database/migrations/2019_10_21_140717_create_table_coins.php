@@ -17,7 +17,7 @@ class CreateTableCoins extends Migration
             $table->increments('id');
             $table->integer('id_coin')->unsigned();
             $table->integer('rank');
-            $table->string('symbol',255);
+            $table->string('symbol',255)->index();
             $table->decimal('price',24,5);
             $table->decimal('f_price',24,2)->nullable();
             $table->decimal('percent_change_24h',24,6)->nullable();
@@ -45,7 +45,7 @@ class CreateTableCoins extends Migration
             $table->double('percent_change14d',8,6)->nullable();
             $table->double('percent_change90d',8,6)->nullable();
             $table->decimal('score_1d',24,5)->nullable();
-            $table->decimal('score_7d',24,5);->nullable();
+            $table->decimal('score_7d',24,5)->nullable();
             $table->decimal('score_14d',24,5)->nullable();
             $table->decimal('score_30d',24,5)->nullable();
             $table->decimal('score_90d',24,5)->nullable();

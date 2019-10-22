@@ -13,7 +13,7 @@ class CreateTableLiveData extends Migration
      */
     public function up()
     {
-        Schema::create('live_data', function (Blueprint $table) {
+        Schema::create('live_data', function (Blueprint $table){
             $table->increments('my_id');
             $table->integer('id');
             $table->string('name',50)->nullable();
@@ -24,7 +24,7 @@ class CreateTableLiveData extends Migration
             $table->string('chart_image',100)->nullable();
             $table->integer('status')->default(1);
             $table->timestamps();
-
+        });
     }
 
     /**

@@ -25,7 +25,7 @@ class CreateTableIco extends Migration
             $table->string('website',200);
             $table->string('whitepaper',200);
             $table->string('twitter',200);
-            $table->string('youtube',200)
+            $table->string('youtube',200);
             $table->string('facebook',200);
             $table->string('linkedin',200);
             $table->string('github',200);
