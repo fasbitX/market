@@ -20,10 +20,10 @@ class CryptoController extends Controller
             if(!isset($_SESSION['orderby'] ))$_SESSION['orderby'] = 'market';
         }
         if($_SESSION['orderby'] == 'score'){
-            $data = DB::table('coins')->select(DB::raw(' *, score_1d + score_7d + score_14d + score_30d + score_90d as sum'))->orderBy('sum', 'DESC')->paginate(100);     
+            $data = DB::table('coins')->orderBy('score', 'DESC')->paginate(100);     
         }
         if($_SESSION['orderby'] == 'market'){
-            $data = Coin::Where('status','=',1)->orderBy('market_cap', 'DESC')->paginate(100); 
+            $data = DB::table('coins')->where('status','=',1)->orderBy('market_cap', 'DESC')->paginate(100);     
         }   
         $title = DB::table('settings')->where('name','title')->first();
         $settings = DB::table('settings')->where('name','logo')->first();      
@@ -37,10 +37,10 @@ class CryptoController extends Controller
 
     public function dbData(){
         if($_SESSION['orderby'] == 'score'){
-            $data = DB::table('coins')->select(DB::raw(' *, score_1d + score_7d + score_14d + score_30d + score_90d as sum'))->orderBy('sum', 'DESC')->paginate(100);     
+            $data = DB::table('coins')->orderBy('score', 'DESC')->paginate(100);     
         }
         if($_SESSION['orderby'] == 'market'){
-            $data = Coin::Where('status','=',1)->orderBy('market_cap', 'DESC')->paginate(100); 
+            $data = DB::table('coins')->where('status','=',1)->orderBy('market_cap', 'DESC')->paginate(100);     
         }  
         return $data->toArray();
     }
@@ -71,7 +71,6 @@ class CryptoController extends Controller
 
     public function dataAjaxScore($name){
         $data = DB::table('coins_history')
-                ->select(DB::raw(' *, score_1d + score_7d + score_14d + score_30d + score_90d as sum'))
                 ->where('symbol',$name)
                 ->get();
         return $data;

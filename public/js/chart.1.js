@@ -224,9 +224,8 @@ function marketFormat(number) {
     let num = parseInt(number, 10);
     return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
-function formatScore(score_1d,score_7d,score_14d,score_30d,score_90d){
-    let num = (parseFloat(score_1d) + parseFloat(score_7d) + parseFloat(score_14d) + parseFloat(score_30d) + parseFloat(score_90d))*100;
-    return num.toFixed(6);
+function formatScore(score){
+    return score.toFixed(6);
 }
 function roundFormatQuantity(quantity){
     let number = parseFloat(quantity);
@@ -271,7 +270,7 @@ setInterval(function () {
                         btc_price = $tr_i.find('#btc_price').text(response[index].btc_price);
                         market_cap = $tr_i.find('#market_cap').text(marketFormat(response[index].market_cap));
                         volume = $tr_i.find('span.volume-859').text(marketFormat(response[index].volume_24h));
-                        score = $tr_i.find('#score').text(formatScore(response[index].score_1d,response[index].score_7d,response[index].score_14d,response[index].score_30d,response[index].score_90d));
+                        score = $tr_i.find('#score').text(formatScore(response[index].score));
                         if(response[index].percent_change_24h < 0){    
                             percentage = $tr_i.find('#p_down').text(roundFormatQuantity(response[index].percent_change_24h*100) + "%");
                         }else{
