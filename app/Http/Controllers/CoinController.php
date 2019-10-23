@@ -144,7 +144,7 @@ class CoinController extends Controller
                 $history = new coins_history();
                 $history->symbol = $currency['currency'];
                 $history->price  = round($currency['price'],8);
-                $history->score = (($percent_change_24h*1.15*100) + ($percent_change7d*1.25*100) + ($percent_change14d*1.25*100) + ($percent_change30d*1.2*100) + ($percent_change90d*1.15*100));
+                $history->score = (($percent_change_24h*1.15*10000) + ($percent_change7d*1.25*10000) + ($percent_change14d*1.25*10000) + ($percent_change30d*1.2*10000) + ($percent_change90d*1.15*10000));
                 $history->date   = date('Y-m-d H:i:s');
                 $history->save();
             }
@@ -305,7 +305,7 @@ class CoinController extends Controller
                             'percent_change14d'=> $percent_change14d,
                             'percent_change30d'=> $percent_change30d,
                             'percent_change90d'=> $percent_change90d,
-                            'score' => (($percent_change_24h*1.15*100) + ($percent_change7d*1.25*100) + ($percent_change14d*1.25*100) + ($percent_change30d*1.2*100) + ($percent_change90d*1.15*100)),
+                            'score' => (($percent_change_24h*1.15*10000) + ($percent_change7d*1.25*10000) + ($percent_change14d*1.25*10000) + ($percent_change30d*1.2*10000) + ($percent_change90d*1.15*10000)),
                             'market_cap' => round($currency['market_cap'],4) ]);  
             }
         });
