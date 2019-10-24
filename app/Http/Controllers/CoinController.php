@@ -300,6 +300,7 @@ class CoinController extends Controller
                              
                 Coin::where('symbol',$currency['currency'])
                     ->update(['price' => round($currency['price'],8),
+                            'volume_24h' => $currency['1d']['volume'],
                             'percent_change_24h'=> $percent_change_24h,
                             'percent_change7d' => $percent_change7d,
                             'percent_change14d'=> $percent_change14d,
