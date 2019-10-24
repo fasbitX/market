@@ -281,6 +281,13 @@ class CoinController extends Controller
             $url_content = file_get_contents($url);
             $currencies = json_decode( $url_content, true );
             foreach ($currencies as $key => $currency ){
+                $volume = 0;
+                if (isset($currency['1d'])) {
+                    if (isset($currency['1d']['volume'])) {
+                        $volume = $currency['1d']['volume'];
+                    }
+                }
+                
                 $last1Coin  = coins_history::where('symbol',$currency['currency'])
                               ->where('Date',substr(Carbon::now()->subDays(1),0,10))->first();
                 $last7Coin  = coins_history::where('symbol',$currency['currency'])
@@ -300,7 +307,7 @@ class CoinController extends Controller
                              
                 Coin::where('symbol',$currency['currency'])
                     ->update(['price' => round($currency['price'],8),
-                            'volume_24h' => $currency['1d']['volume'],
+                            'volume_24h' => $volume,
                             'percent_change_24h'=> $percent_change_24h,
                             'percent_change7d' => $percent_change7d,
                             'percent_change14d'=> $percent_change14d,
