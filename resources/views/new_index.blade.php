@@ -33,10 +33,13 @@
             <div class="col-lg-2 content-buttons-box d-block">
                 <label class="pl-8"> Choose sort basis</label>
                 <div class="row">
-                <a href="{{url('/')}}/?order-by=market" class="basis-button space-button text-white "> Market Cap </a>         
+                <a href="{{url('/')}}/?order-by=market" class="basis-button space-button text-white ">Market Cap</a>         
                 </div>
                 <div class="row">
-                    <a href="{{url('/')}}/?order-by=score" class="space-button second-section-single-coin text-white basis-button" >Investment Quality </a>                
+                    <a href="{{url('/')}}/?order-by=score" class="space-button second-section-single-coin text-white basis-button" >Investment Quality</a>
+                </div>
+                <div class="row">
+                    <a href="{{url('/')}}/?order-by=volume" class="space-button second-section-single-coin text-white basis-button" >Volume</a>
                 </div>
             </div>
             <div class="col-lg-4 content-buttons-box d-block">

@@ -24,6 +24,9 @@ class CryptoController extends Controller
         }
         if($_SESSION['orderby'] == 'market'){
             $data = DB::table('coins')->where('status','=',1)->orderBy('market_cap', 'DESC')->paginate(100);     
+        }
+        if($_SESSION['orderby'] == 'volume'){
+            $data = DB::table('coins')->where('status','=',1)->orderBy('volume_24h', 'DESC')->paginate(100);     
         }   
         $title = DB::table('settings')->where('name','title')->first();
         $settings = DB::table('settings')->where('name','logo')->first();      
@@ -41,6 +44,9 @@ class CryptoController extends Controller
         }
         if($_SESSION['orderby'] == 'market'){
             $data = DB::table('coins')->where('status','=',1)->orderBy('market_cap', 'DESC')->paginate(100);     
+        }
+        if($_SESSION['orderby'] == 'volume'){
+            $data = DB::table('coins')->where('status','=',1)->orderBy('volume_24h', 'DESC')->paginate(100);     
         }  
         return $data->toArray();
     }
