@@ -124,83 +124,42 @@ class CoinController extends Controller
             $currencies = json_decode( $url_content, true );
             foreach ($currencies as $key => $currency ){
                 $last1Coin  = coins_history::where('symbol',$currency['currency'])
-                              ->where('Date',substr(Carbon::now()->subDays(1),0,10))->first();
+                              ->where('entry_datetime',substr(Carbon::now()->subDays(1),0,16) . ':00')
+                              ->orderBy('created_at', 'DESC')
+                              ->first();
                 $last7Coin  = coins_history::where('symbol',$currency['currency'])
-                              ->where('Date',substr(Carbon::now()->subDays(7),0,10))->first();
+                              ->where('entry_datetime',substr(Carbon::now()->subDays(7),0,16) . ':00')
+                              ->orderBy('created_at', 'DESC')
+                              ->first();
                 $last14Coin = coins_history::where('symbol',$currency['currency'])
-                              ->where('Date',substr(Carbon::now()->subDays(14),0,10))->first();
+                              ->where('entry_datetime',substr(Carbon::now()->subDays(14),0,16) . ':00')
+                              ->orderBy('created_at', 'DESC')
+                              ->first();
                 $last30Coin  = coins_history::where('symbol',$currency['currency'])
-                              ->where('Date',substr(Carbon::now()->subDays(30),0,10))->first(); 
+                              ->where('entry_datetime',substr(Carbon::now()->subDays(30),0,16) . ':00')
+                              ->orderBy('created_at', 'DESC')
+                              ->first(); 
                 $last90Coin = coins_history::where('symbol',$currency['currency'])
-                              ->where('Date',substr(Carbon::now()->subDays(90),0,10))->first();              
-                                         
-                $percent_change_24h = isset($last1Coin->price) ?  round($currency['price']-$last1Coin->price,6)/$last1Coin->price : self::changePercentDays($currency['currency'],$currency['price'],1);
-                $percent_change7d = isset($last7Coin->price)  ?  round($currency['price']-$last7Coin->price,6)/$last7Coin->price : self::changePercentDays($currency['currency'],$currency['price'],2);
-                $percent_change14d = isset($last14Coin->price) ? round($currency['price']-$last14Coin->price,6)/$last14Coin->price : self::changePercentDays($currency['currency'],$currency['price'],3);
-                $percent_change30d = isset($last30Coin->price) ? (round($currency['price']-$last30Coin->price,6)) / $last30Coin->price : self::changePercentDays($currency['currency'],$currency['price'],4);
-                $percent_change90d = isset($last90Coin->price) ? (round($currency['price']-$last90Coin->price,6)) / $last90Coin->price : self::changePercentDays($currency['currency'],$currency['price'],5);
+                              ->where('entry_datetime',substr(Carbon::now()->subDays(90),0,16) . ':00')
+                              ->orderBy('created_at', 'DESC')
+                              ->first();              
+
+                $percent_change_24h = isset($last1Coin->price) ? round( $currency['price']-$last1Coin->price/$last1Coin->price*100, 6) : 0;
+                $percent_change7d = isset($last7Coin->price)  ? round( $currency['price']-$last7Coin->price/$last7Coin->price*100, 6) : 0;
+                $percent_change14d = isset($last14Coin->price) ? round($currency['price']-$last14Coin->price/$last14Coin->price*100, 6) : 0;
+                $percent_change30d = isset($last30Coin->price) ? round($currency['price']-$last30Coin->price / $last30Coin->price*100, 6) : 0;
+                $percent_change90d = isset($last90Coin->price) ? round($currency['price']-$last90Coin->price / $last90Coin->price*100, 6) : 0;
               
                 // save prices and historical data
                 $history = new coins_history();
                 $history->symbol = $currency['currency'];
                 $history->price  = round($currency['price'],8);
-                $history->score = (($percent_change_24h*1.15*100) + ($percent_change7d*1.25*100) + ($percent_change14d*1.25*100) + ($percent_change30d*1.2*100) + ($percent_change90d*1.15*100));
-                $history->date   = date('Y-m-d H:i:s');
+                $history->volume_24h  = ($currency['1d']['volume'] ?? 0);
+                $history->score = (($percent_change_24h*1.15) + ($percent_change7d*1.25) + ($percent_change14d*1.25) + ($percent_change30d*1.2) + ($percent_change90d*1.15));
+                $history->entry_datetime   = (date('Y-m-d H:i') . ':00');
                 $history->save();
             }
         });
-    }
-
-
-    public static function changePercentDays($symbol,$priceNow,$constNum){
-        switch($constNum){
-            case 1:
-                $lastPrice = coins_history::where('symbol',$symbol)
-                ->where('Date',substr(Carbon::now()->subDays(1),0,10))->first(); 
-                $returnNum = 0;
-                if(isset($lastPrice->price)){
-                    $returnNum = ($priceNow - $lastPrice->price) / $lastPrice->price;
-                    return $returnNum;
-                }else{
-                    $returnNum = ($priceNow - $priceNow*1.0113) / ($priceNow*1.0113);
-                    return $returnNum;
-                }
-                
-                break;
-            case 2:
-                $lastPrice = coins_history::where('symbol',$symbol)
-                ->where('Date',substr(Carbon::now()->subDays(7),0,10))->first(); 
-                $returnNum = 0;
-                if(isset($lastPrice->price)){
-                    $returnNum = ($priceNow - $lastPrice->price) / $lastPrice->price;
-                    return $returnNum;
-                }else{
-                    $returnNum = ($priceNow - $priceNow*1.0069) / $priceNow*1.0069;
-                    return $returnNum;
-                }
-                break;
-            case 3:
-                $returnNum = ($priceNow - ($priceNow*1.23)) / ($priceNow*1.23);
-                return round($returnNum, 6);
-                break;
-            
-            case 4:
-                $lastPrice = coins_history::where('symbol',$symbol)
-                ->where('Date',substr(Carbon::now()->subDays(30),0,10))->first(); 
-                $returnNum = 0;
-                if(isset($lastPrice->price)){
-                    $returnNum = ($priceNow - $lastPrice->price) / $lastPrice->price;
-                    return $returnNum;
-                }else{
-                    $returnNum = ($priceNow - $priceNow*1.245) / ($priceNow*1.245);
-                    return $returnNum;
-                }
-                break;        
-            case 5:
-                $returnNum = ($priceNow - ($priceNow*1.35)) / ($priceNow*1.35);
-                return round($returnNum, 6);
-                break;
-        }
     }
 
     public static function scoreUpdate($symbol,$priceNow,$constNum){
@@ -281,39 +240,42 @@ class CoinController extends Controller
             $url_content = file_get_contents($url);
             $currencies = json_decode( $url_content, true );
             foreach ($currencies as $key => $currency ){
-                $volume = 0;
-                if (isset($currency['1d'])) {
-                    if (isset($currency['1d']['volume'])) {
-                        $volume = $currency['1d']['volume'];
-                    }
-                }
-                
                 $last1Coin  = coins_history::where('symbol',$currency['currency'])
-                              ->where('Date',substr(Carbon::now()->subDays(1),0,10))->first();
+                              ->where('entry_datetime',substr(Carbon::now()->subDays(1),0,16) . ':00')
+                              ->orderBy('created_at', 'DESC')
+                              ->first();
                 $last7Coin  = coins_history::where('symbol',$currency['currency'])
-                              ->where('Date',substr(Carbon::now()->subDays(7),0,10))->first();
+                              ->where('entry_datetime',substr(Carbon::now()->subDays(7),0,16) . ':00')
+                              ->orderBy('created_at', 'DESC')
+                              ->first();
                 $last14Coin = coins_history::where('symbol',$currency['currency'])
-                              ->where('Date',substr(Carbon::now()->subDays(14),0,10))->first();
+                              ->where('entry_datetime',substr(Carbon::now()->subDays(14),0,16) . ':00')
+                              ->orderBy('created_at', 'DESC')
+                              ->first();
                 $last30Coin  = coins_history::where('symbol',$currency['currency'])
-                              ->where('Date',substr(Carbon::now()->subDays(30),0,10))->first(); 
+                              ->where('entry_datetime',substr(Carbon::now()->subDays(30),0,16) . ':00')
+                              ->orderBy('created_at', 'DESC')
+                              ->first(); 
                 $last90Coin = coins_history::where('symbol',$currency['currency'])
-                              ->where('Date',substr(Carbon::now()->subDays(90),0,10))->first();              
+                              ->where('entry_datetime',substr(Carbon::now()->subDays(90),0,16) . ':00')
+                              ->orderBy('created_at', 'DESC')
+                              ->first();              
 
-                $percent_change_24h = isset($last1Coin->price) ?  round($currency['price']-$last1Coin->price,6)/$last1Coin->price : self::changePercentDays($currency['currency'],$currency['price'],1);
-                $percent_change7d = isset($last7Coin->price)  ?  round($currency['price']-$last7Coin->price,6)/$last7Coin->price : self::changePercentDays($currency['currency'],$currency['price'],2);
-                $percent_change14d = isset($last14Coin->price) ? round($currency['price']-$last14Coin->price,6)/$last14Coin->price : self::changePercentDays($currency['currency'],$currency['price'],3);
-                $percent_change30d = isset($last30Coin->price) ? (round($currency['price']-$last30Coin->price,6)) / $last30Coin->price : self::changePercentDays($currency['currency'],$currency['price'],4);
-                $percent_change90d = isset($last90Coin->price) ? (round($currency['price']-$last90Coin->price,6)) / $last90Coin->price : self::changePercentDays($currency['currency'],$currency['price'],5);
+                $percent_change_24h = isset($last1Coin->price) ? round( $currency['price']-$last1Coin->price/$last1Coin->price*100, 6) : 0;
+                $percent_change7d = isset($last7Coin->price)  ? round( $currency['price']-$last7Coin->price/$last7Coin->price*100, 6) : 0;
+                $percent_change14d = isset($last14Coin->price) ? round($currency['price']-$last14Coin->price/$last14Coin->price*100, 6) : 0;
+                $percent_change30d = isset($last30Coin->price) ? round($currency['price']-$last30Coin->price / $last30Coin->price*100, 6) : 0;
+                $percent_change90d = isset($last90Coin->price) ? round($currency['price']-$last90Coin->price / $last90Coin->price*100, 6) : 0;
                              
                 Coin::where('symbol',$currency['currency'])
                     ->update(['price' => round($currency['price'],8),
-                            'volume_24h' => $volume,
+                            'volume_24h' => ($currency['1d']['volume'] ?? 0),
                             'percent_change_24h'=> $percent_change_24h,
                             'percent_change7d' => $percent_change7d,
                             'percent_change14d'=> $percent_change14d,
                             'percent_change30d'=> $percent_change30d,
                             'percent_change90d'=> $percent_change90d,
-                            'score' => (($percent_change_24h*1.15*100) + ($percent_change7d*1.25*100) + ($percent_change14d*1.25*100) + ($percent_change30d*1.2*100) + ($percent_change90d*1.15*100)),
+                            'score' => (($percent_change_24h*1.15) + ($percent_change7d*1.25) + ($percent_change14d*1.25) + ($percent_change30d*1.2) + ($percent_change90d*1.15)),
                             'market_cap' => round($currency['market_cap'],4) ]);  
             }
         });

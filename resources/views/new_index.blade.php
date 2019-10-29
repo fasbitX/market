@@ -200,17 +200,17 @@
                                         </span> --}}
                                     </td>
                                     <td class="tbl-col-md change-period clickable-coin-td text-right">
-                                        @if($item->percent_change7d*100 < 0)
-                                            <span id="p_down_7" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change7d*100 > -10) 
-                                                {{substr_replace(number_format($item->percent_change7d*100,2,".",","),"0",1,0)}}
+                                        @if($item->percent_change7d < 0)
+                                            <span id="p_down_7" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change7d > -10) 
+                                                {{substr_replace(number_format($item->percent_change7d,2,".",","),"0",1,0)}}
                                                 @else
-                                                {{number_format($item->percent_change7d*100, 2, '.', ',')}}
+                                                {{number_format($item->percent_change7d, 2, '.', ',')}}
                                                 @endif %</span>
                                         @else
-                                            <span id="p_up_7" class="tbl-price pr-change delta-859 price up perc_none p-0">@if($item->percent_change7d*100<10)
-                                                0{{number_format($item->percent_change7d*100, 2, '.', ',')}}
+                                            <span id="p_up_7" class="tbl-price pr-change delta-859 price up perc_none p-0">@if($item->percent_change7d<10)
+                                                0{{number_format($item->percent_change7d, 2, '.', ',')}}
                                                 @else 
-                                                {{number_format($item->percent_change7d*100, 2, '.', ',')}}
+                                                {{number_format($item->percent_change7d, 2, '.', ',')}}
                                                 @endif %</span>
                                         @endif
                                         {{-- Graph

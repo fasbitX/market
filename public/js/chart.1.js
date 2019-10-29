@@ -277,9 +277,9 @@ setInterval(function () {
                             percentage = $tr_i.find('#p_up').text(roundFormatQuantity(response[index].percent_change_24h*100) + "%");
                         }
                         if(response[index].percent_change7d < 0){
-                            percentage = $tr_i.find('#p_down_7').text(roundFormatQuantity(response[index].percent_change7d*100) + "%");
+                            percentage = $tr_i.find('#p_down_7').text(roundFormatQuantity(response[index].percent_change7d) + "%");
                         }else{
-                            percentage = $tr_i.find('#p_up_7').text(roundFormatQuantity(response[index].percent_change7d*100) + "%");
+                            percentage = $tr_i.find('#p_up_7').text(roundFormatQuantity(response[index].percent_change7d) + "%");
                         }
                         if(response[index].percent_change14d < 0){
                             percentage = $tr_i.find('#p_down_14').text(roundFormatQuantity(response[index].percent_change14d) + "%");
