@@ -71,18 +71,22 @@
                     <table id="coin-table" class="table coinlist">
                         <thead>
                             <tr>
-                                <th class="tbl-col-sm"></th>
-                                <th ><span class="d-none d-sm-block">Rank</span></th>
-                                <th colspan="2">Name</th>
-                                <th class="text-center">Price</th>
-                                <th class="d-none d-lg-table-cell text-right">Market cap</th>
-                                <th class="d-none d-lg-table-cell text-right">Volume</th>
-                                <th class="d-none d-lg-table-cell text-right">1D</th>
-                                <th class="d-none d-lg-table-cell text-right">7D</th>
-                                <th class="d-none d-lg-table-cell text-right">14D</th>
-                                <th class="d-none d-lg-table-cell text-right">30D</th>
-                                <th class="d-none d-lg-table-cell text-right">90D</th>
-                                <th class="d-none d-lg-table-cell text-right">Score</th>
+                                <th rowspan="2" class="text-center">Coin</th>
+                                <th rowspan="2" colspan="2" class="text-center">Virals</th>
+                                <th colspan="5" class="text-center">Changes in Virals</th>
+                                <th rowspan="2" class="text-center">Rank</th>
+                                <th colspan="4" class="text-center">Changes in Rank</th>
+                            </tr>
+                            <tr>
+                                <th>1D</th>
+                                <th>7D</th>
+                                <th>14D</th>
+                                <th>30D</th>
+                                <th>90D</th>
+                                <th>3H</th>
+                                <th>6H</th>
+                                <th>12H</th>
+                                <th>24H</th>
                             </tr>
                         </thead>
                         
@@ -98,106 +102,37 @@
                                     @endphp
                                 @endif   
                                 <tr coin_id="{{$item->id}}" coin_href="/coin/{{$item->symbol}}/{{$rank}}" >
-                                    <td class="tbl-col-sm"></td>  
-                                    <td class="tbl-col-sm">
-                                        <span class="tbl-rank">
-                                            @if(app('request')->input('page'))
-                                                {{ $rank }}
-                                            @else
-                                                {{$rank}}
-                                            @endif  
-                                        </span>
-                                    </td>
-                                    <td class="fit clickable-coin-td">
-                                        <img class="tbl-icon" src="{{$item->image_url}}?width=30" alt="{{$item->name}} logo">
-                                    </td>
-                                    <td class="clickable-coin-td">
-                                        <div class="tbl-currency">
-                                            @if(app('request')->input('page'))
-                                                <a id="name" href="/coin/{{$item->symbol}}/{{$rank}}">{{$item->name}}</a>
-                                            @else
-                                                <a id="name" href="/coin/{{$item->symbol}}/{{$rank}}" >{{$item->name}}</a>
-                                            @endif  
-                                           <!-- <a id="name" href="/coin/{{$item->symbol}}/{{ (app('request')->input('page') ) ? ($index+1)+( (  app('request')->input('page') - 1)*100) : ($index+1) }}">{{$item->name}}</a>
-                                            -->
+                                    <td rowspan="4" class="text-center">
+                                        <div>
+                                            <img class="tbl-icon" src="{{$item->image_url}}?width=30" alt="{{$item->name}} logo">
+                                        </div>
+                                        <div>
+                                            {{$item->name}}
+                                        </div>
+                                        <div>
                                             <span id="symbol" class="tbl-coin-abbrev">[{{$item->symbol}}]</span>
                                         </div>
-                                        <div class="d-lg-none tbl-mob-info smaller">
-                                            <span class="mob-info-title">Mkt Cap:&nbsp;</span>
-                                            <span class="mob-info-value marketcap-859" data-market="{{$item->market_cap}}">{{$item->market_cap}}</span>
-                                            <span class="mob-info-title">Volume:&nbsp;</span>
-                                            <span class="mob-info-value volume-859" data-volume="{{$item->volume_24h}}">{{$item->volume_24h}}</span>
-                                            <span class="mob-info-title">Price change percentage: </span>
-                                            <br>
-                                            <br>
-                                            <br>
-                                            <span class="mob-info-title">1D:</span>
-                                            @if($item->percent_change_24h < 0)
-                                                <span id="p_down" class="tbl-price pr-change delta-859 price down mob-info-value volume-859 p-0">{{number_format($item->percent_change_24h, 2, '.', ',')}}%</span>
-                                            @else
-                                                <span id="p_up" class="tbl-price pr-change delta-859 price up  mob-info-value volume-859 p-0">{{number_format($item->percent_change_24h, 2, '.', ',')}}%</span>
-                                            @endif
-                                            <span class="mob-info-title">7D:</span>
-                                            @if($item->percent_change7d < 0)
-                                                <span id="p_down_7" class="tbl-price pr-change delta-859 price down  mob-info-value volume-859 p-0">{{number_format($item->percent_change7d, 2, '.', ',')}}%</span>
-                                            @else
-                                                <span id="p_up_7" class="tbl-price pr-change delta-859 price up  mob-info-value volume-859 p-0">{{number_format($item->percent_change7d, 2, '.', ',')}}%</span>
-                                            @endif
-                                            <span class="mob-info-title">14D:</span>
-                                            @if($item->percent_change14d < 0)
-                                                {{-- <span id="p_up_14" class="tbl-price pr-change delta-859 price down p-0">{{ -- }}</span> --}}
-                                                <span id="p_up_14" class="tbl-price pr-change delta-859 price down  mob-info-value volume-859 p-0">{{number_format($item->percent_change14d, 2, '.', ',')}}%</span>
-                                            @else
-                                                {{-- <span id="p_up_14" class="tbl-price pr-change delta-859 price up p-0">{{ -- }}</span> --}}
-                                                <span id="p_up_14" class="tbl-price pr-change delta-859 price up  mob-info-value volume-859 p-0">{{number_format($item->percent_change14d, 2, '.', ',')}}%</span>
-                                            @endif         
-                                            <span class="mob-info-title">30D: </span>
-                                            @if($item->percent_change30d < 0)
-                                                <span id="p_down_30" class="tbl-price pr-change delta-859 price  mob-info-value volume-859 down p-0">{{number_format($item->percent_change30d, 2, '.', ',')}}%</span>    
-                                            @else
-                                                <span id="p_up_30" class="tbl-price pr-change delta-859 price up  mob-info-value volume-859 p-0">{{number_format($item->percent_change30d, 2, '.', ',')}}%</span>
-                                            @endif
-                                            <span class="mob-info-title">90D: </span>
-                                            @if($item->percent_change90d < 0)
-                                                <span id="p_down" class="tbl-price pr-change delta-859 price  mob-info-value volume-859 down p-0">{{number_format($item->percent_change90d, 2, '.', ',')}}%</span>
-                                                {{-- <span id="p_up_90" class="tbl-price pr-change delta-859 price down  mob-info-value volume-859 p-0">--%</span> --}}
-                                            @else
-                                                {{-- <span id="p_up_90" class="tbl-price pr-change delta-859 price down  mob-info-value volume-859 p-0">--%</span> --}}
-                                                <span id="p_up_90" class="tbl-price pr-change delta-859 price up mob-info-value volume-859 p-0">{{number_format($item->percent_change90d, 2, '.', ',')}}%</span>
-                                            @endif
-                                        </div>
                                     </td>
-                                    <td class="clickable-coin-td">
-                                        <span id="price" class="tbl-price avgprice-859 price">${{number_format($item->price,8,".",",")}}</span>
+                                    <td>
+                                        Market Cap
                                     </td>
-                                    <td class="d-none d-lg-table-cell clickable-coin-td">
-                                        <span id="market_cap" class="tbl-price price dimmed marketcap-859" data="{{$item->market_cap}}">{{number_format($item->market_cap,0,".",",")}}</span>
-                                    </td>
-                                    <td class="d-none d-lg-table-cell clickable-coin-td">
-                                        <span id="market_cap" class="tbl-price price dimmed marketcap-859" data="{{$item->volume_24h}}">{{number_format($item->volume_24h,0,".",",")}}</span>
+                                    <td>
+                                        <span id="market_cap" class="tbl-price avgprice-859 price" data="{{$item->market_cap}}">{{number_format($item->market_cap,0,".",",")}}</span>
                                     </td>
                                     <td class="tbl-col-md change-period clickable-coin-td text-right">
-                                        @if($item->percent_change_24h*100 < 0)
-                                            <span id="p_down" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change_24h*100 > -10)
-                                                {{substr_replace(number_format($item->percent_change_24h*100,2,".",","),"0",1,0)}}
+                                        @if($item->percent_change_24h < 0)
+                                            <span id="p_down" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change_24h > -10)
+                                                {{substr_replace(number_format($item->percent_change_24h,2,".",","),"0",1,0)}}
                                                 @else 
-                                                {{number_format($item->percent_change_24h*100,2,".",",")}}
+                                                {{number_format($item->percent_change_24h,2,".",",")}}
                                                 @endif %</span>
                                         @else
-                                            <span id="p_up" class="tbl-price pr-change delta-859 price up perc_none p-0">@if($item->percent_change_24h*100 < 10)
-                                                0{{number_format($item->percent_change_24h*100,2,".",",")}}   
+                                            <span id="p_up" class="tbl-price pr-change delta-859 price up perc_none p-0">@if($item->percent_change_24h < 10)
+                                                0{{number_format($item->percent_change_24h,2,".",",")}}   
                                             @else
-                                                {{number_format($item->percent_change_24h*100,2,".",",")}} 
+                                                {{number_format($item->percent_change_24h,2,".",",")}} 
                                             @endif%</span>
                                         @endif
-                                        {{-- Graph
-                                        <span class="small-chart-container">
-                                            <div class="small-chart small-live-chart">
-                                                <div id="highcharts-q6qp1d2-0" class="highcharts-container" style="overflow: hidden; text-align: left;">
-                                                                
-                                                </div>
-                                            </div>
-                                        </span> --}}
                                     </td>
                                     <td class="tbl-col-md change-period clickable-coin-td text-right">
                                         @if($item->percent_change7d < 0)
@@ -213,87 +148,564 @@
                                                 {{number_format($item->percent_change7d, 2, '.', ',')}}
                                                 @endif %</span>
                                         @endif
-                                        {{-- Graph
-                                        <span class="small-chart-container">
-                                            <div class="small-chart small-live-chart">
-                                                <div id="highcharts-q6qp1d2-0" class="highcharts-container align-graph">
-                                                                
-                                                </div>
-                                            </div>
-                                        </span> --}}
                                     </td>
                                     <td class="tbl-col-md change-period clickable-coin-td text-right" >
-                                        @if($item->percent_change14d*100 < 0)
-                                             <span id="p_up_14" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change14d*100 > -10) 
-                                                {{substr_replace(number_format($item->percent_change14d*100,2,".",","),"0",1,0)}} 
+                                        @if($item->percent_change14d < 0)
+                                             <span id="p_up_14" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change14d > -10) 
+                                                {{substr_replace(number_format($item->percent_change14d,2,".",","),"0",1,0)}} 
                                                 @else 
-                                                {{number_format($item->percent_change14d*100, 2, '.', ',')}}
+                                                {{number_format($item->percent_change14d, 2, '.', ',')}}
                                                  @endif
                                                  %</span>
                                         @else
-                                            <span id="p_up_14" class="tbl-price pr-change delta-859 price up perc_none p-0">@if ($item->percent_change14d*100 < 10) 
-                                                0{{number_format($item->percent_change14d*100, 2, '.', ',')}}
+                                            <span id="p_up_14" class="tbl-price pr-change delta-859 price up perc_none p-0">@if ($item->percent_change14d < 10) 
+                                                0{{number_format($item->percent_change14d, 2, '.', ',')}}
                                                 @else 
-                                                {{number_format($item->percent_change14d*100, 2, '.', ',')}}
+                                                {{number_format($item->percent_change14d, 2, '.', ',')}}
                                                 @endif %</span>
                                         @endif
-                                        {{-- Graph 
-                                        <span class="small-chart-container">
-                                            <div class="small-chart small-live-chart">
-                                                <div id="highcharts-q6qp1d2-0" class="highcharts-container align-graph">               
-                                                </div>
-                                            </div>
-                                        </span> --}}
                                     </td>
                                     <td class="tbl-col-md change-period clickable-coin-td text-right" >
-                                        @if($item->percent_change30d*100 < 0)
-                                            <span id="p_down_30" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change30d*100 > -10) 
-                                                {{substr_replace(number_format($item->percent_change30d*100,2,".",","),"0",1,0)}} 
+                                        @if($item->percent_change30d < 0)
+                                            <span id="p_down_30" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change30d > -10) 
+                                                {{substr_replace(number_format($item->percent_change30d,2,".",","),"0",1,0)}} 
                                                 @else 
-                                                {{number_format($item->percent_change30d*100, 2, '.', ',')}}
+                                                {{number_format($item->percent_change30d, 2, '.', ',')}}
                                                 @endif %</span>    
                                         @else
-                                            <span id="p_up_30" class="tbl-price pr-change delta-859 price up perc_none p-0"> @if($item->percent_change30d*100 < 10) 
-                                                0{{number_format($item->percent_change30d*100, 2, '.', ',')}}
+                                            <span id="p_up_30" class="tbl-price pr-change delta-859 price up perc_none p-0"> @if($item->percent_change30d < 10) 
+                                                0{{number_format($item->percent_change30d, 2, '.', ',')}}
                                                 @else 
-                                                {{number_format($item->percent_change30d*100, 2, '.', ',')}}
+                                                {{number_format($item->percent_change30d, 2, '.', ',')}}
                                                 @endif%</span>
                                         @endif
-                                        {{-- Graph 
-                                        <span class="small-chart-container">
-                                            <div class="small-chart small-live-chart">
-                                                <div id="highcharts-q6qp1d2-0" class="highcharts-container align-graph">
-                                                                
-                                                </div>
-                                            </div>
-                                        </span> --}}
                                     </td>
                                     <td class="tbl-col-md change-period clickable-coin-td text-right" >
-                                        @if($item->percent_change90d*100 < 0)
-                                            <span id="p_down" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change90d*100 > -10) 
-                                                {{substr_replace(number_format($item->percent_change90d*100,2,".",","),"0",1,0)}} 
+                                        @if($item->percent_change90d < 0)
+                                            <span id="p_down" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change90d > -10) 
+                                                {{substr_replace(number_format($item->percent_change90d,2,".",","),"0",1,0)}} 
                                                 @else 
-                                                {{number_format($item->percent_change90d*100, 2, '.', ',')}}
+                                                {{number_format($item->percent_change90d, 2, '.', ',')}}
                                                 @endif 
                                                 %</span>
                                         @else
-                                            <span id="p_up_90" class="tbl-price pr-change delta-859 price up perc_none p-0">@if($item->percent_change90d*100 < 10) 
-                                                0{{number_format($item->percent_change90d*100, 2, '.', ',')}}
+                                            <span id="p_up_90" class="tbl-price pr-change delta-859 price up perc_none p-0">@if($item->percent_change90d < 10) 
+                                                0{{number_format($item->percent_change90d, 2, '.', ',')}}
                                                 @else 
-                                                {{number_format($item->percent_change90d*100, 2, '.', ',')}}
+                                                {{number_format($item->percent_change90d, 2, '.', ',')}}
                                                 @endif %</span>
                                         @endif
-                                        {{-- Graph 
-                                        <span class="small-chart-container">
-                                            <div class="small-chart small-live-chart">
-                                                <div id="highcharts-q6qp1d2-0" class="highcharts-container align-graph">
-                                                                
-                                                </div>
-                                            </div>
-                                        </span> --}}
+                                    </td>
+                                    <td class="text-center">
+                                        {{ $rank }}
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right">
+                                        @if($item->percent_change_24h < 0)
+                                            <span id="p_down" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change_24h > -10)
+                                                {{substr_replace(number_format($item->percent_change_24h,2,".",","),"0",1,0)}}
+                                                @else 
+                                                {{number_format($item->percent_change_24h,2,".",",")}}
+                                                @endif %</span>
+                                        @else
+                                            <span id="p_up" class="tbl-price pr-change delta-859 price up perc_none p-0">@if($item->percent_change_24h < 10)
+                                                0{{number_format($item->percent_change_24h,2,".",",")}}   
+                                            @else
+                                                {{number_format($item->percent_change_24h,2,".",",")}} 
+                                            @endif%</span>
+                                        @endif
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right">
+                                        @if($item->percent_change7d < 0)
+                                            <span id="p_down_7" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change7d > -10) 
+                                                {{substr_replace(number_format($item->percent_change7d,2,".",","),"0",1,0)}}
+                                                @else
+                                                {{number_format($item->percent_change7d, 2, '.', ',')}}
+                                                @endif %</span>
+                                        @else
+                                            <span id="p_up_7" class="tbl-price pr-change delta-859 price up perc_none p-0">@if($item->percent_change7d<10)
+                                                0{{number_format($item->percent_change7d, 2, '.', ',')}}
+                                                @else 
+                                                {{number_format($item->percent_change7d, 2, '.', ',')}}
+                                                @endif %</span>
+                                        @endif
                                     </td>
                                     <td class="tbl-col-md change-period clickable-coin-td text-right" >
-                                       <span id="score" class="tbl-price pr-change delta-859 perc_none p-0"> {{number_format($item->score, 6, '.', ',')}} </span>
+                                        @if($item->percent_change14d < 0)
+                                             <span id="p_up_14" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change14d > -10) 
+                                                {{substr_replace(number_format($item->percent_change14d,2,".",","),"0",1,0)}} 
+                                                @else 
+                                                {{number_format($item->percent_change14d, 2, '.', ',')}}
+                                                 @endif
+                                                 %</span>
+                                        @else
+                                            <span id="p_up_14" class="tbl-price pr-change delta-859 price up perc_none p-0">@if ($item->percent_change14d < 10) 
+                                                0{{number_format($item->percent_change14d, 2, '.', ',')}}
+                                                @else 
+                                                {{number_format($item->percent_change14d, 2, '.', ',')}}
+                                                @endif %</span>
+                                        @endif
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right" >
+                                        @if($item->percent_change30d < 0)
+                                            <span id="p_down_30" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change30d > -10) 
+                                                {{substr_replace(number_format($item->percent_change30d,2,".",","),"0",1,0)}} 
+                                                @else 
+                                                {{number_format($item->percent_change30d, 2, '.', ',')}}
+                                                @endif %</span>    
+                                        @else
+                                            <span id="p_up_30" class="tbl-price pr-change delta-859 price up perc_none p-0"> @if($item->percent_change30d < 10) 
+                                                0{{number_format($item->percent_change30d, 2, '.', ',')}}
+                                                @else 
+                                                {{number_format($item->percent_change30d, 2, '.', ',')}}
+                                                @endif%</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr coin_id="{{$item->id}}" coin_href="/coin/{{$item->symbol}}/{{$rank}}" >
+                                    <td>
+                                        Price
+                                    </td>
+                                    <td>
+                                        <span id="price" class="tbl-price avgprice-859 price">${{number_format($item->price,8,".",",")}}</span>
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right">
+                                        @if($item->percent_change_24h < 0)
+                                            <span id="p_down" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change_24h > -10)
+                                                {{substr_replace(number_format($item->percent_change_24h,2,".",","),"0",1,0)}}
+                                                @else 
+                                                {{number_format($item->percent_change_24h,2,".",",")}}
+                                                @endif %</span>
+                                        @else
+                                            <span id="p_up" class="tbl-price pr-change delta-859 price up perc_none p-0">@if($item->percent_change_24h < 10)
+                                                0{{number_format($item->percent_change_24h,2,".",",")}}   
+                                            @else
+                                                {{number_format($item->percent_change_24h,2,".",",")}} 
+                                            @endif%</span>
+                                        @endif
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right">
+                                        @if($item->percent_change7d < 0)
+                                            <span id="p_down_7" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change7d > -10) 
+                                                {{substr_replace(number_format($item->percent_change7d,2,".",","),"0",1,0)}}
+                                                @else
+                                                {{number_format($item->percent_change7d, 2, '.', ',')}}
+                                                @endif %</span>
+                                        @else
+                                            <span id="p_up_7" class="tbl-price pr-change delta-859 price up perc_none p-0">@if($item->percent_change7d<10)
+                                                0{{number_format($item->percent_change7d, 2, '.', ',')}}
+                                                @else 
+                                                {{number_format($item->percent_change7d, 2, '.', ',')}}
+                                                @endif %</span>
+                                        @endif
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right" >
+                                        @if($item->percent_change14d < 0)
+                                             <span id="p_up_14" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change14d > -10) 
+                                                {{substr_replace(number_format($item->percent_change14d,2,".",","),"0",1,0)}} 
+                                                @else 
+                                                {{number_format($item->percent_change14d, 2, '.', ',')}}
+                                                 @endif
+                                                 %</span>
+                                        @else
+                                            <span id="p_up_14" class="tbl-price pr-change delta-859 price up perc_none p-0">@if ($item->percent_change14d < 10) 
+                                                0{{number_format($item->percent_change14d, 2, '.', ',')}}
+                                                @else 
+                                                {{number_format($item->percent_change14d, 2, '.', ',')}}
+                                                @endif %</span>
+                                        @endif
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right" >
+                                        @if($item->percent_change30d < 0)
+                                            <span id="p_down_30" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change30d > -10) 
+                                                {{substr_replace(number_format($item->percent_change30d,2,".",","),"0",1,0)}} 
+                                                @else 
+                                                {{number_format($item->percent_change30d, 2, '.', ',')}}
+                                                @endif %</span>    
+                                        @else
+                                            <span id="p_up_30" class="tbl-price pr-change delta-859 price up perc_none p-0"> @if($item->percent_change30d < 10) 
+                                                0{{number_format($item->percent_change30d, 2, '.', ',')}}
+                                                @else 
+                                                {{number_format($item->percent_change30d, 2, '.', ',')}}
+                                                @endif%</span>
+                                        @endif
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right" >
+                                        @if($item->percent_change90d < 0)
+                                            <span id="p_down" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change90d > -10) 
+                                                {{substr_replace(number_format($item->percent_change90d,2,".",","),"0",1,0)}} 
+                                                @else 
+                                                {{number_format($item->percent_change90d, 2, '.', ',')}}
+                                                @endif 
+                                                %</span>
+                                        @else
+                                            <span id="p_up_90" class="tbl-price pr-change delta-859 price up perc_none p-0">@if($item->percent_change90d < 10) 
+                                                0{{number_format($item->percent_change90d, 2, '.', ',')}}
+                                                @else 
+                                                {{number_format($item->percent_change90d, 2, '.', ',')}}
+                                                @endif %</span>
+                                        @endif
+                                    </td>
+                                    <td class="text-center">
+                                        {{ $rank }}
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right">
+                                        @if($item->percent_change_24h < 0)
+                                            <span id="p_down" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change_24h > -10)
+                                                {{substr_replace(number_format($item->percent_change_24h,2,".",","),"0",1,0)}}
+                                                @else 
+                                                {{number_format($item->percent_change_24h,2,".",",")}}
+                                                @endif %</span>
+                                        @else
+                                            <span id="p_up" class="tbl-price pr-change delta-859 price up perc_none p-0">@if($item->percent_change_24h < 10)
+                                                0{{number_format($item->percent_change_24h,2,".",",")}}   
+                                            @else
+                                                {{number_format($item->percent_change_24h,2,".",",")}} 
+                                            @endif%</span>
+                                        @endif
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right">
+                                        @if($item->percent_change7d < 0)
+                                            <span id="p_down_7" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change7d > -10) 
+                                                {{substr_replace(number_format($item->percent_change7d,2,".",","),"0",1,0)}}
+                                                @else
+                                                {{number_format($item->percent_change7d, 2, '.', ',')}}
+                                                @endif %</span>
+                                        @else
+                                            <span id="p_up_7" class="tbl-price pr-change delta-859 price up perc_none p-0">@if($item->percent_change7d<10)
+                                                0{{number_format($item->percent_change7d, 2, '.', ',')}}
+                                                @else 
+                                                {{number_format($item->percent_change7d, 2, '.', ',')}}
+                                                @endif %</span>
+                                        @endif
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right" >
+                                        @if($item->percent_change14d < 0)
+                                             <span id="p_up_14" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change14d > -10) 
+                                                {{substr_replace(number_format($item->percent_change14d,2,".",","),"0",1,0)}} 
+                                                @else 
+                                                {{number_format($item->percent_change14d, 2, '.', ',')}}
+                                                 @endif
+                                                 %</span>
+                                        @else
+                                            <span id="p_up_14" class="tbl-price pr-change delta-859 price up perc_none p-0">@if ($item->percent_change14d < 10) 
+                                                0{{number_format($item->percent_change14d, 2, '.', ',')}}
+                                                @else 
+                                                {{number_format($item->percent_change14d, 2, '.', ',')}}
+                                                @endif %</span>
+                                        @endif
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right" >
+                                        @if($item->percent_change30d < 0)
+                                            <span id="p_down_30" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change30d > -10) 
+                                                {{substr_replace(number_format($item->percent_change30d,2,".",","),"0",1,0)}} 
+                                                @else 
+                                                {{number_format($item->percent_change30d, 2, '.', ',')}}
+                                                @endif %</span>    
+                                        @else
+                                            <span id="p_up_30" class="tbl-price pr-change delta-859 price up perc_none p-0"> @if($item->percent_change30d < 10) 
+                                                0{{number_format($item->percent_change30d, 2, '.', ',')}}
+                                                @else 
+                                                {{number_format($item->percent_change30d, 2, '.', ',')}}
+                                                @endif%</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr coin_id="{{$item->id}}" coin_href="/coin/{{$item->symbol}}/{{$rank}}" >
+                                    <td>
+                                        Volume
+                                    </td>
+                                    <td>
+                                        <span id="market_cap" class="tbl-price avgprice-859 price" data="{{$item->volume_24h}}">{{number_format($item->volume_24h,0,".",",")}}</span>
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right">
+                                        @if($item->percent_change_24h < 0)
+                                            <span id="p_down" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change_24h > -10)
+                                                {{substr_replace(number_format($item->percent_change_24h,2,".",","),"0",1,0)}}
+                                                @else 
+                                                {{number_format($item->percent_change_24h,2,".",",")}}
+                                                @endif %</span>
+                                        @else
+                                            <span id="p_up" class="tbl-price pr-change delta-859 price up perc_none p-0">@if($item->percent_change_24h < 10)
+                                                0{{number_format($item->percent_change_24h,2,".",",")}}   
+                                            @else
+                                                {{number_format($item->percent_change_24h,2,".",",")}} 
+                                            @endif%</span>
+                                        @endif
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right">
+                                        @if($item->percent_change7d < 0)
+                                            <span id="p_down_7" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change7d > -10) 
+                                                {{substr_replace(number_format($item->percent_change7d,2,".",","),"0",1,0)}}
+                                                @else
+                                                {{number_format($item->percent_change7d, 2, '.', ',')}}
+                                                @endif %</span>
+                                        @else
+                                            <span id="p_up_7" class="tbl-price pr-change delta-859 price up perc_none p-0">@if($item->percent_change7d<10)
+                                                0{{number_format($item->percent_change7d, 2, '.', ',')}}
+                                                @else 
+                                                {{number_format($item->percent_change7d, 2, '.', ',')}}
+                                                @endif %</span>
+                                        @endif
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right" >
+                                        @if($item->percent_change14d < 0)
+                                             <span id="p_up_14" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change14d > -10) 
+                                                {{substr_replace(number_format($item->percent_change14d,2,".",","),"0",1,0)}} 
+                                                @else 
+                                                {{number_format($item->percent_change14d, 2, '.', ',')}}
+                                                 @endif
+                                                 %</span>
+                                        @else
+                                            <span id="p_up_14" class="tbl-price pr-change delta-859 price up perc_none p-0">@if ($item->percent_change14d < 10) 
+                                                0{{number_format($item->percent_change14d, 2, '.', ',')}}
+                                                @else 
+                                                {{number_format($item->percent_change14d, 2, '.', ',')}}
+                                                @endif %</span>
+                                        @endif
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right" >
+                                        @if($item->percent_change30d < 0)
+                                            <span id="p_down_30" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change30d > -10) 
+                                                {{substr_replace(number_format($item->percent_change30d,2,".",","),"0",1,0)}} 
+                                                @else 
+                                                {{number_format($item->percent_change30d, 2, '.', ',')}}
+                                                @endif %</span>    
+                                        @else
+                                            <span id="p_up_30" class="tbl-price pr-change delta-859 price up perc_none p-0"> @if($item->percent_change30d < 10) 
+                                                0{{number_format($item->percent_change30d, 2, '.', ',')}}
+                                                @else 
+                                                {{number_format($item->percent_change30d, 2, '.', ',')}}
+                                                @endif%</span>
+                                        @endif
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right" >
+                                        @if($item->percent_change90d < 0)
+                                            <span id="p_down" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change90d > -10) 
+                                                {{substr_replace(number_format($item->percent_change90d,2,".",","),"0",1,0)}} 
+                                                @else 
+                                                {{number_format($item->percent_change90d, 2, '.', ',')}}
+                                                @endif 
+                                                %</span>
+                                        @else
+                                            <span id="p_up_90" class="tbl-price pr-change delta-859 price up perc_none p-0">@if($item->percent_change90d < 10) 
+                                                0{{number_format($item->percent_change90d, 2, '.', ',')}}
+                                                @else 
+                                                {{number_format($item->percent_change90d, 2, '.', ',')}}
+                                                @endif %</span>
+                                        @endif
+                                    </td>
+                                    <td class="text-center">
+                                        {{ $rank }}
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right">
+                                        @if($item->percent_change_24h < 0)
+                                            <span id="p_down" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change_24h > -10)
+                                                {{substr_replace(number_format($item->percent_change_24h,2,".",","),"0",1,0)}}
+                                                @else 
+                                                {{number_format($item->percent_change_24h,2,".",",")}}
+                                                @endif %</span>
+                                        @else
+                                            <span id="p_up" class="tbl-price pr-change delta-859 price up perc_none p-0">@if($item->percent_change_24h < 10)
+                                                0{{number_format($item->percent_change_24h,2,".",",")}}   
+                                            @else
+                                                {{number_format($item->percent_change_24h,2,".",",")}} 
+                                            @endif%</span>
+                                        @endif
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right">
+                                        @if($item->percent_change7d < 0)
+                                            <span id="p_down_7" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change7d > -10) 
+                                                {{substr_replace(number_format($item->percent_change7d,2,".",","),"0",1,0)}}
+                                                @else
+                                                {{number_format($item->percent_change7d, 2, '.', ',')}}
+                                                @endif %</span>
+                                        @else
+                                            <span id="p_up_7" class="tbl-price pr-change delta-859 price up perc_none p-0">@if($item->percent_change7d<10)
+                                                0{{number_format($item->percent_change7d, 2, '.', ',')}}
+                                                @else 
+                                                {{number_format($item->percent_change7d, 2, '.', ',')}}
+                                                @endif %</span>
+                                        @endif
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right" >
+                                        @if($item->percent_change14d < 0)
+                                             <span id="p_up_14" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change14d > -10) 
+                                                {{substr_replace(number_format($item->percent_change14d,2,".",","),"0",1,0)}} 
+                                                @else 
+                                                {{number_format($item->percent_change14d, 2, '.', ',')}}
+                                                 @endif
+                                                 %</span>
+                                        @else
+                                            <span id="p_up_14" class="tbl-price pr-change delta-859 price up perc_none p-0">@if ($item->percent_change14d < 10) 
+                                                0{{number_format($item->percent_change14d, 2, '.', ',')}}
+                                                @else 
+                                                {{number_format($item->percent_change14d, 2, '.', ',')}}
+                                                @endif %</span>
+                                        @endif
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right" >
+                                        @if($item->percent_change30d < 0)
+                                            <span id="p_down_30" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change30d > -10) 
+                                                {{substr_replace(number_format($item->percent_change30d,2,".",","),"0",1,0)}} 
+                                                @else 
+                                                {{number_format($item->percent_change30d, 2, '.', ',')}}
+                                                @endif %</span>    
+                                        @else
+                                            <span id="p_up_30" class="tbl-price pr-change delta-859 price up perc_none p-0"> @if($item->percent_change30d < 10) 
+                                                0{{number_format($item->percent_change30d, 2, '.', ',')}}
+                                                @else 
+                                                {{number_format($item->percent_change30d, 2, '.', ',')}}
+                                                @endif%</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr coin_id="{{$item->id}}" coin_href="/coin/{{$item->symbol}}/{{$rank}}" >
+                                    <td>
+                                        Score
+                                    </td>
+                                    <td>
+                                        <span id="score" class="tbl-price avgprice-859 price"> {{number_format($item->score, 6, '.', ',')}} </span>
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right">
+                                        @if($item->percent_change_24h < 0)
+                                            <span id="p_down" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change_24h > -10)
+                                                {{substr_replace(number_format($item->percent_change_24h,2,".",","),"0",1,0)}}
+                                                @else 
+                                                {{number_format($item->percent_change_24h,2,".",",")}}
+                                                @endif %</span>
+                                        @else
+                                            <span id="p_up" class="tbl-price pr-change delta-859 price up perc_none p-0">@if($item->percent_change_24h < 10)
+                                                0{{number_format($item->percent_change_24h,2,".",",")}}   
+                                            @else
+                                                {{number_format($item->percent_change_24h,2,".",",")}} 
+                                            @endif%</span>
+                                        @endif
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right">
+                                        @if($item->percent_change7d < 0)
+                                            <span id="p_down_7" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change7d > -10) 
+                                                {{substr_replace(number_format($item->percent_change7d,2,".",","),"0",1,0)}}
+                                                @else
+                                                {{number_format($item->percent_change7d, 2, '.', ',')}}
+                                                @endif %</span>
+                                        @else
+                                            <span id="p_up_7" class="tbl-price pr-change delta-859 price up perc_none p-0">@if($item->percent_change7d<10)
+                                                0{{number_format($item->percent_change7d, 2, '.', ',')}}
+                                                @else 
+                                                {{number_format($item->percent_change7d, 2, '.', ',')}}
+                                                @endif %</span>
+                                        @endif
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right" >
+                                        @if($item->percent_change14d < 0)
+                                             <span id="p_up_14" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change14d > -10) 
+                                                {{substr_replace(number_format($item->percent_change14d,2,".",","),"0",1,0)}} 
+                                                @else 
+                                                {{number_format($item->percent_change14d, 2, '.', ',')}}
+                                                 @endif
+                                                 %</span>
+                                        @else
+                                            <span id="p_up_14" class="tbl-price pr-change delta-859 price up perc_none p-0">@if ($item->percent_change14d < 10) 
+                                                0{{number_format($item->percent_change14d, 2, '.', ',')}}
+                                                @else 
+                                                {{number_format($item->percent_change14d, 2, '.', ',')}}
+                                                @endif %</span>
+                                        @endif
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right" >
+                                        @if($item->percent_change30d < 0)
+                                            <span id="p_down_30" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change30d > -10) 
+                                                {{substr_replace(number_format($item->percent_change30d,2,".",","),"0",1,0)}} 
+                                                @else 
+                                                {{number_format($item->percent_change30d, 2, '.', ',')}}
+                                                @endif %</span>    
+                                        @else
+                                            <span id="p_up_30" class="tbl-price pr-change delta-859 price up perc_none p-0"> @if($item->percent_change30d < 10) 
+                                                0{{number_format($item->percent_change30d, 2, '.', ',')}}
+                                                @else 
+                                                {{number_format($item->percent_change30d, 2, '.', ',')}}
+                                                @endif%</span>
+                                        @endif
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right" >
+                                        @if($item->percent_change90d < 0)
+                                            <span id="p_down" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change90d > -10) 
+                                                {{substr_replace(number_format($item->percent_change90d,2,".",","),"0",1,0)}} 
+                                                @else 
+                                                {{number_format($item->percent_change90d, 2, '.', ',')}}
+                                                @endif 
+                                                %</span>
+                                        @else
+                                            <span id="p_up_90" class="tbl-price pr-change delta-859 price up perc_none p-0">@if($item->percent_change90d < 10) 
+                                                0{{number_format($item->percent_change90d, 2, '.', ',')}}
+                                                @else 
+                                                {{number_format($item->percent_change90d, 2, '.', ',')}}
+                                                @endif %</span>
+                                        @endif
+                                    </td>
+                                    <td class="text-center">
+                                        {{ $rank }}
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right">
+                                        @if($item->percent_change_24h < 0)
+                                            <span id="p_down" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change_24h > -10)
+                                                {{substr_replace(number_format($item->percent_change_24h,2,".",","),"0",1,0)}}
+                                                @else 
+                                                {{number_format($item->percent_change_24h,2,".",",")}}
+                                                @endif %</span>
+                                        @else
+                                            <span id="p_up" class="tbl-price pr-change delta-859 price up perc_none p-0">@if($item->percent_change_24h < 10)
+                                                0{{number_format($item->percent_change_24h,2,".",",")}}   
+                                            @else
+                                                {{number_format($item->percent_change_24h,2,".",",")}} 
+                                            @endif%</span>
+                                        @endif
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right">
+                                        @if($item->percent_change7d < 0)
+                                            <span id="p_down_7" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change7d > -10) 
+                                                {{substr_replace(number_format($item->percent_change7d,2,".",","),"0",1,0)}}
+                                                @else
+                                                {{number_format($item->percent_change7d, 2, '.', ',')}}
+                                                @endif %</span>
+                                        @else
+                                            <span id="p_up_7" class="tbl-price pr-change delta-859 price up perc_none p-0">@if($item->percent_change7d<10)
+                                                0{{number_format($item->percent_change7d, 2, '.', ',')}}
+                                                @else 
+                                                {{number_format($item->percent_change7d, 2, '.', ',')}}
+                                                @endif %</span>
+                                        @endif
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right" >
+                                        @if($item->percent_change14d < 0)
+                                             <span id="p_up_14" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change14d > -10) 
+                                                {{substr_replace(number_format($item->percent_change14d,2,".",","),"0",1,0)}} 
+                                                @else 
+                                                {{number_format($item->percent_change14d, 2, '.', ',')}}
+                                                 @endif
+                                                 %</span>
+                                        @else
+                                            <span id="p_up_14" class="tbl-price pr-change delta-859 price up perc_none p-0">@if ($item->percent_change14d < 10) 
+                                                0{{number_format($item->percent_change14d, 2, '.', ',')}}
+                                                @else 
+                                                {{number_format($item->percent_change14d, 2, '.', ',')}}
+                                                @endif %</span>
+                                        @endif
+                                    </td>
+                                    <td class="tbl-col-md change-period clickable-coin-td text-right" >
+                                        @if($item->percent_change30d < 0)
+                                            <span id="p_down_30" class="tbl-price pr-change delta-859 price down perc_none p-0">@if($item->percent_change30d > -10) 
+                                                {{substr_replace(number_format($item->percent_change30d,2,".",","),"0",1,0)}} 
+                                                @else 
+                                                {{number_format($item->percent_change30d, 2, '.', ',')}}
+                                                @endif %</span>    
+                                        @else
+                                            <span id="p_up_30" class="tbl-price pr-change delta-859 price up perc_none p-0"> @if($item->percent_change30d < 10) 
+                                                0{{number_format($item->percent_change30d, 2, '.', ',')}}
+                                                @else 
+                                                {{number_format($item->percent_change30d, 2, '.', ',')}}
+                                                @endif%</span>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
