@@ -272,9 +272,9 @@ setInterval(function () {
                         volume = $tr_i.find('span.volume-859').text(marketFormat(response[index].volume_24h));
                         score = $tr_i.find('#score').text(formatScore(response[index].score));
                         if(response[index].percent_change_24h < 0){    
-                            percentage = $tr_i.find('#p_down').text(roundFormatQuantity(response[index].percent_change_24h*100) + "%");
+                            percentage = $tr_i.find('#p_down').text(roundFormatQuantity(response[index].percent_change_24h) + "%");
                         }else{
-                            percentage = $tr_i.find('#p_up').text(roundFormatQuantity(response[index].percent_change_24h*100) + "%");
+                            percentage = $tr_i.find('#p_up').text(roundFormatQuantity(response[index].percent_change_24h) + "%");
                         }
                         if(response[index].percent_change7d < 0){
                             percentage = $tr_i.find('#p_down_7').text(roundFormatQuantity(response[index].percent_change7d) + "%");
@@ -287,9 +287,9 @@ setInterval(function () {
                             percentage = $tr_i.find('#p_up_14').text(roundFormatQuantity(response[index].percent_change14d) + "%");
                         }
                         if(response[index].percent_change30d < 0){
-                            percentage = $tr_i.find('#p_down_30').text(roundFormatQuantity(response[index].percent_change30d*100) + "%");
+                            percentage = $tr_i.find('#p_down_30').text(roundFormatQuantity(response[index].percent_change30d) + "%");
                         }else{
-                            percentage = $tr_i.find('#p_up_30').text(roundFormatQuantity(response[index].percent_change30d*100) + "%");
+                            percentage = $tr_i.find('#p_up_30').text(roundFormatQuantity(response[index].percent_change30d) + "%");
                         }
                         if(response[index].percent_change90d < 0){
                             percentage = $tr_i.find('#p_down_90').text(roundFormatQuantity(response[index].percent_change90d) + "%");
