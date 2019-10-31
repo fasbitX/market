@@ -145,17 +145,17 @@ class CoinController extends Controller
                               ->first();              
 
                 $percent_change_24h = isset($last1Coin->price) ? round( ($currency['price']-$last1Coin->price)/$last1Coin->price*100, 6) : 0;
-                $percent_change7d = isset($last7Coin->price)  ? round( ($currency['price']-$last7Coin->price)/$last7Coin->price*100, 6) : 0;
-                $percent_change14d = isset($last14Coin->price) ? round(($currency['price']-$last14Coin->price)/$last14Coin->price*100, 6) : 0;
-                $percent_change30d = isset($last30Coin->price) ? round(($currency['price']-$last30Coin->price) / $last30Coin->price*100, 6) : 0;
-                $percent_change90d = isset($last90Coin->price) ? round(($currency['price']-$last90Coin->price) / $last90Coin->price*100, 6) : 0;
+                $price_7d_change = isset($last7Coin->price)  ? round( ($currency['price']-$last7Coin->price)/$last7Coin->price*100, 6) : 0;
+                $price_14d_change = isset($last14Coin->price) ? round(($currency['price']-$last14Coin->price)/$last14Coin->price*100, 6) : 0;
+                $price_30d_change = isset($last30Coin->price) ? round(($currency['price']-$last30Coin->price) / $last30Coin->price*100, 6) : 0;
+                $price_90d_change = isset($last90Coin->price) ? round(($currency['price']-$last90Coin->price) / $last90Coin->price*100, 6) : 0;
               
                 // save prices and historical data
                 $history = new coins_history();
                 $history->symbol = $currency['currency'];
                 $history->price  = round($currency['price'],8);
                 $history->volume_24h  = ($currency['1d']['volume'] ?? 0);
-                $history->score = (($percent_change_24h*1.15) + ($percent_change7d*1.25) + ($percent_change14d*1.25) + ($percent_change30d*1.2) + ($percent_change90d*1.15));
+                $history->score = (($percent_change_24h*1.15) + ($price_7d_change*1.25) + ($price_14d_change*1.25) + ($price_30d_change*1.2) + ($price_90d_change*1.15));
                 $history->entry_datetime   = (date('Y-m-d H:i') . ':00');
                 $history->save();
             }
@@ -262,20 +262,20 @@ class CoinController extends Controller
                               ->first();              
 
                 $percent_change_24h = isset($last1Coin->price) ? round( ($currency['price']-$last1Coin->price)/$last1Coin->price*100, 6) : 0;
-                $percent_change7d = isset($last7Coin->price)  ? round( ($currency['price']-$last7Coin->price)/$last7Coin->price*100, 6) : 0;
-                $percent_change14d = isset($last14Coin->price) ? round(($currency['price']-$last14Coin->price)/$last14Coin->price*100, 6) : 0;
-                $percent_change30d = isset($last30Coin->price) ? round(($currency['price']-$last30Coin->price) / $last30Coin->price*100, 6) : 0;
-                $percent_change90d = isset($last90Coin->price) ? round(($currency['price']-$last90Coin->price) / $last90Coin->price*100, 6) : 0;
+                $price_7d_change = isset($last7Coin->price)  ? round( ($currency['price']-$last7Coin->price)/$last7Coin->price*100, 6) : 0;
+                $price_14d_change = isset($last14Coin->price) ? round(($currency['price']-$last14Coin->price)/$last14Coin->price*100, 6) : 0;
+                $price_30d_change = isset($last30Coin->price) ? round(($currency['price']-$last30Coin->price) / $last30Coin->price*100, 6) : 0;
+                $price_90d_change = isset($last90Coin->price) ? round(($currency['price']-$last90Coin->price) / $last90Coin->price*100, 6) : 0;
                                            
                 Coin::where('symbol',$currency['currency'])
                     ->update(['price' => round($currency['price'],8),
                             'volume_24h' => ($currency['1d']['volume'] ?? 0),
                             'percent_change_24h'=> $percent_change_24h,
-                            'percent_change7d' => $percent_change7d,
-                            'percent_change14d'=> $percent_change14d,
-                            'percent_change30d'=> $percent_change30d,
-                            'percent_change90d'=> $percent_change90d,
-                            'score' => (($percent_change_24h*1.15) + ($percent_change7d*1.25) + ($percent_change14d*1.25) + ($percent_change30d*1.2) + ($percent_change90d*1.15)),
+                            'price_7d_change' => $price_7d_change,
+                            'price_14d_change'=> $price_14d_change,
+                            'price_30d_change'=> $price_30d_change,
+                            'price_90d_change'=> $price_90d_change,
+                            'score' => (($percent_change_24h*1.15) + ($price_7d_change*1.25) + ($price_14d_change*1.25) + ($price_30d_change*1.2) + ($price_90d_change*1.15)),
                             'market_cap' => round($currency['market_cap'],4) ]);  
             }
         });
@@ -395,17 +395,17 @@ class CoinController extends Controller
                     $coin->percent_change_24h = isset($currency['1d']['price_change_pct']) ? (double)round($currency['1d']['price_change_pct'],2) : 0;
                     $coin->volume_24h =  isset($currency['1d']['volume'])  ? (double)round($currency['1d']['volume'],2) : 0;
                 
-                    $coin->percent_change7d = isset($currency['7d']['price_change_pct']) ? (double)round($currency['7d']['price_change_pct'],2) : 0;
-                    $coin->volume_7d  =  isset($currency['7d']['volume'])  ? (double)round($currency['7d']['volume'],2) : 0;
+                    $coin->price_7d_change = isset($currency['7d']['price_change_pct']) ? (double)round($currency['7d']['price_change_pct'],2) : 0;
+                    $coin->volume_24h_7d_change  =  isset($currency['7d']['volume'])  ? (double)round($currency['7d']['volume'],2) : 0;
                     
-                    $coin->percent_change14d = isset($currency['14d']['price_change_pct']) ? (double)round($currency['14d']['price_change_pct'],2) : 0;
-                    $coin->volume_14d =  isset($currency['14d']['volume'])  ? (double)round($currency['14d']['volume'],2) : 0;
+                    $coin->price_14d_change = isset($currency['14d']['price_change_pct']) ? (double)round($currency['14d']['price_change_pct'],2) : 0;
+                    $coin->volume_24h_14d_change =  isset($currency['14d']['volume'])  ? (double)round($currency['14d']['volume'],2) : 0;
                     
-                    $coin->percent_change30d = isset($currency['30d']['price_change_pct']) ? (double)round($currency['30d']['price_change_pct'],2) : 0;
-                    $coin->volume_30d =  isset($currency['30d']['volume'])  ? (double)round($currency['30d']['volume'],2) : 0;
+                    $coin->price_30d_change = isset($currency['30d']['price_change_pct']) ? (double)round($currency['30d']['price_change_pct'],2) : 0;
+                    $coin->volume_24h_30d_change =  isset($currency['30d']['volume'])  ? (double)round($currency['30d']['volume'],2) : 0;
                     
-                    $coin->percent_change90d = isset($currency['90d']['price_change_pct']) ? (double)round($currency['90d']['price_change_pct'],2) : 0;
-                    $coin->volume_90d =  isset($currency['90d']['volume'])  ? (double)round($currency['90d']['volume'],2) : 0;
+                    $coin->price_90d_change = isset($currency['90d']['price_change_pct']) ? (double)round($currency['90d']['price_change_pct'],2) : 0;
+                    $coin->volume_24h_90d_change =  isset($currency['90d']['volume'])  ? (double)round($currency['90d']['volume'],2) : 0;
                         
                     $coin->market_cap = round($currency['market_cap']);
                     $coin->image_url = isset($currency['logo_url']) ? $currency['logo_url'] : " ";
