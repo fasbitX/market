@@ -237,6 +237,7 @@ class CoinController extends Controller
             $url = "https://api.nomics.com/v1/currencies/ticker?key=".$APIKEYN."&ids=".$symbols_string."&interval=1d,7d,30d&convert=USD";
             $url_content = file_get_contents($url);
             $currencies = json_decode( $url_content, true );
+
             foreach ($currencies as $key => $currency ){
                 $last1Coin  = coins_history::where('symbol',$currency['currency'])
                               ->where('Date',substr(Carbon::now()->subDays(1),0,10))->first();
@@ -247,8 +248,7 @@ class CoinController extends Controller
                 $last30Coin = coins_history::where('symbol',$currency['currency'])
                               ->where('Date',substr(Carbon::now()->subDays(30),0,10))->first(); 
                 $last90Coin = coins_history::where('symbol',$currency['currency'])
-                              ->where('Date',substr(Carbon::now()->subDays(90),0,10))->first();              
-                             
+                              ->where('Date',substr(Carbon::now()->subDays(90),0,10))->first();                                         
                 Coin::where('symbol',$currency['currency'])
                     ->update(['price' => round($currency['price'],8),
                             'percent_change_24h'=>isset($last1Coin->price) ? round($currency['price']-$last1Coin->price,8)/$last1Coin->price : self::changePercentDays($currency['currency'],$currency['price'],1),
@@ -262,8 +262,7 @@ class CoinController extends Controller
                             'score_14d'=>isset($last14Coin->price) ? ((round($currency['price']-$last14Coin->price,8))/($last14Coin->price))*1.25*100*100 : self::scoreUpdate($currency['currency'],$currency['price'],3),
                             'score_30d'=>isset($last30Coin->price) ? ((round($currency['price']-$last30Coin->price,8))/($last30Coin->price))*1.2*100*100  : self::scoreUpdate($currency['currency'],$currency['price'],4),
                             'score_90d'=>isset($last90Coin->price) ? ((round($currency['price']-$last90Coin->price,8))/($last90Coin->price))*1.15*100*100 : self::scoreUpdate($currency['currency'],$currency['price'],5),
-   
-                            'market_cap' => isset($currency['market_cap'])?round($currency['market_cap'],4):0 ]);  
+                            'market_cap' => isset($currency['market_cap']) ? round($currency['market_cap'],4) : 0 ]);  
             }
         });
         
@@ -335,158 +334,28 @@ class CoinController extends Controller
     }
     
     public static function newAPI(){
-        
-        //API key for www.alphavantage.co
-    //    $APIKEYA = "GS853EHQT1R8ET7J";
-    //    ///API key for www.nomics.com
-    //    $APIKEYN = "e612f7b0f124b709451a0ccb0e29752b";
-    //    // $url_alpha = "https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=ETH&to_currency=USD&apikey=demo".$APIKEYA;
-    //    $band = 1;
-    //    $symbols_string = "";
-    //    $currencies = "";
-    //    $url = "https://api.nomics.com/v1/currencies/sparkline?key=".$APIKEYN."&start=2019-10-18T00:00:00Z&end=2019-10-20T00:01:00Z";
-    //    $contentUrl = file_get_contents($url);
-    //    $JsonResponse = json_decode($contentUrl,true);
-       
-    //    $none = array();
-    //    $monedas_all = Coin::all();
-    //    $monedas_name = array();
-    //     foreach($monedas_all as $mone){
-    //         array_push($monedas_name,$mone->symbol);
-    //     }
-
-    //    for($i=0 ; $i<sizeof($JsonResponse)-1700 ; $i++){
-    //         if (!in_array($JsonResponse[$i]['currency'],$monedas_name)) {
-    //             array_push($none,$JsonResponse[$i]['currency']);
-    //         }
-    //    }
-
-    //    $monedas_unidas = implode(',',$none);
-    //    $peticion = "https://api.nomics.com/v1/currencies/ticker?key=".$APIKEYN."&ids=".$monedas_unidas."&interval=1d,7d,30d&convert=USD";
-    //    $respuesta = json_decode( file_get_contents($peticion), true );
-    //    var_dump($respuesta);
-    //    die();
-    //    $cantidad =0;
-    //    foreach($respuesta as $currency){
-    //        if(isset($currency['1d']['volume'])){
-    //            if($currency['1d']['volume']>0){
-    //             //inserta en bd
-    //             echo "<br>".$currency['symbol'];
-    //             $cantidad++;
-
-    //         $verify = Coin::where('symbol','=',$currency['symbol'])->first();
-    //             if(!$verify){
-    //                 $coin = new Coin();
-    //                 $coin->rank = $currency['rank'];
-    //                 $coin->symbol =$currency['symbol'];
-    //                 $coin->name = $currency['name'];;
-    //                 $coin->price = round($currency['price'],2);
-
-    //                 $coin->percent_change_24h = isset($currency['1d']['price_change_pct']) ? (double)round($currency['1d']['price_change_pct'],2) : 0;
-    //                 $coin->volume_24h =  isset($currency['1d']['volume'])  ? (double)round($currency['1d']['volume'],2) : 0;
-                
-    //                 $coin->percent_change7d = isset($currency['7d']['price_change_pct']) ? (double)round($currency['7d']['price_change_pct'],2) : 0;
-    //                 $coin->volume_7d  =  isset($currency['7d']['volume'])  ? (double)round($currency['7d']['volume'],2) : 0;
-                    
-    //                 $coin->percent_change14d = isset($currency['14d']['price_change_pct']) ? (double)round($currency['14d']['price_change_pct'],2) : 0;
-    //                 $coin->volume_14d =  isset($currency['14d']['volume'])  ? (double)round($currency['14d']['volume'],2) : 0;
-                    
-    //                 $coin->percent_change30d = isset($currency['30d']['price_change_pct']) ? (double)round($currency['30d']['price_change_pct'],2) : 0;
-    //                 $coin->volume_30d =  isset($currency['30d']['volume'])  ? (double)round($currency['30d']['volume'],2) : 0;
-                    
-    //                 $coin->percent_change90d = isset($currency['90d']['price_change_pct']) ? (double)round($currency['90d']['price_change_pct'],2) : 0;
-    //                 $coin->volume_90d =  isset($currency['90d']['volume'])  ? (double)round($currency['90d']['volume'],2) : 0;
-                        
-    //                 $coin->market_cap = round($currency['market_cap']);
-    //                 $coin->image_url = isset($currency['logo_url']) ? $currency['logo_url'] : " ";
-    //                 $coin->total_supply = isset($currency['max_supply']) ? $currency['max_supply'] : " ";
-    //                 $url_general = "https://api.nomics.com/v1/currencies?key=".$APIKEYN."&ids=".$currency['symbol']."&attributes=website_url,description";
-    //                 $data_2 = json_decode( file_get_contents($url_general), true );
-    //                 //save general info  
-    //                 if(isset($data_2[0])){
-    //                     $coin->description = $data_2[0]['description'];
-    //                     $coin->website = $data_2[0]['website_url'];
-    //                 }else{
-    //                     $coin->description = "Not Available";
-    //                     $coin->website = "#";
-    //                 }
-    //                 sleep(50);
-    //                 $url_info_crypto = 'https://min-api.cryptocompare.com/data/coin/generalinfo?fsyms='.$currency['symbol'].'&tsym=XMR';
-    //                 $dataCrypto = json_decode( file_get_contents($url_info_crypto), true );
-                
-    //                 if(isset($dataCrypto['Data'][0])){
-    //                     $coin->id_coin = $dataCrypto['Data'][0]['CoinInfo']['Id'];
-    //                     $coin->algorithm =$dataCrypto['Data'][0]['CoinInfo']['Algorithm'];
-    //                     $coin->prooftype = $dataCrypto['Data'][0]['CoinInfo']['ProofType'];
-    //                 }else{
-    //                     $coin->id_coin = 9999;
-    //                     $coin->algorithm = "Not Available";
-    //                     $coin->prooftype = "Not Available";
-    //                 }
-    //                 $coin->features = "0";
-    //                 $coin->technology = "0";
-    //                 $coin->status = 1;
-    //                 $coin->f_volume_24h = "1";
-    //                 $coin->btc_price = "1";
-    //                 $coin->f_market_cap = "1";
-    //                 $coin->f_price = "1"; 
-    //                 $coin->save();
-                  
-    //               //var_dump($coin);
-    //               //die();
-    //                // echo "guardo". $key;
-    //             }    
-    //            }
-    //        }
-    //    }
-
-    //    echo "<br> CAntidad: ".$cantidad;
-
-       //var_dump($respuesta);
-
-
-       //var_dump($none);
-    //    die();
-       //foreach($JsonResponse as $band => $currency){
-           //var_dump($currency['currency']);
-           //$url_nomics = "https://api.nomics.com/v1/currencies/ticker?key=".$APIKEYN."&ids=".$currency['currency']."&interval=1d,7d,30d&convert=USD";
-         //  $currencies = json_decode( file_get_contents($url_nomics), true );
-         
-           //var_dump($currencies);
-         //die();
-         //  foreach($currencies as $newCoin){
-               //echo '<br> '.$currencies[0]['currency'];
-               /*if(isset($newCoin['1d'])){
-                   echo "inserteme";
-               }*/
-           //}
-           //die();
-        //}
-        // die();
-        
-        
         //API key for www.alphavantage.co
         //$APIKEYA = "GS853EHQT1R8ET7J";
         ///API key for www.nomics.com
-        //$APIKEYN = "e612f7b0f124b709451a0ccb0e29752b";
+        $APIKEYN = "e612f7b0f124b709451a0ccb0e29752b";
         // $url_alpha = "https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=ETH&to_currency=USD&apikey=demo".$APIKEYA;
         //$band = 1;
         //$symbols_string = "";
         //$currencies = "";
-        // $url = "https://api.nomics.com/v1/currencies/sparkline?key=".$APIKEYN."&start=2019-10-18T00:00:00Z&end=2019-10-18T00:01:00Z";
-        // $contentUrl = file_get_contents($url);
-        // $JsonResponse = json_decode($contentUrl,true);
-        // foreach($JsonResponse as $band => $currency){   
-        //    foreach($currency['prices'] as $key => $currencyPrice){
-        //             $coin = new coins_history();
-        //             $coin->symbol = $currency['currency'];
-        //             $coin->price = $currencyPrice;
-        //             $coin->Date = substr($currency['timestamps'][$key],0,-10);
-        //             var_dump(substr($currency['timestamps'][$key],0,-10) );
-        //             $coin->save();  
-        //    }           
-        // }
-        // die();
+        $url = "https://api.nomics.com/v1/currencies/sparkline?key=".$APIKEYN."&start=2019-09-25T00:00:00Z&end=2019-09-30T00:01:00Z";
+        $contentUrl = file_get_contents($url);
+        $JsonResponse = json_decode($contentUrl,true);
+        foreach($JsonResponse as $band => $currency){   
+           foreach($currency['prices'] as $key => $currencyPrice){
+                    $coin = new coins_history();
+                    $coin->symbol = $currency['currency'];
+                    $coin->price = $currencyPrice;
+                    $coin->Date = substr($currency['timestamps'][$key],0,-10);
+                    var_dump(substr($currency['timestamps'][$key],0,-10) );
+                    $coin->save();  
+           }           
+        }
+        die();
         Coin::CHUNK(1000, function($coin) {
             $APIKEYN = "e612f7b0f124b709451a0ccb0e29752b";
             $symbols = $coin->pluck('symbol')->toArray();
