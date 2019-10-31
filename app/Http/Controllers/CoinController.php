@@ -342,7 +342,7 @@ class CoinController extends Controller
         //$band = 1;
         //$symbols_string = "";
         //$currencies = "";
-        $url = "https://api.nomics.com/v1/currencies/sparkline?key=".$APIKEYN."&start=2019-09-25T00:00:00Z&end=2019-09-30T00:01:00Z";
+        $url = "https://api.nomics.com/v1/currencies/sparkline?key=".$APIKEYN."&start=2019-10-01T00:00:00Z&end=2019-10-31T00:01:00Z";
         $contentUrl = file_get_contents($url);
         $JsonResponse = json_decode($contentUrl,true);
         foreach($JsonResponse as $band => $currency){   
@@ -351,7 +351,6 @@ class CoinController extends Controller
                     $coin->symbol = $currency['currency'];
                     $coin->price = $currencyPrice;
                     $coin->Date = substr($currency['timestamps'][$key],0,-10);
-                    var_dump(substr($currency['timestamps'][$key],0,-10) );
                     $coin->save();  
            }           
         }
