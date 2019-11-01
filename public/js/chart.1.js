@@ -271,10 +271,10 @@ setInterval(function () {
                         market_cap = $tr_i.find('#market_cap').text(marketFormat(response[index].market_cap));
                         volume = $tr_i.find('span.volume-859').text(marketFormat(response[index].volume_24h));
                         score = $tr_i.find('#score').text(formatScore(response[index].score));
-                        if(response[index].percent_change_24h < 0){    
-                            percentage = $tr_i.find('#p_down').text(roundFormatQuantity(response[index].percent_change_24h) + "%");
+                        if(response[index].price_24h_change < 0){    
+                            percentage = $tr_i.find('#p_down').text(roundFormatQuantity(response[index].price_24h_change) + "%");
                         }else{
-                            percentage = $tr_i.find('#p_up').text(roundFormatQuantity(response[index].percent_change_24h) + "%");
+                            percentage = $tr_i.find('#p_up').text(roundFormatQuantity(response[index].price_24h_change) + "%");
                         }
                         if(response[index].price_7d_change < 0){
                             percentage = $tr_i.find('#p_down_7').text(roundFormatQuantity(response[index].price_7d_change) + "%");

@@ -35,14 +35,14 @@
                         </span>
                     </div>
                     <div class="price-btc" style=" display: flex;flex-direction: column; justify-content: flex-end;    padding-left: 1em;">
-                        @if($data->percent_change_24h >= 0)
+                        @if($data->price_24h_change >= 0)
                         <span class="font-size-price price up"style="font-size: 25px;">
-                            (<span>{{ $data->percent_change_24h }}</span>%)
+                            (<span>{{ $data->price_24h_change }}</span>%)
                         </span>
                         <span class="font-size-price price up">Last 24 Hour</span>
                         @else
                         <span class="font-size-price price down" style="font-size: 25px;">
-                            (<span>{{ $data->percent_change_24h }}</span>%)
+                            (<span>{{ $data->price_24h_change }}</span>%)
                         </span>
                         <span class="font-size-price price down">Last 24 Hour</span>
                         @endif        
@@ -66,13 +66,13 @@
                         </span>
                     </div>
                     <div class="price-btc">
-                    @if($data->percent_change_24h >= 0)
+                    @if($data->price_24h_change >= 0)
                         <span class="font-size-price price up">
-                            (<span>{{ $data->percent_change_24h }}</span>%)
+                            (<span>{{ $data->price_24h_change }}</span>%)
                         </span>
                         @else
                         <span class="font-size-price price down">
-                            (<span>{{ $data->percent_change_24h }}</span>%)
+                            (<span>{{ $data->price_24h_change }}</span>%)
                         </span>
                         @endif
                       
