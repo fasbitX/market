@@ -211,7 +211,8 @@ class CoinController extends Controller
              * calculation of percentages and formula application
              */
             foreach ($currencies as $key => $currency ){
-                $index = array_search($currency['currency'],$coin_name);     
+                $index = array_search($currency['currency'],$coin_name); 
+                $percent_1d= 0 ;    
                 if($index != false){
                     $percent_1d = ($coin_price[$index]['price_1d']==0)?0:round((($currency['price'] - $coin_price[$index]['price_1d'])/$coin_price[$index]['price_1d']),8,PHP_ROUND_HALF_DOWN);
                     if($coin_price[$index]['price_7d']== -1)
@@ -239,7 +240,7 @@ class CoinController extends Controller
                 /**
                 * calculation of score and formula application
                 */
-                $score_1d =round( $percent_1d* self::scoreMult1d *100*100,5,PHP_ROUND_HALF_DOWN);
+                $score_1d =round($percent_1d* self::scoreMult1d *100*100,5,PHP_ROUND_HALF_DOWN);
                 $score_7d = round($percent_7d* self::scoreMult7d *100*100,5,PHP_ROUND_HALF_DOWN);
                 $score_14d = round($percent_14d* self::scoreMult14d *100*100,5,PHP_ROUND_HALF_DOWN);
                 $score_30d = round($percent_30d* self::scoreMult30d *100*100,5,PHP_ROUND_HALF_DOWN);
