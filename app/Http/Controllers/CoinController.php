@@ -212,7 +212,11 @@ class CoinController extends Controller
              */
             foreach ($currencies as $key => $currency ){
                 $index = array_search($currency['currency'],$coin_name); 
-                $percent_1d= 0 ;    
+                $percent_1d= 0;
+                $percent_7d = 0;
+                $percent_14d = 0; 
+                $percent_30d = 0; 
+                $percent_90d = 0;  
                 if($index != false){
                     $percent_1d = ($coin_price[$index]['price_1d']==0)?0:round((($currency['price'] - $coin_price[$index]['price_1d'])/$coin_price[$index]['price_1d']),8,PHP_ROUND_HALF_DOWN);
                     if($coin_price[$index]['price_7d']== -1)
