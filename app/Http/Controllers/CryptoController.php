@@ -7,20 +7,33 @@ use App\Http\Controllers\Controller;
 use App\Coin;
 use App\coins_history;
 use DB;
+use Carbon\Carbon;
 session_start();
 class CryptoController extends Controller
 {
-    
-    public function index(Request $request){ 
-       
-        
+
+    /**
+     * declaration of the values constants of the scores for their respective days.
+     */
+    const scoreMult1d=1.15;
+    const scoreMult7d=1.25;
+    const scoreMult14d=1.25;
+    const scoreMult30d=1.2;
+    const scoreMult90d=1.15;
+
+    /**
+     * main function, returns the data, 
+     * to the main view and makes the ordering calculations.
+     */
+    public function index(Request $request){    
         if($request->input('order-by')){
             $_SESSION['orderby'] = $request->input('order-by');
         }else{
             if(!isset($_SESSION['orderby'] ))$_SESSION['orderby'] = 'market';
         }
         if($_SESSION['orderby'] == 'score'){
-            $data = DB::table('coins')->select(DB::raw(' *, score_1d + score_7d + score_14d + score_30d + score_90d as sum'))->orderBy('sum', 'DESC')->paginate(100);     
+            //$data = DB::table('coins')->select(DB::raw(' *, score_1d + score_7d + score_14d + score_30d + score_90d as sum'))->orderBy('sum', 'DESC')->paginate(100);  
+            $data = Coin::orderBy('score','DESC')->paginate(100);
         }
         if($_SESSION['orderby'] == 'market'){
             $data = Coin::Where('status','=',1)->orderBy('market_cap', 'DESC')->paginate(100); 
@@ -35,9 +48,14 @@ class CryptoController extends Controller
         return view('new_index',['data'=>$data,'ads'=>$ads,'ads1'=>$ads1,'title'=>$title,'meta_description'=>$meta_description,'meta_keyword'=>$meta_keyword]);
     }
 
+    /**
+     * refreshes the information in the 
+     * table depending on the order, 
+     * through an ajax.
+     */
     public function dbData(){
         if($_SESSION['orderby'] == 'score'){
-            $data = DB::table('coins')->select(DB::raw(' *, score_1d + score_7d + score_14d + score_30d + score_90d as sum'))->orderBy('sum', 'DESC')->paginate(100);     
+            $data = DB::table('coins')->select(DB::raw(' *, score as sum'))->orderBy('sum', 'DESC')->paginate(100);     
         }
         if($_SESSION['orderby'] == 'market'){
             $data = Coin::Where('status','=',1)->orderBy('market_cap', 'DESC')->paginate(100); 
@@ -45,6 +63,10 @@ class CryptoController extends Controller
         return $data->toArray();
     }
 
+    /**
+     * function of sending the information 
+     * of the view of a specific currency
+     */
     public function singleCoin($name,$rank){
         $title = DB::table('settings')->where('name','title')->first();
         $coin = Coin::where('symbol',$name)->first();
@@ -58,6 +80,12 @@ class CryptoController extends Controller
                 ->with('ads1',$ads1)
                 ->with('rank',$rank);
     }
+
+    /**
+     * ajax functions to return the 
+     * necessary data in view of a 
+     * specific currency, used by an ajax.
+     */
     public function dataAjaxGraph($name){
         //$coin = coins_history::where('symbol','BTC')->first();
         $coin = DB::table('coins_history')
