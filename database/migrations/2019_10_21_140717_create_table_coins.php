@@ -44,11 +44,7 @@ class CreateTableCoins extends Migration
             $table->double('percent_change30d',8,6)->nullable();
             $table->double('percent_change14d',8,6)->nullable();
             $table->double('percent_change90d',8,6)->nullable();
-            $table->decimal('score_1d',24,5)->nullable();
-            $table->decimal('score_7d',24,5)->nullable();
-            $table->decimal('score_14d',24,5)->nullable();
-            $table->decimal('score_30d',24,5)->nullable();
-            $table->decimal('score_90d',24,5)->nullable();
+            $table->decimal('score',24,5)->nullable();
         });
 
         Schema::table('coins', function($table) {
