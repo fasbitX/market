@@ -212,7 +212,7 @@ class CoinController extends Controller
              */
             foreach ($currencies as $key => $currency ){
                 $index = array_search($currency['currency'],$coin_name); 
-                $percent_1d= 0;
+                $percent_1d = 0;
                 $percent_7d = 0;
                 $percent_14d = 0; 
                 $percent_30d = 0; 
@@ -252,7 +252,7 @@ class CoinController extends Controller
                 // save prices and historical data
                 $history = new coins_history();
                 $history->symbol = $currency['currency'];
-                $history->price  = round($currency['price'],8);
+                $history->price  = round($currency['price'],10);
                 $history->score_1d =$score_1d; 
                 $history->score_7d =$score_7d; 
                 $history->score_14d=$score_14d;
@@ -358,11 +358,12 @@ class CoinController extends Controller
                     }
 
                     $score = round(($percent_1d * self::scoreMult1d *100*100),8,PHP_ROUND_HALF_DOWN) + 
-                    round(($percent_7d * self::scoreMult7d *100*100) ,8,PHP_ROUND_HALF_DOWN)+ 
+                    round(($percent_7d  * self::scoreMult7d *100*100) ,8,PHP_ROUND_HALF_DOWN)+ 
                     round(($percent_14d * self::scoreMult14d *100*100) ,8,PHP_ROUND_HALF_DOWN)+
-                    round(  ($percent_30d * self::scoreMult30d *100*100) +($percent_90d * self::scoreMult90d *100*100),8,PHP_ROUND_HALF_DOWN);
+                    round(($percent_30d * self::scoreMult30d *100*100),8,PHP_ROUND_HALF_DOWN) +
+                    round(($percent_90d * self::scoreMult90d *100*100),8,PHP_ROUND_HALF_DOWN);
                     Coin::where('symbol',$currency['currency'])
-                    ->update(['price' => round($currency['price'],8,PHP_ROUND_HALF_DOWN),
+                    ->update(['price' => round($currency['price'],10,PHP_ROUND_HALF_DOWN),
                             'percent_change_24h'=>$percent_1d ,
                             'percent_change7d' =>$percent_7d ,
                             'percent_change14d'=>$percent_14d  ,

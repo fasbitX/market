@@ -19,7 +19,7 @@ class CreateCoinsTable extends Migration
             $table->integer('rank');
             $table->string('symbol');
             $table->string('name');
-            $table->decimal('price',24,8);
+            $table->decimal('price',24,10);
             $table->string('f_price');
             $table->double('percent_change_24h',24,10);
             $table->double('percent_change_7d',24,10);

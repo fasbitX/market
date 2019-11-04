@@ -16,7 +16,7 @@ class CreateCoinsHistoryTable extends Migration
         Schema::create('coins_history', function (Blueprint $table) {
             $table->increments('id');
             $table->string('symbol')->index();
-            $table->decimal('price',24,5);
+            $table->decimal('price',24,10);
             $table->decimal('score_1d',24,5);
             $table->decimal('score_7d',24,5);
             $table->decimal('score_14d',24,5);

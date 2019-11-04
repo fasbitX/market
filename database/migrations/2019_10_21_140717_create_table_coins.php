@@ -18,7 +18,7 @@ class CreateTableCoins extends Migration
             $table->integer('id_coin')->unsigned();
             $table->integer('rank');
             $table->string('symbol',255)->index();
-            $table->decimal('price',24,5);
+            $table->decimal('price',24,10);
             $table->decimal('f_price',24,2)->nullable();
             $table->decimal('percent_change_24h',24,6)->nullable();
             $table->decimal('volume_24h',24,5);
