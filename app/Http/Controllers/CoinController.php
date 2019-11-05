@@ -135,16 +135,16 @@ class CoinController extends Controller
      * coins history table and have a 
      * historical data record.
      */
-    public static function saveHistoricalData(){
-        Coin::CHUNK(500, function($coin) { 
-            //APIKEY from nomics
-            $APIKEYN = "e612f7b0f124b709451a0ccb0e29752b";
-            $symbols = $coin->pluck('symbol')->toArray();
-            $symbols_string = implode(',',$symbols);
-            $currencies = "";
-            $url = "https://api.nomics.com/v1/currencies/ticker?key=".$APIKEYN."&ids=".$symbols_string."&interval=1d,7d,30d&convert=USD";
-            $url_content = file_get_contents($url);
-            $currencies = json_decode( $url_content, true );
+    public static function saveHistoricalData($data1D,$data7D,$data14D,$data30D,$data90D,$currencies){
+        // Coin::CHUNK(500, function($coin) { 
+        //     //APIKEY from nomics
+        //     $APIKEYN = "e612f7b0f124b709451a0ccb0e29752b";
+        //     $symbols = $coin->pluck('symbol')->toArray();
+        //     $symbols_string = implode(',',$symbols);
+        //     $currencies = "";
+        //     $url = "https://api.nomics.com/v1/currencies/ticker?key=".$APIKEYN."&ids=".$symbols_string."&interval=1d,7d,30d&convert=USD";
+        //     $url_content = file_get_contents($url);
+        //     $currencies = json_decode( $url_content, true );
 
             /**
              * query to bring the data sectioned 
@@ -152,16 +152,16 @@ class CoinController extends Controller
              */
             $coin_name = array();
             $coin_price = array();
-            $data1D = coins_history::select('symbol',DB::raw('avg(price) as price'))
-                    ->where('Date','=',substr(Carbon::Now()->subDays(1),0,10))->groupBy('symbol')->get();
-            $data7D = coins_history::select('symbol',DB::raw('avg(price) as price'))
-                    ->where('Date','=',substr(Carbon::Now()->subDays(7),0,10))->groupBy('symbol')->get();   
-            $data14D = coins_history::select('symbol',DB::raw('avg(price) as price'))
-                    ->where('Date','=',substr(Carbon::Now()->subDays(14),0,10))->groupBy('symbol')->get();
-            $data30D = coins_history::select('symbol',DB::raw('avg(price) as price'))
-                    ->where('Date','=',substr(Carbon::Now()->subDays(30),0,10))->groupBy('symbol')->get();
-            $data90D = coins_history::select('symbol',DB::raw('avg(price) as price'))
-                    ->where('Date','=',substr(Carbon::Now()->subDays(90),0,10))->groupBy('symbol')->get();
+            // $data1D = coins_history::select('symbol',DB::raw('avg(price) as price'))
+            //         ->where('Date','=',substr(Carbon::Now()->subDays(1),0,10))->groupBy('symbol')->get();
+            // $data7D = coins_history::select('symbol',DB::raw('avg(price) as price'))
+            //         ->where('Date','=',substr(Carbon::Now()->subDays(7),0,10))->groupBy('symbol')->get();   
+            // $data14D = coins_history::select('symbol',DB::raw('avg(price) as price'))
+            //         ->where('Date','=',substr(Carbon::Now()->subDays(14),0,10))->groupBy('symbol')->get();
+            // $data30D = coins_history::select('symbol',DB::raw('avg(price) as price'))
+            //         ->where('Date','=',substr(Carbon::Now()->subDays(30),0,10))->groupBy('symbol')->get();
+            // $data90D = coins_history::select('symbol',DB::raw('avg(price) as price'))
+            //         ->where('Date','=',substr(Carbon::Now()->subDays(90),0,10))->groupBy('symbol')->get();
             
             foreach ($data1D as $coin) {
                 array_push($coin_name,$coin->symbol);
@@ -261,7 +261,8 @@ class CoinController extends Controller
                 $history->date   = date('Y-m-d H:i:s');
                 $history->save();
             }
-        });
+        // });
+        log::info('ok');
     }
 
     /**
@@ -374,7 +375,7 @@ class CoinController extends Controller
                             'market_cap' => isset($currency['market_cap']) ? round($currency['market_cap'],4) : 0 ]);  
                 }
             }
-
+            self::saveHistoricalData($data1D,$data7D,$data14D,$data30D,$data90D,$currencies);
         });
         
     }
