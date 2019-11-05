@@ -56,7 +56,7 @@ class CoinController extends Controller
             //save pries
             $coin->price = $data['RAW'][$coin->symbol]['USD']['PRICE'];
             $coin->f_price = $data['DISPLAY'][$coin->symbol]['USD']['PRICE'];      
-            $coin->percent_change_24h = round($data['RAW'][$coin->symbol]['USD']['CHANGEPCT24HOUR'],2); 
+            $coin->price_24h_change = round($data['RAW'][$coin->symbol]['USD']['CHANGEPCT24HOUR'],2); 
             $coin->volume_24h = round($data['RAW'][$coin->symbol]['USD']['TOTALVOLUME24HTO'],5);
             $coin->f_volume_24h = $data['DISPLAY'][$coin->symbol]['USD']['TOTALVOLUME24HTO'];      
             $coin->market_cap = round($data['RAW'][$coin->symbol]['USD']['MKTCAP'],5);
@@ -144,7 +144,7 @@ class CoinController extends Controller
                               ->orderBy('created_at', 'DESC')
                               ->first();              
 
-                $percent_change_24h = isset($last1Coin->price) ? round( ($currency['price']-$last1Coin->price)/$last1Coin->price*100, 6) : 0;
+                $price_24h_change = isset($last1Coin->price) ? round( ($currency['price']-$last1Coin->price)/$last1Coin->price*100, 6) : 0;
                 $price_7d_change = isset($last7Coin->price)  ? round( ($currency['price']-$last7Coin->price)/$last7Coin->price*100, 6) : 0;
                 $price_14d_change = isset($last14Coin->price) ? round(($currency['price']-$last14Coin->price)/$last14Coin->price*100, 6) : 0;
                 $price_30d_change = isset($last30Coin->price) ? round(($currency['price']-$last30Coin->price) / $last30Coin->price*100, 6) : 0;
@@ -155,7 +155,7 @@ class CoinController extends Controller
                 $history->symbol = $currency['currency'];
                 $history->price  = round($currency['price'],8);
                 $history->volume_24h  = ($currency['1d']['volume'] ?? 0);
-                $history->score = (($percent_change_24h*1.15) + ($price_7d_change*1.25) + ($price_14d_change*1.25) + ($price_30d_change*1.2) + ($price_90d_change*1.15));
+                $history->score = (($price_24h_change*1.15) + ($price_7d_change*1.25) + ($price_14d_change*1.25) + ($price_30d_change*1.2) + ($price_90d_change*1.15));
                 $history->entry_datetime   = (date('Y-m-d H:i') . ':00');
                 $history->save();
             }
@@ -230,7 +230,19 @@ class CoinController extends Controller
     }
 
     public static function cronUpdate(){
+
+        DB::statement("INSERT INTO coins_history (symbol, price, price_24h_change, price_7d_change, price_14d_change, price_30d_change, price_90d_change, market_cap, market_cap_24h_change, market_cap_7d_change, market_cap_14d_change, market_cap_30d_change, market_cap_90d_change, market_cap_rank, market_cap_rank_3h_change, market_cap_rank_5h_change, market_cap_rank_12h_change, market_cap_rank_24h_change, volume_24h, volume_24h_24h_change, volume_24h_7d_change, volume_24h_14d_change, volume_24h_30d_change, volume_24h_90d_change, volume_24h_rank, volume_24h_rank_3h_change, volume_24h_rank_5h_change, volume_24h_rank_12h_change, volume_24h_rank_24h_change, entry_datetime, created_at, updated_at, score, score_core, score_24h_change, score_7d_change, score_14d_change, score_30d_change, score_90d_change, score_rank, score_rank_3h_change, score_rank_5h_change, score_rank_12h_change, score_rank_24h_change) (SELECT symbol, price, price_24h_change, price_7d_change, price_14d_change, price_30d_change, price_90d_change, market_cap, market_cap_24h_change, market_cap_7d_change, market_cap_14d_change, market_cap_30d_change, market_cap_90d_change, market_cap_rank, market_cap_rank_3h_change, market_cap_rank_5h_change, market_cap_rank_12h_change, market_cap_rank_24h_change, volume_24h, volume_24h_24h_change, volume_24h_7d_change, volume_24h_14d_change, volume_24h_30d_change, volume_24h_90d_change, volume_24h_rank, volume_24h_rank_3h_change, volume_24h_rank_5h_change, volume_24h_rank_12h_change, volume_24h_rank_24h_change, entry_datetime, now(), now(), score, score_core, score_24h_change, score_7d_change, score_14d_change, score_30d_change, score_90d_change, score_rank, score_rank_3h_change, score_rank_5h_change, score_rank_12h_change, score_rank_24h_change FROM coins)");
+        Log::info('Records Inserted to coin_history');
+        
         Coin::CHUNK(500, function($coin) {
+            $errorLog = [];
+            $process_datetime = (substr(Carbon::now(),0,16) . ':00');
+            $last1CoinArr  = coins_history::where('entry_datetime', (substr(Carbon::now()->subDays(1),0,16) . ':00'))->get()->keyBy('symbol');
+            $last7CoinArr  = coins_history::where('entry_datetime', (substr(Carbon::now()->subDays(7),0,16) . ':00'))->get()->keyBy('symbol');
+            $last14CoinArr = coins_history::where('entry_datetime', (substr(Carbon::now()->subDays(14),0,16) . ':00'))->get()->keyBy('symbol');
+            $last30CoinArr  = coins_history::where('entry_datetime', (substr(Carbon::now()->subDays(30),0,16) . ':00'))->get()->keyBy('symbol');
+            $last90CoinArr = coins_history::where('entry_datetime', (substr(Carbon::now()->subDays(90),0,16) . ':00'))->get()->keyBy('symbol');
+            
             ///API key for www.nomics.com
             $APIKEYN = "e612f7b0f124b709451a0ccb0e29752b";
             $symbols = $coin->pluck('symbol')->toArray();
@@ -238,45 +250,127 @@ class CoinController extends Controller
             $currencies = "";
             $url = "https://api.nomics.com/v1/currencies/ticker?key=".$APIKEYN."&ids=".$symbols_string."&interval=1d,7d,30d&convert=USD";
             $url_content = file_get_contents($url);
-            $currencies = json_decode( $url_content, true );
-            foreach ($currencies as $key => $currency ){
-                $last1Coin  = coins_history::where('symbol',$currency['currency'])
-                              ->where('entry_datetime',substr(Carbon::now()->subDays(1),0,16) . ':00')
-                              ->orderBy('created_at', 'DESC')
-                              ->first();
-                $last7Coin  = coins_history::where('symbol',$currency['currency'])
-                              ->where('entry_datetime',substr(Carbon::now()->subDays(7),0,16) . ':00')
-                              ->orderBy('created_at', 'DESC')
-                              ->first();
-                $last14Coin = coins_history::where('symbol',$currency['currency'])
-                              ->where('entry_datetime',substr(Carbon::now()->subDays(14),0,16) . ':00')
-                              ->orderBy('created_at', 'DESC')
-                              ->first();
-                $last30Coin  = coins_history::where('symbol',$currency['currency'])
-                              ->where('entry_datetime',substr(Carbon::now()->subDays(30),0,16) . ':00')
-                              ->orderBy('created_at', 'DESC')
-                              ->first(); 
-                $last90Coin = coins_history::where('symbol',$currency['currency'])
-                              ->where('entry_datetime',substr(Carbon::now()->subDays(90),0,16) . ':00')
-                              ->orderBy('created_at', 'DESC')
-                              ->first();              
+            if ($url_content == FALSE) {
+                Log::error('Unbale to fetch data from API for ' . $process_datetime);
+            } else {
+                if ($currencies = json_decode( $url_content, true )) {
+                    DB::beginTransaction();
 
-                $percent_change_24h = isset($last1Coin->price) ? round( ($currency['price']-$last1Coin->price)/$last1Coin->price*100, 6) : 0;
-                $price_7d_change = isset($last7Coin->price)  ? round( ($currency['price']-$last7Coin->price)/$last7Coin->price*100, 6) : 0;
-                $price_14d_change = isset($last14Coin->price) ? round(($currency['price']-$last14Coin->price)/$last14Coin->price*100, 6) : 0;
-                $price_30d_change = isset($last30Coin->price) ? round(($currency['price']-$last30Coin->price) / $last30Coin->price*100, 6) : 0;
-                $price_90d_change = isset($last90Coin->price) ? round(($currency['price']-$last90Coin->price) / $last90Coin->price*100, 6) : 0;
-                                           
-                Coin::where('symbol',$currency['currency'])
-                    ->update(['price' => round($currency['price'],8),
-                            'volume_24h' => ($currency['1d']['volume'] ?? 0),
-                            'percent_change_24h'=> $percent_change_24h,
-                            'price_7d_change' => $price_7d_change,
-                            'price_14d_change'=> $price_14d_change,
-                            'price_30d_change'=> $price_30d_change,
-                            'price_90d_change'=> $price_90d_change,
-                            'score' => (($percent_change_24h*1.15) + ($price_7d_change*1.25) + ($price_14d_change*1.25) + ($price_30d_change*1.2) + ($price_90d_change*1.15)),
-                            'market_cap' => round($currency['market_cap'],4) ]);  
+                    foreach ($currencies as $key => $currency ){
+                        $symbol = $currency['symbol'] ?? false;
+                        $price = +($currency['price'] ?? 0);
+                        $market_cap = +($currency['market_cap'] ?? 0);
+                        $volume = +($currency['1d']['volume'] ?? 0);
+
+                        // if (!($symbol && $price && $market_cap && $volume)) {
+                        //     $errorLog[] = [
+                        //     ];
+                        // }
+
+                        $last1Coin = $last1CoinArr[$symbol] ?? false;
+                        $last7Coin = $last7CoinArr[$symbol] ?? false;
+                        $last14Coin = $last14CoinArr[$symbol] ?? false;
+                        $last30Coin = $last30CoinArr[$symbol] ?? false;
+                        $last90Coin = $last90CoinArr[$symbol] ?? false;
+                        
+                        $price_24h_change = isset($last1Coin->price) ? ((($price - $last1Coin->price) * 100) / $last1Coin->price) : 0;
+                        $price_7d_change = isset($last7Coin->price)  ? ((($price - $last7Coin->price) * 100) / $last7Coin->price) : 0;
+                        $price_14d_change = isset($last14Coin->price) ? ((($price - $last14Coin->price) * 100) / $last14Coin->price) : 0;
+                        $price_30d_change = isset($last30Coin->price) ? ((($price - $last30Coin->price) * 100) / $last30Coin->price) : 0;
+                        $price_90d_change = isset($last90Coin->price) ? ((($price - $last90Coin->price) * 100) / $last90Coin->price) : 0;
+
+                        $score_core = (($price_24h_change*1.15) + ($price_7d_change*1.25) + ($price_14d_change*1.25) + ($price_30d_change*1.2) + ($price_90d_change*1.15));
+                        $score = ($volume >= 1000) ? $score_core : 0;
+                        $score_24h_change = isset($last1Coin->score) ? ((($score - $last1Coin->score) * 100) / $last1Coin->score) : 0;
+                        $score_7d_change = isset($last7Coin->score) ? ((($score - $last7Coin->score) * 100) / $last7Coin->score) : 0;
+                        $score_14d_change = isset($last14Coin->score) ? ((($score - $last14Coin->score) * 100) / $last14Coin->score) : 0;
+                        $score_30d_change = isset($last30Coin->score) ? ((($score - $last30Coin->score) * 100) / $last30Coin->score) : 0;
+                        $score_90d_change = isset($last90Coin->score) ? ((($score - $last90Coin->score) * 100) / $last90Coin->score) : 0;
+
+                        $volume_24h_24h_change = isset($last1Coin->volume_24h) ? ((($volume - $last1Coin->volume_24h) * 100) / $last1Coin->volume_24h) : 0;
+                        $volume_24h_7d_change = isset($last7Coin->volume_24h) ? ((($volume - $last7Coin->volume_24h) * 100) / $last7Coin->volume_24h) : 0;
+                        $volume_24h_14d_change = isset($last14Coin->volume_24h) ? ((($volume - $last14Coin->volume_24h) * 100) / $last14Coin->volume_24h) : 0;
+                        $volume_24h_30d_change = isset($last30Coin->volume_24h) ? ((($volume - $last30Coin->volume_24h) * 100) / $last30Coin->volume_24h) : 0;
+                        $volume_24h_90d_change = isset($last90Coin->volume_24h) ? ((($volume - $last90Coin->volume_24h) * 100) / $last90Coin->volume_24h) : 0;
+
+                        $market_cap_24h_change = isset($last1Coin->market_cap) ? ((($volume - $last1Coin->market_cap) * 100) / $last1Coin->market_cap) : 0;
+                        $market_cap_7d_change = isset($last7Coin->market_cap) ? ((($volume - $last7Coin->market_cap) * 100) / $last7Coin->market_cap) : 0;
+                        $market_cap_14d_change = isset($last14Coin->market_cap) ? ((($volume - $last14Coin->market_cap) * 100) / $last14Coin->market_cap) : 0;
+                        $market_cap_30d_change = isset($last30Coin->market_cap) ? ((($volume - $last30Coin->market_cap) * 100) / $last30Coin->market_cap) : 0;
+                        $market_cap_90d_change = isset($last90Coin->market_cap) ? ((($volume - $last90Coin->market_cap) * 100) / $last90Coin->market_cap) : 0;
+                                                
+                        Coin::where('symbol', $symbol)
+                            ->update([
+                                'price' => $price,
+                                'price_24h_change'=> $price_24h_change,
+                                'price_7d_change' => $price_7d_change,
+                                'price_14d_change'=> $price_14d_change,
+                                'price_30d_change'=> $price_30d_change,
+                                'price_90d_change'=> $price_90d_change,
+                                'volume_24h' => $volume,
+                                'volume_24h_24h_change' => $volume_24h_24h_change,
+                                'volume_24h_7d_change' => $volume_24h_7d_change,
+                                'volume_24h_14d_change' => $volume_24h_14d_change,
+                                'volume_24h_30d_change' => $volume_24h_30d_change,
+                                'volume_24h_90d_change' => $volume_24h_90d_change,
+                                // volume rank fields
+                                'market_cap' => $market_cap,
+                                'market_cap_24h_change' => $market_cap_24h_change,
+                                'market_cap_7d_change' => $market_cap_7d_change,
+                                'market_cap_14d_change' => $market_cap_14d_change,
+                                'market_cap_30d_change' => $market_cap_30d_change,
+                                'market_cap_90d_change' => $market_cap_90d_change,
+                                // market cap rank fields
+                                'score' => $score,
+                                'score_core' => $score_core,
+                                'score_24h_change' => $score_24h_change,
+                                'score_7d_change' => $score_7d_change,
+                                'score_14d_change' => $score_14d_change,
+                                'score_30d_change' => $score_30d_change,
+                                'score_90d_change' => $score_90d_change,
+                                // score rank fields
+                                'entry_datetime' => $process_datetime
+                            ]);
+                    }
+
+                    DB::unprepared("SET @s=0; SET @v=0; SET @m=0;
+                        UPDATE coins
+                        JOIN (SELECT @s:=@s+1 AS rank, id FROM coins ORDER BY score DESC) AS sorted_score USING(id)
+                        JOIN (SELECT @v:=@v+1 AS rank, id FROM coins ORDER BY volume_24h DESC) AS sorted_volume USING(id)
+                        JOIN (SELECT @m:=@m+1 AS rank, id FROM coins ORDER BY market_cap DESC) AS sorted_market_cap USING(id)
+                        SET coins.score_rank = sorted_score.rank, coins.volume_24h_rank = sorted_volume.rank, coins.market_cap_rank = sorted_market_cap.rank;");
+
+                    // DB::unprepared("SET @r=0;UPDATE coins JOIN (SELECT @r:=@r+1 AS rank, id FROM coins ORDER BY score DESC) AS sorted USING(id) SET coins.score_rank = sorted.rank;");
+                    // DB::unprepared("SET @r=0;UPDATE coins JOIN (SELECT @r:=@r+1 AS rank, id FROM coins ORDER BY volume_24h DESC) AS sorted USING(id) SET coins.volume_24h_rank = sorted.rank;");
+                    // DB::unprepared("SET @r=0;UPDATE coins JOIN (SELECT @r:=@r+1 AS rank, id FROM coins ORDER BY market_cap DESC) AS sorted USING(id) SET coins.market_cap_rank = sorted.rank;");
+
+                    DB::unprepared("UPDATE coins
+                        LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(3),0,16) . ':00') . "') AS sorted3 USING(id)
+                        LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(5),0,16) . ':00') . "') AS sorted5 USING(id)
+                        LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(12),0,16) . ':00') . "') AS sorted12 USING(id)
+                        LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(24),0,16) . ':00') . "') AS sorted24 USING(id)
+                        SET coins.market_cap_rank_3h_change = (coins.market_cap_rank-IFNULL(sorted3.market_cap_rank, 0)),
+                        coins.market_cap_rank_5h_change = (coins.market_cap_rank-IFNULL(sorted5.market_cap_rank, 0)),
+                        coins.market_cap_rank_12h_change = (coins.market_cap_rank-IFNULL(sorted12.market_cap_rank, 0)),
+                        coins.market_cap_rank_24h_change = (coins.market_cap_rank-IFNULL(sorted24.market_cap_rank, 0)),
+                        coins.volume_24h_rank_3h_change = (coins.volume_24h_rank-IFNULL(sorted3.volume_24h_rank, 0)),
+                        coins.volume_24h_rank_5h_change = (coins.volume_24h_rank-IFNULL(sorted5.volume_24h_rank, 0)),
+                        coins.volume_24h_rank_12h_change = (coins.volume_24h_rank-IFNULL(sorted12.volume_24h_rank, 0)),
+                        coins.volume_24h_rank_24h_change = (coins.volume_24h_rank-IFNULL(sorted24.volume_24h_rank, 0)),
+                        coins.score_rank_3h_change = (coins.score_rank-IFNULL(sorted3.score_rank, 0)),
+                        coins.score_rank_5h_change = (coins.score_rank-IFNULL(sorted5.score_rank, 0)),
+                        coins.score_rank_12h_change = (coins.score_rank-IFNULL(sorted12.score_rank, 0)),
+                        coins.score_rank_24h_change = (coins.score_rank-IFNULL(sorted24.score_rank, 0));");
+
+                    // DB::unprepared("UPDATE coins JOIN (SELECT id, market_cap_rank FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(3),0,16) . ':00') . "') AS sorted USING(id) SET coins.market_cap_rank_3h_change = (coins.market_cap_rank-sorted.market_cap_rank);");
+                    // DB::unprepared("UPDATE coins JOIN (SELECT id, market_cap_rank FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(5),0,16) . ':00') . "') AS sorted USING(id) SET coins.market_cap_rank_5h_change = (coins.market_cap_rank-sorted.market_cap_rank);");
+                    // DB::unprepared("UPDATE coins JOIN (SELECT id, market_cap_rank FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(12),0,16) . ':00') . "') AS sorted USING(id) SET coins.market_cap_rank_12h_change = (coins.market_cap_rank-sorted.market_cap_rank);");
+                    // DB::unprepared("UPDATE coins JOIN (SELECT id, market_cap_rank FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(24),0,16) . ':00') . "') AS sorted USING(id) SET coins.market_cap_rank_24h_change = (coins.market_cap_rank-sorted.market_cap_rank);");
+
+                    DB::commit();
+                } else {
+                    Log::error('Received data from API is not correct for ' . $process_datetime);
+                }
             }
         });
         
@@ -308,7 +402,7 @@ class CoinController extends Controller
                 $coin->name = $item['CoinInfo']['FullName'];
                 $coin->price = $item['RAW']['USD']['PRICE'];
                 $coin->f_price = $item['DISPLAY']['USD']['PRICE'];      
-                $coin->percent_change_24h = round($item['RAW']['USD']['CHANGEPCT24HOUR'],2); 
+                $coin->price_24h_change = round($item['RAW']['USD']['CHANGEPCT24HOUR'],2); 
                 $coin->volume_24h = round($item['RAW']['USD']['TOTALVOLUME24HTO'],5);
                 $coin->f_volume_24h = $item['DISPLAY']['USD']['TOTALVOLUME24HTO'];      
                 $coin->market_cap = round($item['RAW']['USD']['MKTCAP'],5);
@@ -392,7 +486,7 @@ class CoinController extends Controller
                     $coin->name = $currency['name'];;
                     $coin->price = round($currency['price'],2);
 
-                    $coin->percent_change_24h = isset($currency['1d']['price_change_pct']) ? (double)round($currency['1d']['price_change_pct'],2) : 0;
+                    $coin->price_24h_change = isset($currency['1d']['price_change_pct']) ? (double)round($currency['1d']['price_change_pct'],2) : 0;
                     $coin->volume_24h =  isset($currency['1d']['volume'])  ? (double)round($currency['1d']['volume'],2) : 0;
                 
                     $coin->price_7d_change = isset($currency['7d']['price_change_pct']) ? (double)round($currency['7d']['price_change_pct'],2) : 0;
