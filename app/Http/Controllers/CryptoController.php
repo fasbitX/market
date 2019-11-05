@@ -20,13 +20,13 @@ class CryptoController extends Controller
             if(!isset($_SESSION['orderby'] ))$_SESSION['orderby'] = 'market';
         }
         if($_SESSION['orderby'] == 'score'){
-            $data = DB::table('coins')->orderBy('score', 'DESC')->paginate(100);     
+            $data = DB::table('coins')->orderBy('score_rank')->paginate(100);     
         }
         if($_SESSION['orderby'] == 'market'){
-            $data = DB::table('coins')->where('status','=',1)->orderBy('market_cap', 'DESC')->paginate(100);     
+            $data = DB::table('coins')->where('status','=',1)->orderBy('market_cap_rank')->paginate(100);     
         }
         if($_SESSION['orderby'] == 'volume'){
-            $data = DB::table('coins')->where('status','=',1)->orderBy('volume_24h', 'DESC')->paginate(100);     
+            $data = DB::table('coins')->where('status','=',1)->orderBy('volume_24h_rank')->paginate(100);     
         }   
         $title = DB::table('settings')->where('name','title')->first();
         $settings = DB::table('settings')->where('name','logo')->first();      
