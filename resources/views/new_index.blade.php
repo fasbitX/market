@@ -206,7 +206,7 @@
                                             </span>    
                                         @else
                                             <span id="p_up_30" class="tbl-price pr-change delta-859 price up perc_none p-0">
-                                                +{{$item->market_cap_rank_3h_change}}
+                                                {{($item->market_cap_rank_3h_change == 0) ? 0 : ('+' . $item->market_cap_rank_3h_change)}}
                                             </span>
                                         @endif
                                     </td>
@@ -217,7 +217,7 @@
                                             </span>    
                                         @else
                                             <span id="p_up_30" class="tbl-price pr-change delta-859 price up perc_none p-0">
-                                                +{{$item->market_cap_rank_6h_change}}
+                                                {{($item->market_cap_rank_6h_change == 0) ? 0 : ('+' . $item->market_cap_rank_6h_change)}}
                                             </span>
                                         @endif
                                     </td>
@@ -228,7 +228,7 @@
                                             </span>    
                                         @else
                                             <span id="p_up_30" class="tbl-price pr-change delta-859 price up perc_none p-0">
-                                                +{{$item->market_cap_rank_12h_change}}
+                                                {{($item->market_cap_rank_12h_change == 0) ? 0 : ('+' . $item->market_cap_rank_12h_change)}}
                                             </span>
                                         @endif
                                     </td>
@@ -239,7 +239,7 @@
                                             </span>    
                                         @else
                                             <span id="p_up_30" class="tbl-price pr-change delta-859 price up perc_none p-0">
-                                                +{{$item->market_cap_rank_24h_change}}
+                                                {{($item->market_cap_rank_24h_change == 0) ? 0 : ('+' . $item->market_cap_rank_24h_change)}}
                                             </span>
                                         @endif
                                     </td>
@@ -438,7 +438,7 @@
                                             </span>    
                                         @else
                                             <span id="p_up_30" class="tbl-price pr-change delta-859 price up perc_none p-0">
-                                                +{{$item->volume_24h_rank_3h_change}}
+                                                {{($item->volume_24h_rank_3h_change == 0) ? 0 : ('+' . $item->volume_24h_rank_3h_change)}}
                                             </span>
                                         @endif
                                     </td>
@@ -449,7 +449,7 @@
                                             </span>    
                                         @else
                                             <span id="p_up_30" class="tbl-price pr-change delta-859 price up perc_none p-0">
-                                                +{{$item->volume_24h_rank_6h_change}}
+                                                {{($item->volume_24h_rank_6h_change == 0) ? 0 : ('+' . $item->volume_24h_rank_6h_change)}}
                                             </span>
                                         @endif
                                     </td>
@@ -460,7 +460,7 @@
                                             </span>    
                                         @else
                                             <span id="p_up_30" class="tbl-price pr-change delta-859 price up perc_none p-0">
-                                                +{{$item->volume_24h_rank_12h_change}}
+                                                {{($item->volume_24h_rank_12h_change == 0) ? 0 : ('+' . $item->volume_24h_rank_12h_change)}}
                                             </span>
                                         @endif
                                     </td>
@@ -471,7 +471,7 @@
                                             </span>    
                                         @else
                                             <span id="p_up_30" class="tbl-price pr-change delta-859 price up perc_none p-0">
-                                                +{{$item->volume_24h_rank_24h_change}}
+                                                {{($item->volume_24h_rank_24h_change == 0) ? 0 : ('+' . $item->volume_24h_rank_24h_change)}}
                                             </span>
                                         @endif
                                     </td>
@@ -570,7 +570,7 @@
                                             </span>    
                                         @else
                                             <span id="p_up_30" class="tbl-price pr-change delta-859 price up perc_none p-0">
-                                                +{{$item->score_rank_3h_change}}
+                                                {{($item->score_rank_3h_change == 0) ? 0 : ('+' . $item->score_rank_3h_change)}}
                                             </span>
                                         @endif
                                     </td>
@@ -581,7 +581,7 @@
                                             </span>    
                                         @else
                                             <span id="p_up_30" class="tbl-price pr-change delta-859 price up perc_none p-0">
-                                                +{{$item->score_rank_6h_change}}
+                                                {{($item->score_rank_6h_change == 0) ? 0 : ('+' . $item->score_rank_6h_change)}}
                                             </span>
                                         @endif
                                     </td>
@@ -592,7 +592,7 @@
                                             </span>    
                                         @else
                                             <span id="p_up_30" class="tbl-price pr-change delta-859 price up perc_none p-0">
-                                                +{{$item->score_rank_12h_change}}
+                                                {{($item->score_rank_12h_change == 0) ? 0 : ('+' . $item->score_rank_12h_change)}}
                                             </span>
                                         @endif
                                     </td>
@@ -603,7 +603,7 @@
                                             </span>    
                                         @else
                                             <span id="p_up_30" class="tbl-price pr-change delta-859 price up perc_none p-0">
-                                                +{{$item->score_rank_24h_change}}
+                                                {{($item->score_rank_24h_change == 0) ? 0 : ('+' . $item->score_rank_24h_change)}}
                                             </span>
                                         @endif
                                     </td>
