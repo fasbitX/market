@@ -345,10 +345,10 @@ class CoinController extends Controller
                     // DB::unprepared("SET @r=0;UPDATE coins JOIN (SELECT @r:=@r+1 AS rank, id FROM coins ORDER BY market_cap DESC) AS sorted USING(id) SET coins.market_cap_rank = sorted.rank;");
 
                     DB::unprepared("UPDATE coins
-                        LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(3),0,16) . ':00') . "') AS sorted3 USING(symbol)
-                        LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(6),0,16) . ':00') . "') AS sorted6 USING(symbol)
-                        LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(12),0,16) . ':00') . "') AS sorted12 USING(symbol)
-                        LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(24),0,16) . ':00') . "') AS sorted24 USING(symbol)
+                        LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank, symbol FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(3),0,16) . ':00') . "') AS sorted3 USING(symbol)
+                        LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank, symbol FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(6),0,16) . ':00') . "') AS sorted6 USING(symbol)
+                        LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank, symbol FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(12),0,16) . ':00') . "') AS sorted12 USING(symbol)
+                        LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank, symbol FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(24),0,16) . ':00') . "') AS sorted24 USING(symbol)
                         SET coins.market_cap_rank_3h_change = (coins.market_cap_rank-IFNULL(sorted3.market_cap_rank, 0)),
                         coins.market_cap_rank_6h_change = (coins.market_cap_rank-IFNULL(sorted6.market_cap_rank, 0)),
                         coins.market_cap_rank_12h_change = (coins.market_cap_rank-IFNULL(sorted12.market_cap_rank, 0)),
