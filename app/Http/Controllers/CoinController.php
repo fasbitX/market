@@ -339,35 +339,35 @@ class CoinController extends Controller
                                                 
                         Coin::where('symbol', $symbol)
                             ->update([
-                                'price' => $price,
-                                'price_24h_change'=> $price_24h_change,
-                                'price_7d_change' => $price_7d_change,
-                                'price_14d_change'=> $price_14d_change,
-                                'price_30d_change'=> $price_30d_change,
-                                'price_90d_change'=> $price_90d_change,
-                                'volume_24h' => $volume,
-                                'volume_24h_24h_change' => $volume_24h_24h_change,
-                                'volume_24h_7d_change' => $volume_24h_7d_change,
-                                'volume_24h_14d_change' => $volume_24h_14d_change,
-                                'volume_24h_30d_change' => $volume_24h_30d_change,
-                                'volume_24h_90d_change' => $volume_24h_90d_change,
+                                'price' => $price ?? 0,
+                                'price_24h_change'=> $price_24h_change ?? 0,
+                                'price_7d_change' => $price_7d_change ?? 0,
+                                'price_14d_change'=> $price_14d_change ?? 0,
+                                'price_30d_change'=> $price_30d_change ?? 0,
+                                'price_90d_change'=> $price_90d_change ?? 0,
+                                'volume_24h' => $volume ?? 0,
+                                'volume_24h_24h_change' => $volume_24h_24h_change ?? 0,
+                                'volume_24h_7d_change' => $volume_24h_7d_change ?? 0,
+                                'volume_24h_14d_change' => $volume_24h_14d_change ?? 0,
+                                'volume_24h_30d_change' => $volume_24h_30d_change ?? 0,
+                                'volume_24h_90d_change' => $volume_24h_90d_change ?? 0,
                                 // volume rank fields
-                                'market_cap' => $market_cap,
-                                'market_cap_24h_change' => $market_cap_24h_change,
-                                'market_cap_7d_change' => $market_cap_7d_change,
-                                'market_cap_14d_change' => $market_cap_14d_change,
-                                'market_cap_30d_change' => $market_cap_30d_change,
-                                'market_cap_90d_change' => $market_cap_90d_change,
+                                'market_cap' => $market_cap ?? 0,
+                                'market_cap_24h_change' => $market_cap_24h_change ?? 0,
+                                'market_cap_7d_change' => $market_cap_7d_change ?? 0,
+                                'market_cap_14d_change' => $market_cap_14d_change ?? 0,
+                                'market_cap_30d_change' => $market_cap_30d_change ?? 0,
+                                'market_cap_90d_change' => $market_cap_90d_change ?? 0,
                                 // market cap rank fields
-                                'score' => $score,
-                                'score_core' => $score_core,
-                                'score_24h_change' => $score_24h_change,
-                                'score_7d_change' => $score_7d_change,
-                                'score_14d_change' => $score_14d_change,
-                                'score_30d_change' => $score_30d_change,
-                                'score_90d_change' => $score_90d_change,
+                                'score' => $score ?? 0,
+                                'score_core' => $score_core ?? 0,
+                                'score_24h_change' => $score_24h_change ?? 0,
+                                'score_7d_change' => $score_7d_change ?? 0,
+                                'score_14d_change' => $score_14d_change ?? 0,
+                                'score_30d_change' => $score_30d_change ?? 0,
+                                'score_90d_change' => $score_90d_change ?? 0,
                                 // score rank fields
-                                'entry_datetime' => $process_datetime
+                                'entry_datetime' => $process_datetime ?? 0
                             ]);
                     }
 
