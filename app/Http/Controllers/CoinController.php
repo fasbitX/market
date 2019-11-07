@@ -236,7 +236,6 @@ class CoinController extends Controller
         Log::info('Records Inserted to coin_history');
         
         Coin::CHUNK(500, function($coin) {
-            $errorLog = [];
             $process_datetime = (substr(Carbon::now(),0,16) . ':00');
             $last1CoinArr  = coins_history::where('entry_datetime', (substr(Carbon::now()->subDays(1),0,16) . ':00'))->get()->keyBy('symbol');
             $last7CoinArr  = coins_history::where('entry_datetime', (substr(Carbon::now()->subDays(7),0,16) . ':00'))->get()->keyBy('symbol');
@@ -262,42 +261,81 @@ class CoinController extends Controller
                         $market_cap = +($currency['market_cap'] ?? 0);
                         $volume = +($currency['1d']['volume'] ?? 0);
 
-                        // if (!($symbol && $price && $market_cap && $volume)) {
-                        //     $errorLog[] = [
-                        //     ];
-                        // }
-
                         $last1Coin = $last1CoinArr[$symbol] ?? false;
                         $last7Coin = $last7CoinArr[$symbol] ?? false;
                         $last14Coin = $last14CoinArr[$symbol] ?? false;
                         $last30Coin = $last30CoinArr[$symbol] ?? false;
                         $last90Coin = $last90CoinArr[$symbol] ?? false;
                         
-                        $price_24h_change = (isset($last1Coin->price) && $last1Coin->price) ? ((($price - $last1Coin->price) * 100) / $last1Coin->price) : 0;
-                        $price_7d_change = (isset($last7Coin->price) && $last7Coin->price)  ? ((($price - $last7Coin->price) * 100) / $last7Coin->price) : 0;
-                        $price_14d_change = (isset($last14Coin->price) && $last14Coin->price) ? ((($price - $last14Coin->price) * 100) / $last14Coin->price) : 0;
-                        $price_30d_change = (isset($last30Coin->price) && $last30Coin->price) ? ((($price - $last30Coin->price) * 100) / $last30Coin->price) : 0;
-                        $price_90d_change = (isset($last90Coin->price) && $last90Coin->price) ? ((($price - $last90Coin->price) * 100) / $last90Coin->price) : 0;
+                        try {
+                            $price_24h_change = (isset($last1Coin->price) && $last1Coin->price) ? ((($price - $last1Coin->price) * 100) / $last1Coin->price) : 0;
+                            $price_7d_change = (isset($last7Coin->price) && $last7Coin->price)  ? ((($price - $last7Coin->price) * 100) / $last7Coin->price) : 0;
+                            $price_14d_change = (isset($last14Coin->price) && $last14Coin->price) ? ((($price - $last14Coin->price) * 100) / $last14Coin->price) : 0;
+                            $price_30d_change = (isset($last30Coin->price) && $last30Coin->price) ? ((($price - $last30Coin->price) * 100) / $last30Coin->price) : 0;
+                            $price_90d_change = (isset($last90Coin->price) && $last90Coin->price) ? ((($price - $last90Coin->price) * 100) / $last90Coin->price) : 0;
+                        } catch (Exception $e) {
+                            Log::error("Price ERROR DATA: " . implode(' | ', [
+                                $price,
+                                $last1Coin->price,
+                                $last7Coin->price,
+                                $last14Coin->price,
+                                $last30Coin->price,
+                                $last90Coin->price
+                            ]));
+                        }
 
-                        $score_core = (($price_24h_change*1.15) + ($price_7d_change*1.25) + ($price_14d_change*1.25) + ($price_30d_change*1.2) + ($price_90d_change*1.15));
-                        $score = ($volume >= 1000) ? $score_core : 0;
-                        $score_24h_change = (isset($last1Coin->score) && $last1Coin->score) ? ((($score - $last1Coin->score) * 100) / $last1Coin->score) : 0;
-                        $score_7d_change = (isset($last7Coin->score) && $last7Coin->score) ? ((($score - $last7Coin->score) * 100) / $last7Coin->score) : 0;
-                        $score_14d_change = (isset($last14Coin->score) && $last14Coin->score) ? ((($score - $last14Coin->score) * 100) / $last14Coin->score) : 0;
-                        $score_30d_change = (isset($last30Coin->score) && $last30Coin->score) ? ((($score - $last30Coin->score) * 100) / $last30Coin->score) : 0;
-                        $score_90d_change = (isset($last90Coin->score) && $last90Coin->score) ? ((($score - $last90Coin->score) * 100) / $last90Coin->score) : 0;
+                        try {
+                            $score_core = (($price_24h_change*1.15) + ($price_7d_change*1.25) + ($price_14d_change*1.25) + ($price_30d_change*1.2) + ($price_90d_change*1.15));
+                            $score = ($volume >= 1000) ? $score_core : 0;
+                            $score_24h_change = (isset($last1Coin->score) && $last1Coin->score) ? ((($score - $last1Coin->score) * 100) / $last1Coin->score) : 0;
+                            $score_7d_change = (isset($last7Coin->score) && $last7Coin->score) ? ((($score - $last7Coin->score) * 100) / $last7Coin->score) : 0;
+                            $score_14d_change = (isset($last14Coin->score) && $last14Coin->score) ? ((($score - $last14Coin->score) * 100) / $last14Coin->score) : 0;
+                            $score_30d_change = (isset($last30Coin->score) && $last30Coin->score) ? ((($score - $last30Coin->score) * 100) / $last30Coin->score) : 0;
+                            $score_90d_change = (isset($last90Coin->score) && $last90Coin->score) ? ((($score - $last90Coin->score) * 100) / $last90Coin->score) : 0;
+                        } catch (Exception $e) {
+                            Log::error("Score ERROR DATA: " . implode(' | ', [
+                                $score,
+                                $last1Coin->score,
+                                $last7Coin->score,
+                                $last14Coin->score,
+                                $last30Coin->score,
+                                $last90Coin->score
+                            ]));
+                        }
 
-                        $volume_24h_24h_change = (isset($last1Coin->volume_24h) && $last1Coin->volume_24h) ? ((($volume - $last1Coin->volume_24h) * 100) / $last1Coin->volume_24h) : 0;
-                        $volume_24h_7d_change = (isset($last7Coin->volume_24h) && $last7Coin->volume_24h) ? ((($volume - $last7Coin->volume_24h) * 100) / $last7Coin->volume_24h) : 0;
-                        $volume_24h_14d_change = (isset($last14Coin->volume_24h) && $last14Coin->volume_24h) ? ((($volume - $last14Coin->volume_24h) * 100) / $last14Coin->volume_24h) : 0;
-                        $volume_24h_30d_change = (isset($last30Coin->volume_24h) && $last30Coin->volume_24h) ? ((($volume - $last30Coin->volume_24h) * 100) / $last30Coin->volume_24h) : 0;
-                        $volume_24h_90d_change = (isset($last90Coin->volume_24h) && $last90Coin->volume_24h) ? ((($volume - $last90Coin->volume_24h) * 100) / $last90Coin->volume_24h) : 0;
+                        try {
+                            $volume_24h_24h_change = (isset($last1Coin->volume_24h) && $last1Coin->volume_24h) ? ((($volume - $last1Coin->volume_24h) * 100) / $last1Coin->volume_24h) : 0;
+                            $volume_24h_7d_change = (isset($last7Coin->volume_24h) && $last7Coin->volume_24h) ? ((($volume - $last7Coin->volume_24h) * 100) / $last7Coin->volume_24h) : 0;
+                            $volume_24h_14d_change = (isset($last14Coin->volume_24h) && $last14Coin->volume_24h) ? ((($volume - $last14Coin->volume_24h) * 100) / $last14Coin->volume_24h) : 0;
+                            $volume_24h_30d_change = (isset($last30Coin->volume_24h) && $last30Coin->volume_24h) ? ((($volume - $last30Coin->volume_24h) * 100) / $last30Coin->volume_24h) : 0;
+                            $volume_24h_90d_change = (isset($last90Coin->volume_24h) && $last90Coin->volume_24h) ? ((($volume - $last90Coin->volume_24h) * 100) / $last90Coin->volume_24h) : 0;
+                        } catch (Exception $e) {
+                            Log::error("Volume ERROR DATA: " . implode(' | ', [
+                                $volume,
+                                $last1Coin->volume_24h,
+                                $last7Coin->volume_24h,
+                                $last14Coin->volume_24h,
+                                $last30Coin->volume_24h,
+                                $last90Coin->volume_24h
+                            ]));
+                        }
 
-                        $market_cap_24h_change = (isset($last1Coin->market_cap) && $last1Coin->market_cap) ? ((($market_cap - $last1Coin->market_cap) * 100) / $last1Coin->market_cap) : 0;
-                        $market_cap_7d_change = (isset($last7Coin->market_cap) && $last7Coin->market_cap) ? ((($market_cap - $last7Coin->market_cap) * 100) / $last7Coin->market_cap) : 0;
-                        $market_cap_14d_change = (isset($last14Coin->market_cap) && $last14Coin->market_cap) ? ((($market_cap - $last14Coin->market_cap) * 100) / $last14Coin->market_cap) : 0;
-                        $market_cap_30d_change = (isset($last30Coin->market_cap) && $last30Coin->market_cap) ? ((($market_cap - $last30Coin->market_cap) * 100) / $last30Coin->market_cap) : 0;
-                        $market_cap_90d_change = (isset($last90Coin->market_cap) && $last90Coin->market_cap) ? ((($market_cap - $last90Coin->market_cap) * 100) / $last90Coin->market_cap) : 0;
+                        try {
+                            $market_cap_24h_change = (isset($last1Coin->market_cap) && $last1Coin->market_cap) ? ((($market_cap - $last1Coin->market_cap) * 100) / $last1Coin->market_cap) : 0;
+                            $market_cap_7d_change = (isset($last7Coin->market_cap) && $last7Coin->market_cap) ? ((($market_cap - $last7Coin->market_cap) * 100) / $last7Coin->market_cap) : 0;
+                            $market_cap_14d_change = (isset($last14Coin->market_cap) && $last14Coin->market_cap) ? ((($market_cap - $last14Coin->market_cap) * 100) / $last14Coin->market_cap) : 0;
+                            $market_cap_30d_change = (isset($last30Coin->market_cap) && $last30Coin->market_cap) ? ((($market_cap - $last30Coin->market_cap) * 100) / $last30Coin->market_cap) : 0;
+                            $market_cap_90d_change = (isset($last90Coin->market_cap) && $last90Coin->market_cap) ? ((($market_cap - $last90Coin->market_cap) * 100) / $last90Coin->market_cap) : 0;
+                        } catch (Exception $e) {
+                            Log::error("Market Cap ERROR DATA: " . implode(' | ', [
+                                $market_cap,
+                                $last1Coin->market_cap,
+                                $last7Coin->market_cap,
+                                $last14Coin->market_cap,
+                                $last30Coin->market_cap,
+                                $last90Coin->market_cap
+                            ]));
+                        }
                                                 
                         Coin::where('symbol', $symbol)
                             ->update([
