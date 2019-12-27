@@ -415,6 +415,7 @@ class CoinController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             Log::error('ROLLBACKED');
+            Log::error($e->getMessage());
             DB::rollback();
         }
     }
