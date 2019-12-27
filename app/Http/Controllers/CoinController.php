@@ -411,12 +411,11 @@ class CoinController extends Controller
                     }
                 }
             });
+            DB::commit();
         } catch (Exception $e) {
             Log::error('ROLLBACKED');
             DB::rollback();
         }
-        
-        DB::commit();
     }
     public static function reasignRank(){
         $coin = Coin::Where('status','=',1)->orderBy('rank', 'ASC')->get();
