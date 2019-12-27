@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Log;
+use Illuminate\Support\Facades\Log;
 use Hash;
 use App\Coin;
 use App\coins_history;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class CoinController extends Controller
@@ -234,7 +234,7 @@ class CoinController extends Controller
         DB::beginTransaction();
 
         try {
-            DB::statement("INSERT INTO coins_history (symbol, price, price_24h_change, price_7d_change, price_14d_change, price_30d_change, price_90d_change, market_cap, market_cap_24h_change, market_cap_7d_change, market_cap_14d_change, market_cap_30d_change, market_cap_90d_change, market_cap_rank, market_cap_rank_3h_change, market_cap_rank_6h_change, market_cap_rank_12h_change, market_cap_rank_24h_change, volume_24h, volume_24h_24h_change, volume_24h_7d_change, volume_24h_14d_change, volume_24h_30d_change, volume_24h_90d_change, volume_24h_rank, volume_24h_rank_3h_change, volume_24h_rank_6h_change, volume_24h_rank_12h_change, volume_24h_rank_24h_change, entry_datetime, created_at, updated_at, score, score_core, score_24h_change, score_7d_change, score_14d_change, score_30d_change, score_90d_change, score_rank, score_rank_3h_change, score_rank_6h_change, score_rank_12h_change, score_rank_24h_change) (SELECT symbol, price, price_24h_change, price_7d_change, price_14d_change, price_30d_change, price_90d_change, market_cap, market_cap_24h_change, market_cap_7d_change, market_cap_14d_change, market_cap_30d_change, market_cap_90d_change, market_cap_rank, market_cap_rank_3h_change, market_cap_rank_6h_change, market_cap_rank_12h_change, market_cap_rank_24h_change, volume_24h, volume_24h_24h_change, volume_24h_7d_change, volume_24h_14d_change, volume_24h_30d_change, volume_24h_90d_change, volume_24h_rank, volume_24h_rank_3h_change, volume_24h_rank_6h_change, volume_24h_rank_12h_change, volume_24h_rank_24h_change, entry_datetime, now(), now(), score, score_core, score_24h_change, score_7d_change, score_14d_change, score_30d_change, score_90d_change, score_rank, score_rank_3h_change, score_rank_6h_change, score_rank_12h_change, score_rank_24h_change FROM coins)");
+            DB::unprepared("INSERT INTO coins_history (symbol, price, price_24h_change, price_7d_change, price_14d_change, price_30d_change, price_90d_change, market_cap, market_cap_24h_change, market_cap_7d_change, market_cap_14d_change, market_cap_30d_change, market_cap_90d_change, market_cap_rank, market_cap_rank_3h_change, market_cap_rank_6h_change, market_cap_rank_12h_change, market_cap_rank_24h_change, volume_24h, volume_24h_24h_change, volume_24h_7d_change, volume_24h_14d_change, volume_24h_30d_change, volume_24h_90d_change, volume_24h_rank, volume_24h_rank_3h_change, volume_24h_rank_6h_change, volume_24h_rank_12h_change, volume_24h_rank_24h_change, entry_datetime, created_at, updated_at, score, score_core, score_24h_change, score_7d_change, score_14d_change, score_30d_change, score_90d_change, score_rank, score_rank_3h_change, score_rank_6h_change, score_rank_12h_change, score_rank_24h_change) (SELECT symbol, price, price_24h_change, price_7d_change, price_14d_change, price_30d_change, price_90d_change, market_cap, market_cap_24h_change, market_cap_7d_change, market_cap_14d_change, market_cap_30d_change, market_cap_90d_change, market_cap_rank, market_cap_rank_3h_change, market_cap_rank_6h_change, market_cap_rank_12h_change, market_cap_rank_24h_change, volume_24h, volume_24h_24h_change, volume_24h_7d_change, volume_24h_14d_change, volume_24h_30d_change, volume_24h_90d_change, volume_24h_rank, volume_24h_rank_3h_change, volume_24h_rank_6h_change, volume_24h_rank_12h_change, volume_24h_rank_24h_change, entry_datetime, now(), now(), score, score_core, score_24h_change, score_7d_change, score_14d_change, score_30d_change, score_90d_change, score_rank, score_rank_3h_change, score_rank_6h_change, score_rank_12h_change, score_rank_24h_change FROM coins)");
             Log::info('Records Inserted to coin_history');
             
             Coin::CHUNK(500, function($coin) {
@@ -249,6 +249,7 @@ class CoinController extends Controller
                 $APIKEYN = "e612f7b0f124b709451a0ccb0e29752b";
                 $symbols = $coin->pluck('symbol')->toArray();
                 $symbols_string = implode(',',$symbols);
+                // Log::info('COINS: ' . $symbols_string);
                 $currencies = "";
                 $url = "https://api.nomics.com/v1/currencies/ticker?key=".$APIKEYN."&ids=".$symbols_string."&interval=1d,7d,30d&convert=USD";
                 $url_content = file_get_contents($url);
@@ -268,6 +269,10 @@ class CoinController extends Controller
                             $last14Coin = $last14CoinArr[$symbol] ?? false;
                             $last30Coin = $last30CoinArr[$symbol] ?? false;
                             $last90Coin = $last90CoinArr[$symbol] ?? false;
+
+                            if ($currency['symbol'] == 'LINDA') {
+                                Log::info(json_encode($currency));
+                            }
                             
                             try {
                                 $price_24h_change = (isset($last1Coin->price) && $last1Coin->price != 0) ? ((($price - $last1Coin->price) * 100) / $last1Coin->price) : 0;
@@ -275,7 +280,7 @@ class CoinController extends Controller
                                 $price_14d_change = (isset($last14Coin->price) && $last14Coin->price != 0) ? ((($price - $last14Coin->price) * 100) / $last14Coin->price) : 0;
                                 $price_30d_change = (isset($last30Coin->price) && $last30Coin->price != 0) ? ((($price - $last30Coin->price) * 100) / $last30Coin->price) : 0;
                                 $price_90d_change = (isset($last90Coin->price) && $last90Coin->price != 0) ? ((($price - $last90Coin->price) * 100) / $last90Coin->price) : 0;
-                            } catch (Exception $e) {
+                            } catch (\Exception $e) {
                                 Log::error("Price ERROR DATA: " . implode(' | ', [
                                     $price,
                                     $last1Coin->price,
@@ -294,7 +299,7 @@ class CoinController extends Controller
                                 $score_14d_change = (isset($last14Coin->score) && $last14Coin->score != 0) ? ((($score - $last14Coin->score) * 100) / $last14Coin->score) : 0;
                                 $score_30d_change = (isset($last30Coin->score) && $last30Coin->score != 0) ? ((($score - $last30Coin->score) * 100) / $last30Coin->score) : 0;
                                 $score_90d_change = (isset($last90Coin->score) && $last90Coin->score != 0) ? ((($score - $last90Coin->score) * 100) / $last90Coin->score) : 0;
-                            } catch (Exception $e) {
+                            } catch (\Exception $e) {
                                 Log::error("Score ERROR DATA: " . implode(' | ', [
                                     $score,
                                     $last1Coin->score,
@@ -311,7 +316,7 @@ class CoinController extends Controller
                                 $volume_24h_14d_change = (isset($last14Coin->volume_24h) && $last14Coin->volume_24h != 0) ? ((($volume - $last14Coin->volume_24h) * 100) / $last14Coin->volume_24h) : 0;
                                 $volume_24h_30d_change = (isset($last30Coin->volume_24h) && $last30Coin->volume_24h != 0) ? ((($volume - $last30Coin->volume_24h) * 100) / $last30Coin->volume_24h) : 0;
                                 $volume_24h_90d_change = (isset($last90Coin->volume_24h) && $last90Coin->volume_24h != 0) ? ((($volume - $last90Coin->volume_24h) * 100) / $last90Coin->volume_24h) : 0;
-                            } catch (Exception $e) {
+                            } catch (\Exception $e) {
                                 Log::error("Volume ERROR DATA: " . implode(' | ', [
                                     $volume,
                                     $last1Coin->volume_24h,
@@ -328,7 +333,7 @@ class CoinController extends Controller
                                 $market_cap_14d_change = (isset($last14Coin->market_cap) && $last14Coin->market_cap != 0) ? ((($market_cap - $last14Coin->market_cap) * 100) / $last14Coin->market_cap) : 0;
                                 $market_cap_30d_change = (isset($last30Coin->market_cap) && $last30Coin->market_cap != 0) ? ((($market_cap - $last30Coin->market_cap) * 100) / $last30Coin->market_cap) : 0;
                                 $market_cap_90d_change = (isset($last90Coin->market_cap) && $last90Coin->market_cap != 0) ? ((($market_cap - $last90Coin->market_cap) * 100) / $last90Coin->market_cap) : 0;
-                            } catch (Exception $e) {
+                            } catch (\Exception $e) {
                                 Log::error("Market Cap ERROR DATA: " . implode(' | ', [
                                     $market_cap,
                                     $last1Coin->market_cap,
@@ -412,7 +417,7 @@ class CoinController extends Controller
                 }
             });
             DB::commit();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Log::error('ROLLBACKED');
             DB::rollback();
         }
