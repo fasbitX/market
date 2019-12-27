@@ -269,10 +269,6 @@ class CoinController extends Controller
                             $last14Coin = $last14CoinArr[$symbol] ?? false;
                             $last30Coin = $last30CoinArr[$symbol] ?? false;
                             $last90Coin = $last90CoinArr[$symbol] ?? false;
-
-                            if ($currency['symbol'] == 'LINDA') {
-                                Log::info(json_encode($currency));
-                            }
                             
                             try {
                                 $price_24h_change = (isset($last1Coin->price) && $last1Coin->price != 0) ? ((($price - $last1Coin->price) * 100) / $last1Coin->price) : 0;
