@@ -373,45 +373,39 @@ class CoinController extends Controller
                                     'entry_datetime' => $process_datetime ?? 0
                                 ]);
                         }
-
-                        DB::unprepared("SET @s=0; SET @v=0; SET @m=0;
-                            UPDATE coins
-                            JOIN (SELECT @s:=@s+1 AS rank, id FROM coins ORDER BY score DESC) AS sorted_score USING(id)
-                            JOIN (SELECT @v:=@v+1 AS rank, id FROM coins ORDER BY volume_24h DESC) AS sorted_volume USING(id)
-                            JOIN (SELECT @m:=@m+1 AS rank, id FROM coins ORDER BY market_cap DESC) AS sorted_market_cap USING(id)
-                            SET coins.score_rank = sorted_score.rank, coins.volume_24h_rank = sorted_volume.rank, coins.market_cap_rank = sorted_market_cap.rank;");
-
-                        // DB::unprepared("SET @r=0;UPDATE coins JOIN (SELECT @r:=@r+1 AS rank, id FROM coins ORDER BY score DESC) AS sorted USING(id) SET coins.score_rank = sorted.rank;");
-                        // DB::unprepared("SET @r=0;UPDATE coins JOIN (SELECT @r:=@r+1 AS rank, id FROM coins ORDER BY volume_24h DESC) AS sorted USING(id) SET coins.volume_24h_rank = sorted.rank;");
-                        // DB::unprepared("SET @r=0;UPDATE coins JOIN (SELECT @r:=@r+1 AS rank, id FROM coins ORDER BY market_cap DESC) AS sorted USING(id) SET coins.market_cap_rank = sorted.rank;");
-
-                        DB::unprepared("UPDATE coins
-                            LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank, symbol FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(3),0,16) . ':00') . "') AS sorted3 USING(symbol)
-                            LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank, symbol FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(6),0,16) . ':00') . "') AS sorted6 USING(symbol)
-                            LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank, symbol FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(12),0,16) . ':00') . "') AS sorted12 USING(symbol)
-                            LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank, symbol FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(24),0,16) . ':00') . "') AS sorted24 USING(symbol)
-                            SET coins.market_cap_rank_3h_change = (coins.market_cap_rank-IFNULL(sorted3.market_cap_rank, 0)),
-                            coins.market_cap_rank_6h_change = (coins.market_cap_rank-IFNULL(sorted6.market_cap_rank, 0)),
-                            coins.market_cap_rank_12h_change = (coins.market_cap_rank-IFNULL(sorted12.market_cap_rank, 0)),
-                            coins.market_cap_rank_24h_change = (coins.market_cap_rank-IFNULL(sorted24.market_cap_rank, 0)),
-                            coins.volume_24h_rank_3h_change = (coins.volume_24h_rank-IFNULL(sorted3.volume_24h_rank, 0)),
-                            coins.volume_24h_rank_6h_change = (coins.volume_24h_rank-IFNULL(sorted6.volume_24h_rank, 0)),
-                            coins.volume_24h_rank_12h_change = (coins.volume_24h_rank-IFNULL(sorted12.volume_24h_rank, 0)),
-                            coins.volume_24h_rank_24h_change = (coins.volume_24h_rank-IFNULL(sorted24.volume_24h_rank, 0)),
-                            coins.score_rank_3h_change = (coins.score_rank-IFNULL(sorted3.score_rank, 0)),
-                            coins.score_rank_6h_change = (coins.score_rank-IFNULL(sorted6.score_rank, 0)),
-                            coins.score_rank_12h_change = (coins.score_rank-IFNULL(sorted12.score_rank, 0)),
-                            coins.score_rank_24h_change = (coins.score_rank-IFNULL(sorted24.score_rank, 0));");
-
-                        // DB::unprepared("UPDATE coins JOIN (SELECT id, market_cap_rank FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(3),0,16) . ':00') . "') AS sorted USING(symbol) SET coins.market_cap_rank_3h_change = (coins.market_cap_rank-sorted.market_cap_rank);");
-                        // DB::unprepared("UPDATE coins JOIN (SELECT id, market_cap_rank FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(6),0,16) . ':00') . "') AS sorted USING(symbol) SET coins.market_cap_rank_6h_change = (coins.market_cap_rank-sorted.market_cap_rank);");
-                        // DB::unprepared("UPDATE coins JOIN (SELECT id, market_cap_rank FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(12),0,16) . ':00') . "') AS sorted USING(symbol) SET coins.market_cap_rank_12h_change = (coins.market_cap_rank-sorted.market_cap_rank);");
-                        // DB::unprepared("UPDATE coins JOIN (SELECT id, market_cap_rank FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(24),0,16) . ':00') . "') AS sorted USING(symbol) SET coins.market_cap_rank_24h_change = (coins.market_cap_rank-sorted.market_cap_rank);");
                     } else {
                         Log::error('Received data from API is not correct for ' . $process_datetime);
                     }
                 }
+
+                Coin::where('entry_datetime', '!=', $process_datetime)->whereIn('symbol', $symbols)->delete();
             });
+
+            DB::unprepared("SET @s=0; SET @v=0; SET @m=0;
+                UPDATE coins
+                JOIN (SELECT @s:=@s+1 AS rank, id FROM coins ORDER BY score DESC) AS sorted_score USING(id)
+                JOIN (SELECT @v:=@v+1 AS rank, id FROM coins ORDER BY volume_24h DESC) AS sorted_volume USING(id)
+                JOIN (SELECT @m:=@m+1 AS rank, id FROM coins ORDER BY market_cap DESC) AS sorted_market_cap USING(id)
+                SET coins.score_rank = sorted_score.rank, coins.volume_24h_rank = sorted_volume.rank, coins.market_cap_rank = sorted_market_cap.rank;");
+
+            DB::unprepared("UPDATE coins
+                LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank, symbol FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(3),0,16) . ':00') . "') AS sorted3 USING(symbol)
+                LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank, symbol FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(6),0,16) . ':00') . "') AS sorted6 USING(symbol)
+                LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank, symbol FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(12),0,16) . ':00') . "') AS sorted12 USING(symbol)
+                LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank, symbol FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(24),0,16) . ':00') . "') AS sorted24 USING(symbol)
+                SET coins.market_cap_rank_3h_change = (coins.market_cap_rank-IFNULL(sorted3.market_cap_rank, 0)),
+                coins.market_cap_rank_6h_change = (coins.market_cap_rank-IFNULL(sorted6.market_cap_rank, 0)),
+                coins.market_cap_rank_12h_change = (coins.market_cap_rank-IFNULL(sorted12.market_cap_rank, 0)),
+                coins.market_cap_rank_24h_change = (coins.market_cap_rank-IFNULL(sorted24.market_cap_rank, 0)),
+                coins.volume_24h_rank_3h_change = (coins.volume_24h_rank-IFNULL(sorted3.volume_24h_rank, 0)),
+                coins.volume_24h_rank_6h_change = (coins.volume_24h_rank-IFNULL(sorted6.volume_24h_rank, 0)),
+                coins.volume_24h_rank_12h_change = (coins.volume_24h_rank-IFNULL(sorted12.volume_24h_rank, 0)),
+                coins.volume_24h_rank_24h_change = (coins.volume_24h_rank-IFNULL(sorted24.volume_24h_rank, 0)),
+                coins.score_rank_3h_change = (coins.score_rank-IFNULL(sorted3.score_rank, 0)),
+                coins.score_rank_6h_change = (coins.score_rank-IFNULL(sorted6.score_rank, 0)),
+                coins.score_rank_12h_change = (coins.score_rank-IFNULL(sorted12.score_rank, 0)),
+                coins.score_rank_24h_change = (coins.score_rank-IFNULL(sorted24.score_rank, 0));");
+                
             DB::commit();
         } catch (\Exception $e) {
             Log::error('ROLLBACKED');
