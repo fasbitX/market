@@ -72,8 +72,8 @@
                         <thead>
                             <tr>
                                 <th rowspan="2" class="text-center">Coin</th>
-                                <th rowspan="2" colspan="2" class="text-center">Virals</th>
-                                <th colspan="5" class="text-center">Changes in Virals</th>
+                                <th rowspan="2" colspan="2" class="text-center">Vitals</th>
+                                <th colspan="5" class="text-center">Changes in Vitals</th>
                                 <th rowspan="2" class="text-center">Rank</th>
                                 <th colspan="4" class="text-center">Changes in Rank</th>
                             </tr>
