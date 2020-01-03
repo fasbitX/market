@@ -245,7 +245,7 @@ class CoinController extends Controller
                 usort($currencies, function($a, $b) {
                     return $b['market_cap'] <=> $a['market_cap'];
                 });
-                
+
                 DB::beginTransaction();
                 try {
                     $process_datetime = (substr(Carbon::now(),0,16) . ':00');
@@ -421,18 +421,18 @@ class CoinController extends Controller
                         LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank, symbol FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(6),0,16) . ':00') . "') AS sorted6 USING(symbol)
                         LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank, symbol FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(12),0,16) . ':00') . "') AS sorted12 USING(symbol)
                         LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank, symbol FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(24),0,16) . ':00') . "') AS sorted24 USING(symbol)
-                        SET coins.market_cap_rank_3h_change = (IFNULL(sorted3.market_cap_rank, 0)-coins.market_cap_rank),
-                        coins.market_cap_rank_6h_change = (IFNULL(sorted6.market_cap_rank, 0)-coins.market_cap_rank),
-                        coins.market_cap_rank_12h_change = (IFNULL(sorted12.market_cap_rank, 0)-coins.market_cap_rank),
-                        coins.market_cap_rank_24h_change = (IFNULL(sorted24.market_cap_rank, 0)-coins.market_cap_rank),
-                        coins.volume_24h_rank_3h_change = (IFNULL(sorted3.volume_24h_rank, 0)-coins.volume_24h_rank),
-                        coins.volume_24h_rank_6h_change = (IFNULL(sorted6.volume_24h_rank, 0)-coins.volume_24h_rank),
-                        coins.volume_24h_rank_12h_change = (IFNULL(sorted12.volume_24h_rank, 0)-coins.volume_24h_rank),
-                        coins.volume_24h_rank_24h_change = (IFNULL(sorted24.volume_24h_rank, 0)-coins.volume_24h_rank),
-                        coins.score_rank_3h_change = (IFNULL(sorted3.score_rank, 0)-coins.score_rank),
-                        coins.score_rank_6h_change = (IFNULL(sorted6.score_rank, 0)-coins.score_rank),
-                        coins.score_rank_12h_change = (IFNULL(sorted12.score_rank, 0)-coins.score_rank),
-                        coins.score_rank_24h_change = (IFNULL(sorted24.score_rank, 0)-coins.score_rank);");
+                        SET coins.market_cap_rank_3h_change = (IFNULL(sorted3.market_cap_rank, 501)-coins.market_cap_rank),
+                        coins.market_cap_rank_6h_change = (IFNULL(sorted6.market_cap_rank, 501)-coins.market_cap_rank),
+                        coins.market_cap_rank_12h_change = (IFNULL(sorted12.market_cap_rank, 501)-coins.market_cap_rank),
+                        coins.market_cap_rank_24h_change = (IFNULL(sorted24.market_cap_rank, 501)-coins.market_cap_rank),
+                        coins.volume_24h_rank_3h_change = (IFNULL(sorted3.volume_24h_rank, 501)-coins.volume_24h_rank),
+                        coins.volume_24h_rank_6h_change = (IFNULL(sorted6.volume_24h_rank, 501)-coins.volume_24h_rank),
+                        coins.volume_24h_rank_12h_change = (IFNULL(sorted12.volume_24h_rank, 501)-coins.volume_24h_rank),
+                        coins.volume_24h_rank_24h_change = (IFNULL(sorted24.volume_24h_rank, 501)-coins.volume_24h_rank),
+                        coins.score_rank_3h_change = (IFNULL(sorted3.score_rank, 501)-coins.score_rank),
+                        coins.score_rank_6h_change = (IFNULL(sorted6.score_rank, 501)-coins.score_rank),
+                        coins.score_rank_12h_change = (IFNULL(sorted12.score_rank, 501)-coins.score_rank),
+                        coins.score_rank_24h_change = (IFNULL(sorted24.score_rank, 501)-coins.score_rank);");
                         
                     DB::commit();
                 } catch (\Exception $e) {
@@ -607,18 +607,18 @@ class CoinController extends Controller
                 LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank, symbol FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(6),0,16) . ':00') . "') AS sorted6 USING(symbol)
                 LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank, symbol FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(12),0,16) . ':00') . "') AS sorted12 USING(symbol)
                 LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank, symbol FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(24),0,16) . ':00') . "') AS sorted24 USING(symbol)
-                SET coins.market_cap_rank_3h_change = (IFNULL(sorted3.market_cap_rank, 0)-coins.market_cap_rank),
-                coins.market_cap_rank_6h_change = (IFNULL(sorted6.market_cap_rank, 0)-coins.market_cap_rank),
-                coins.market_cap_rank_12h_change = (IFNULL(sorted12.market_cap_rank, 0)-coins.market_cap_rank),
-                coins.market_cap_rank_24h_change = (IFNULL(sorted24.market_cap_rank, 0)-coins.market_cap_rank),
-                coins.volume_24h_rank_3h_change = (IFNULL(sorted3.volume_24h_rank, 0)-coins.volume_24h_rank),
-                coins.volume_24h_rank_6h_change = (IFNULL(sorted6.volume_24h_rank, 0)-coins.volume_24h_rank),
-                coins.volume_24h_rank_12h_change = (IFNULL(sorted12.volume_24h_rank, 0)-coins.volume_24h_rank),
-                coins.volume_24h_rank_24h_change = (IFNULL(sorted24.volume_24h_rank, 0)-coins.volume_24h_rank),
-                coins.score_rank_3h_change = (IFNULL(sorted3.score_rank, 0)-coins.score_rank),
-                coins.score_rank_6h_change = (IFNULL(sorted6.score_rank, 0)-coins.score_rank),
-                coins.score_rank_12h_change = (IFNULL(sorted12.score_rank, 0)-coins.score_rank),
-                coins.score_rank_24h_change = (IFNULL(sorted24.score_rank, 0)-coins.score_rank);");
+                SET coins.market_cap_rank_3h_change = (IFNULL(sorted3.market_cap_rank, 501)-coins.market_cap_rank),
+                coins.market_cap_rank_6h_change = (IFNULL(sorted6.market_cap_rank, 501)-coins.market_cap_rank),
+                coins.market_cap_rank_12h_change = (IFNULL(sorted12.market_cap_rank, 501)-coins.market_cap_rank),
+                coins.market_cap_rank_24h_change = (IFNULL(sorted24.market_cap_rank, 501)-coins.market_cap_rank),
+                coins.volume_24h_rank_3h_change = (IFNULL(sorted3.volume_24h_rank, 501)-coins.volume_24h_rank),
+                coins.volume_24h_rank_6h_change = (IFNULL(sorted6.volume_24h_rank, 501)-coins.volume_24h_rank),
+                coins.volume_24h_rank_12h_change = (IFNULL(sorted12.volume_24h_rank, 501)-coins.volume_24h_rank),
+                coins.volume_24h_rank_24h_change = (IFNULL(sorted24.volume_24h_rank, 501)-coins.volume_24h_rank),
+                coins.score_rank_3h_change = (IFNULL(sorted3.score_rank, 501)-coins.score_rank),
+                coins.score_rank_6h_change = (IFNULL(sorted6.score_rank, 501)-coins.score_rank),
+                coins.score_rank_12h_change = (IFNULL(sorted12.score_rank, 501)-coins.score_rank),
+                coins.score_rank_24h_change = (IFNULL(sorted24.score_rank, 501)-coins.score_rank);");
                 
             DB::commit();
         } catch (\Exception $e) {
