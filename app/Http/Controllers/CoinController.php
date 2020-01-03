@@ -230,6 +230,220 @@ class CoinController extends Controller
         }
     }
 
+    public static function newList()
+    {
+        $APIKEYN = "e612f7b0f124b709451a0ccb0e29752b";
+        $url = "https://api.nomics.com/v1/currencies/ticker?key=".$APIKEYN."&interval=1d,7d,30d&convert=USD";
+        $url_content = file_get_contents($url);
+        if ($url_content == FALSE) {
+            Log::error('Coins New List Failed');
+        } else {
+            if ($currencies = json_decode( $url_content, true )) {
+                $currencies = array_filter($currencies, function ($v, $k) {
+                    return isset($v['market_cap']);
+                }, ARRAY_FILTER_USE_BOTH);
+                usort($currencies, function($a, $b) {
+                    return $b['market_cap'] <=> $a['market_cap'];
+                });
+                
+                DB::beginTransaction();
+                try {
+                    $process_datetime = (substr(Carbon::now(),0,16) . ':00');
+                    $last1CoinArr  = coins_history::where('entry_datetime', (substr(Carbon::now()->subDays(1),0,16) . ':00'))->get()->keyBy('symbol');
+                    $last7CoinArr  = coins_history::where('entry_datetime', (substr(Carbon::now()->subDays(7),0,16) . ':00'))->get()->keyBy('symbol');
+                    $last14CoinArr = coins_history::where('entry_datetime', (substr(Carbon::now()->subDays(14),0,16) . ':00'))->get()->keyBy('symbol');
+                    $last30CoinArr  = coins_history::where('entry_datetime', (substr(Carbon::now()->subDays(30),0,16) . ':00'))->get()->keyBy('symbol');
+                    $last90CoinArr = coins_history::where('entry_datetime', (substr(Carbon::now()->subDays(90),0,16) . ':00'))->get()->keyBy('symbol');
+
+                    $data = [];
+                    for ($i=0; $i < 500; $i++) {
+                        $currency = $currencies[$i];
+
+                        
+                        $symbol = $currency['symbol'] ?? false;
+                        $price = +($currency['price'] ?? 0);
+                        $market_cap = +($currency['market_cap'] ?? 0);
+                        $volume = +($currency['1d']['volume'] ?? 0);
+
+                        $last1Coin = $last1CoinArr[$symbol] ?? false;
+                        $last7Coin = $last7CoinArr[$symbol] ?? false;
+                        $last14Coin = $last14CoinArr[$symbol] ?? false;
+                        $last30Coin = $last30CoinArr[$symbol] ?? false;
+                        $last90Coin = $last90CoinArr[$symbol] ?? false;
+                        
+                        try {
+                            $price_24h_change = (isset($last1Coin->price) && $last1Coin->price != 0) ? ((($price - $last1Coin->price) * 100) / $last1Coin->price) : 0;
+                            $price_7d_change = (isset($last7Coin->price) && $last7Coin->price != 0) ? ((($price - $last7Coin->price) * 100) / $last7Coin->price) : 0;
+                            $price_14d_change = (isset($last14Coin->price) && $last14Coin->price != 0) ? ((($price - $last14Coin->price) * 100) / $last14Coin->price) : 0;
+                            $price_30d_change = (isset($last30Coin->price) && $last30Coin->price != 0) ? ((($price - $last30Coin->price) * 100) / $last30Coin->price) : 0;
+                            $price_90d_change = (isset($last90Coin->price) && $last90Coin->price != 0) ? ((($price - $last90Coin->price) * 100) / $last90Coin->price) : 0;
+                        } catch (\Exception $e) {
+                            Log::error("Coins New List - Price ERROR DATA: " . implode(' | ', [
+                                $price,
+                                $last1Coin->price,
+                                $last7Coin->price,
+                                $last14Coin->price,
+                                $last30Coin->price,
+                                $last90Coin->price
+                            ]));
+                        }
+
+                        try {
+                            $score_core = (($price_24h_change*1.15) + ($price_7d_change*1.25) + ($price_14d_change*1.25) + ($price_30d_change*1.2) + ($price_90d_change*1.15));
+                            $score = ($volume >= 1000) ? $score_core : 0;
+                            $score_24h_change = (isset($last1Coin->score) && $last1Coin->score != 0) ? ((($score - $last1Coin->score) * 100) / $last1Coin->score) : 0;
+                            $score_7d_change = (isset($last7Coin->score) && $last7Coin->score != 0) ? ((($score - $last7Coin->score) * 100) / $last7Coin->score) : 0;
+                            $score_14d_change = (isset($last14Coin->score) && $last14Coin->score != 0) ? ((($score - $last14Coin->score) * 100) / $last14Coin->score) : 0;
+                            $score_30d_change = (isset($last30Coin->score) && $last30Coin->score != 0) ? ((($score - $last30Coin->score) * 100) / $last30Coin->score) : 0;
+                            $score_90d_change = (isset($last90Coin->score) && $last90Coin->score != 0) ? ((($score - $last90Coin->score) * 100) / $last90Coin->score) : 0;
+                        } catch (\Exception $e) {
+                            Log::error("Coins New List - Score ERROR DATA: " . implode(' | ', [
+                                $score,
+                                $last1Coin->score,
+                                $last7Coin->score,
+                                $last14Coin->score,
+                                $last30Coin->score,
+                                $last90Coin->score
+                            ]));
+                        }
+
+                        try {
+                            $volume_24h_24h_change = (isset($last1Coin->volume_24h) && $last1Coin->volume_24h != 0) ? ((($volume - $last1Coin->volume_24h) * 100) / $last1Coin->volume_24h) : 0;
+                            $volume_24h_7d_change = (isset($last7Coin->volume_24h) && $last7Coin->volume_24h != 0) ? ((($volume - $last7Coin->volume_24h) * 100) / $last7Coin->volume_24h) : 0;
+                            $volume_24h_14d_change = (isset($last14Coin->volume_24h) && $last14Coin->volume_24h != 0) ? ((($volume - $last14Coin->volume_24h) * 100) / $last14Coin->volume_24h) : 0;
+                            $volume_24h_30d_change = (isset($last30Coin->volume_24h) && $last30Coin->volume_24h != 0) ? ((($volume - $last30Coin->volume_24h) * 100) / $last30Coin->volume_24h) : 0;
+                            $volume_24h_90d_change = (isset($last90Coin->volume_24h) && $last90Coin->volume_24h != 0) ? ((($volume - $last90Coin->volume_24h) * 100) / $last90Coin->volume_24h) : 0;
+                        } catch (\Exception $e) {
+                            Log::error("Coins New List - Volume ERROR DATA: " . implode(' | ', [
+                                $volume,
+                                $last1Coin->volume_24h,
+                                $last7Coin->volume_24h,
+                                $last14Coin->volume_24h,
+                                $last30Coin->volume_24h,
+                                $last90Coin->volume_24h
+                            ]));
+                        }
+
+                        try {
+                            $market_cap_24h_change = (isset($last1Coin->market_cap) && $last1Coin->market_cap != 0) ? ((($market_cap - $last1Coin->market_cap) * 100) / $last1Coin->market_cap) : 0;
+                            $market_cap_7d_change = (isset($last7Coin->market_cap) && $last7Coin->market_cap != 0) ? ((($market_cap - $last7Coin->market_cap) * 100) / $last7Coin->market_cap) : 0;
+                            $market_cap_14d_change = (isset($last14Coin->market_cap) && $last14Coin->market_cap != 0) ? ((($market_cap - $last14Coin->market_cap) * 100) / $last14Coin->market_cap) : 0;
+                            $market_cap_30d_change = (isset($last30Coin->market_cap) && $last30Coin->market_cap != 0) ? ((($market_cap - $last30Coin->market_cap) * 100) / $last30Coin->market_cap) : 0;
+                            $market_cap_90d_change = (isset($last90Coin->market_cap) && $last90Coin->market_cap != 0) ? ((($market_cap - $last90Coin->market_cap) * 100) / $last90Coin->market_cap) : 0;
+                        } catch (\Exception $e) {
+                            Log::error("Coins New List - Market Cap ERROR DATA: " . implode(' | ', [
+                                $market_cap,
+                                $last1Coin->market_cap,
+                                $last7Coin->market_cap,
+                                $last14Coin->market_cap,
+                                $last30Coin->market_cap,
+                                $last90Coin->market_cap
+                            ]));
+                        }
+                        
+                        $data[] = [
+                            'id_coin' => 0,
+                            'rank' => intval($currency['rank']),
+                            'symbol' => $currency['id'],
+                            'name' => $currency['name'],
+                            'f_price' => 0,
+                            'volume_24h_rank' => 0,
+                            'volume_24h_rank_3h_change' => 0,
+                            'volume_24h_rank_6h_change' => 0,
+                            'volume_24h_rank_12h_change' => 0,
+                            'volume_24h_rank_24h_change' => 0,
+                            'f_volume_24h' => 0,
+                            'market_cap_rank' => 0,
+                            'market_cap_rank_3h_change' => 0,
+                            'market_cap_rank_6h_change' => 0,
+                            'market_cap_rank_12h_change' => 0,
+                            'market_cap_rank_24h_change' => 0,
+                            'f_market_cap' => 0,
+                            'image_url' => $currency['logo_url'],
+                            'btc_price' => 0,
+                            'status' => 1,
+                            'website' => 0,
+                            'algorithm' => 0,
+                            'prooftype' => 0,
+                            'total_supply' => $currency['max_supply'] ?? 0,
+                            'description' => 0,
+                            'features' => 0,
+                            'technology' => 0,
+                            'score_rank' => 0,
+                            'score_rank_3h_change' => 0,
+                            'score_rank_6h_change' => 0,
+                            'score_rank_12h_change' => 0,
+                            'score_rank_24h_change' => 0,
+                            'price' => $price ?? 0,
+                            'price_24h_change'=> $price_24h_change ?? 0,
+                            'price_7d_change' => $price_7d_change ?? 0,
+                            'price_14d_change'=> $price_14d_change ?? 0,
+                            'price_30d_change'=> $price_30d_change ?? 0,
+                            'price_90d_change'=> $price_90d_change ?? 0,
+                            'volume_24h' => $volume ?? 0,
+                            'volume_24h_24h_change' => $volume_24h_24h_change ?? 0,
+                            'volume_24h_7d_change' => $volume_24h_7d_change ?? 0,
+                            'volume_24h_14d_change' => $volume_24h_14d_change ?? 0,
+                            'volume_24h_30d_change' => $volume_24h_30d_change ?? 0,
+                            'volume_24h_90d_change' => $volume_24h_90d_change ?? 0,
+                            // volume rank fields
+                            'market_cap' => $market_cap ?? 0,
+                            'market_cap_24h_change' => $market_cap_24h_change ?? 0,
+                            'market_cap_7d_change' => $market_cap_7d_change ?? 0,
+                            'market_cap_14d_change' => $market_cap_14d_change ?? 0,
+                            'market_cap_30d_change' => $market_cap_30d_change ?? 0,
+                            'market_cap_90d_change' => $market_cap_90d_change ?? 0,
+                            // market cap rank fields
+                            'score' => $score ?? 0,
+                            'score_core' => $score_core ?? 0,
+                            'score_24h_change' => $score_24h_change ?? 0,
+                            'score_7d_change' => $score_7d_change ?? 0,
+                            'score_14d_change' => $score_14d_change ?? 0,
+                            'score_30d_change' => $score_30d_change ?? 0,
+                            'score_90d_change' => $score_90d_change ?? 0,
+                            // score rank fields
+                            'entry_datetime' => $process_datetime ?? 0
+                        ];
+                    }
+
+                    Coin::truncate();
+                    Coin::insert($data);
+        
+                    DB::unprepared("SET @s=0; SET @v=0; SET @m=0;
+                        UPDATE coins
+                        JOIN (SELECT @s:=@s+1 AS rank, id FROM coins ORDER BY score DESC) AS sorted_score USING(id)
+                        JOIN (SELECT @v:=@v+1 AS rank, id FROM coins ORDER BY volume_24h DESC) AS sorted_volume USING(id)
+                        JOIN (SELECT @m:=@m+1 AS rank, id FROM coins ORDER BY market_cap DESC) AS sorted_market_cap USING(id)
+                        SET coins.score_rank = sorted_score.rank, coins.volume_24h_rank = sorted_volume.rank, coins.market_cap_rank = sorted_market_cap.rank;");
+        
+                    DB::unprepared("UPDATE coins
+                        LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank, symbol FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(3),0,16) . ':00') . "') AS sorted3 USING(symbol)
+                        LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank, symbol FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(6),0,16) . ':00') . "') AS sorted6 USING(symbol)
+                        LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank, symbol FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(12),0,16) . ':00') . "') AS sorted12 USING(symbol)
+                        LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank, symbol FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(24),0,16) . ':00') . "') AS sorted24 USING(symbol)
+                        SET coins.market_cap_rank_3h_change = (IFNULL(sorted3.market_cap_rank, 0)-coins.market_cap_rank),
+                        coins.market_cap_rank_6h_change = (IFNULL(sorted6.market_cap_rank, 0)-coins.market_cap_rank),
+                        coins.market_cap_rank_12h_change = (IFNULL(sorted12.market_cap_rank, 0)-coins.market_cap_rank),
+                        coins.market_cap_rank_24h_change = (IFNULL(sorted24.market_cap_rank, 0)-coins.market_cap_rank),
+                        coins.volume_24h_rank_3h_change = (IFNULL(sorted3.volume_24h_rank, 0)-coins.volume_24h_rank),
+                        coins.volume_24h_rank_6h_change = (IFNULL(sorted6.volume_24h_rank, 0)-coins.volume_24h_rank),
+                        coins.volume_24h_rank_12h_change = (IFNULL(sorted12.volume_24h_rank, 0)-coins.volume_24h_rank),
+                        coins.volume_24h_rank_24h_change = (IFNULL(sorted24.volume_24h_rank, 0)-coins.volume_24h_rank),
+                        coins.score_rank_3h_change = (IFNULL(sorted3.score_rank, 0)-coins.score_rank),
+                        coins.score_rank_6h_change = (IFNULL(sorted6.score_rank, 0)-coins.score_rank),
+                        coins.score_rank_12h_change = (IFNULL(sorted12.score_rank, 0)-coins.score_rank),
+                        coins.score_rank_24h_change = (IFNULL(sorted24.score_rank, 0)-coins.score_rank);");
+                        
+                    DB::commit();
+                } catch (\Exception $e) {
+                    Log::error('ROLLBACKED - Coins New List');
+                    Log::error($e->getMessage());
+                    DB::rollback();
+                }
+            }
+        }
+    }
+
     public static function cronUpdate(){
         DB::beginTransaction();
 
@@ -393,18 +607,18 @@ class CoinController extends Controller
                 LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank, symbol FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(6),0,16) . ':00') . "') AS sorted6 USING(symbol)
                 LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank, symbol FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(12),0,16) . ':00') . "') AS sorted12 USING(symbol)
                 LEFT JOIN (SELECT id, market_cap_rank, volume_24h_rank, score_rank, symbol FROM coins_history WHERE entry_datetime='" . (substr(Carbon::now()->subHours(24),0,16) . ':00') . "') AS sorted24 USING(symbol)
-                SET coins.market_cap_rank_3h_change = (coins.market_cap_rank-IFNULL(sorted3.market_cap_rank, 0)),
-                coins.market_cap_rank_6h_change = (coins.market_cap_rank-IFNULL(sorted6.market_cap_rank, 0)),
-                coins.market_cap_rank_12h_change = (coins.market_cap_rank-IFNULL(sorted12.market_cap_rank, 0)),
-                coins.market_cap_rank_24h_change = (coins.market_cap_rank-IFNULL(sorted24.market_cap_rank, 0)),
-                coins.volume_24h_rank_3h_change = (coins.volume_24h_rank-IFNULL(sorted3.volume_24h_rank, 0)),
-                coins.volume_24h_rank_6h_change = (coins.volume_24h_rank-IFNULL(sorted6.volume_24h_rank, 0)),
-                coins.volume_24h_rank_12h_change = (coins.volume_24h_rank-IFNULL(sorted12.volume_24h_rank, 0)),
-                coins.volume_24h_rank_24h_change = (coins.volume_24h_rank-IFNULL(sorted24.volume_24h_rank, 0)),
-                coins.score_rank_3h_change = (coins.score_rank-IFNULL(sorted3.score_rank, 0)),
-                coins.score_rank_6h_change = (coins.score_rank-IFNULL(sorted6.score_rank, 0)),
-                coins.score_rank_12h_change = (coins.score_rank-IFNULL(sorted12.score_rank, 0)),
-                coins.score_rank_24h_change = (coins.score_rank-IFNULL(sorted24.score_rank, 0));");
+                SET coins.market_cap_rank_3h_change = (IFNULL(sorted3.market_cap_rank, 0)-coins.market_cap_rank),
+                coins.market_cap_rank_6h_change = (IFNULL(sorted6.market_cap_rank, 0)-coins.market_cap_rank),
+                coins.market_cap_rank_12h_change = (IFNULL(sorted12.market_cap_rank, 0)-coins.market_cap_rank),
+                coins.market_cap_rank_24h_change = (IFNULL(sorted24.market_cap_rank, 0)-coins.market_cap_rank),
+                coins.volume_24h_rank_3h_change = (IFNULL(sorted3.volume_24h_rank, 0)-coins.volume_24h_rank),
+                coins.volume_24h_rank_6h_change = (IFNULL(sorted6.volume_24h_rank, 0)-coins.volume_24h_rank),
+                coins.volume_24h_rank_12h_change = (IFNULL(sorted12.volume_24h_rank, 0)-coins.volume_24h_rank),
+                coins.volume_24h_rank_24h_change = (IFNULL(sorted24.volume_24h_rank, 0)-coins.volume_24h_rank),
+                coins.score_rank_3h_change = (IFNULL(sorted3.score_rank, 0)-coins.score_rank),
+                coins.score_rank_6h_change = (IFNULL(sorted6.score_rank, 0)-coins.score_rank),
+                coins.score_rank_12h_change = (IFNULL(sorted12.score_rank, 0)-coins.score_rank),
+                coins.score_rank_24h_change = (IFNULL(sorted24.score_rank, 0)-coins.score_rank);");
                 
             DB::commit();
         } catch (\Exception $e) {
