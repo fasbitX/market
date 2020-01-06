@@ -33,32 +33,32 @@
             <div class="col-lg-2 content-buttons-box d-block">
                 <label class="pl-8"> Choose sort basis</label>
                 <div class="row">
-                <a href="{{url('/')}}/?order-by=market" class="basis-button space-button text-white ">Market Cap</a>         
+                <a href="{{url('/')}}{{$categoryUrl}}/?order-by=market" class="basis-button space-button text-white ">Market Cap</a>         
                 </div>
                 <div class="row">
-                    <a href="{{url('/')}}/?order-by=score" class="space-button second-section-single-coin text-white basis-button" >Investment Quality</a>
+                    <a href="{{url('/')}}{{$categoryUrl}}/?order-by=score" class="space-button second-section-single-coin text-white basis-button" >Investment Quality</a>
                 </div>
                 <div class="row">
-                    <a href="{{url('/')}}/?order-by=volume" class="space-button second-section-single-coin text-white basis-button" >Volume</a>
+                    <a href="{{url('/')}}{{$categoryUrl}}/?order-by=volume" class="space-button second-section-single-coin text-white basis-button" >Volume</a>
                 </div>
             </div>
             <div class="col-lg-4 content-buttons-box d-block">
                 <label> Choose a Tier </label>
                 <div class="row">
                     <div class="col-lg-12 d-flex">
-                        <a href="{{url('/')}}/?page=1" class="text-white sort-buttton">
+                        <a href="{{url('/')}}{{$categoryUrl}}/?page=1" class="text-white sort-buttton">
                             1st Tier 
                         </a>
-                        <a href="{{url('/')}}/?page=2" class="text-white sort-buttton space-button" >
+                        <a href="{{url('/')}}{{$categoryUrl}}/?page=2" class="text-white sort-buttton space-button" >
                            2nd Tier
                         </a> 
-                        <a href="{{url('/')}}/?page=3" class="text-white sort-buttton space-button"> 
+                        <a href="{{url('/')}}{{$categoryUrl}}/?page=3" class="text-white sort-buttton space-button"> 
                            3rd Tier
                         </a> 
-                        <a href="{{url('/')}}/?page=4" class="text-white sort-buttton space-button">
+                        <a href="{{url('/')}}{{$categoryUrl}}/?page=4" class="text-white sort-buttton space-button">
                            4th Tier
                         </a> 
-                        <a href="{{url('/')}}/?page=5" class="text-white sort-buttton space-button">
+                        <a href="{{url('/')}}{{$categoryUrl}}/?page=5" class="text-white sort-buttton space-button">
                            5th Tier
                         </a>
                     </div>       

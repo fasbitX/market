@@ -69,7 +69,10 @@
    <div class="collapse navbar-collapse" id="navbarToggler">
       <ul class="navbar-nav principal-menu">
         <li class="nav-item">
-          <a class="crypto-currency" href="{{url('/')}}/">Crypto-Currency</a>
+          <a class="nav-link" href="{{url('/')}}/">Crypto-Currency</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url('/stable-coins')}}/">Stable Coins</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" style="color: grey;">Stock</a>

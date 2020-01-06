@@ -408,6 +408,8 @@ class CoinController extends Controller
 
                     Coin::truncate();
                     Coin::insert($data);
+
+                    DB::unprepared("UPDATE coins SET category='stable-coins' WHERE symbol IN ('USDT', 'USDC');");
         
                     DB::unprepared("SET @s=0; SET @v=0; SET @m=0;
                         UPDATE coins
