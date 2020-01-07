@@ -113,6 +113,7 @@ use Illuminate\Http\Request;
 // });
 
 Route::get('/','CryptoController@index');
+Route::get('/rank-top-10', 'CryptoController@rankTop10');
 Route::get('/stable-coins', 'CryptoController@stableCoins');
 // Route::get('/sortScore','CryptoController@sortScore')->name('sort.score');
 // Route::GET('/dbData', 'CryptoController@dbData');

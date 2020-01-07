@@ -69,6 +69,9 @@
    <div class="collapse navbar-collapse" id="navbarToggler">
       <ul class="navbar-nav principal-menu">
         <li class="nav-item">
+          <a class="nav-link" href="{{url('/rank-top-10')}}/">Rank - Top 10</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="{{url('/')}}/">Crypto-Currency</a>
         </li>
         <li class="nav-item">
