@@ -67,7 +67,7 @@ class CryptoController extends Controller
 
     public function rankTop10(Request $request)
     {
-        $data = DB::table('coins')->orderBy('score_rank')->limit(10)->get();
+        $data = DB::table('coins')->orderBy('market_cap_rank')->limit(10)->get();
         $title = DB::table('settings')->where('name', 'title')->first();
         $meta_description = DB::table('settings')->where('name', 'meta_description')->first();
         $meta_keyword = DB::table('settings')->where('name', 'meta_keyword')->first();
@@ -78,7 +78,7 @@ class CryptoController extends Controller
         foreach ($data as $d) {
             $graphDataArr[] = [
                 'name' => $d->symbol,
-                'data' => array_map('floatval', DB::table('coins_history')->where('symbol', $d->symbol)->where('entry_datetime', '>=', $dateFrom)->orderBy('entry_datetime', 'ASC')->get(['score'])->pluck('score')->toArray())
+                'data' => array_map('floatval', DB::table('coins_history')->where('symbol', $d->symbol)->where('entry_datetime', '>=', $dateFrom)->orderBy('entry_datetime', 'ASC')->get(['market_cap_rank'])->pluck('market_cap_rank')->toArray())
             ];
         }
         $graphData = json_encode($graphDataArr);

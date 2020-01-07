@@ -622,6 +622,7 @@ $(document).ready(function(){
             }
         },
         yAxis: {
+            reversed: true,
             title: {
                 text: 'Rank',
                 style: {
