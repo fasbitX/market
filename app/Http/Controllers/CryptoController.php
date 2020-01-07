@@ -78,7 +78,7 @@ class CryptoController extends Controller
         foreach ($data as $d) {
             $graphDataArr[] = [
                 'name' => $d->symbol,
-                'data' => array_map('floatval', DB::table('coins_history')->where('symbol', $d->symbol)->where('entry_datetime', '>=', $dateFrom)->orderBy('entry_datetime', 'DESC')->get(['score'])->pluck('score')->toArray())
+                'data' => array_map('floatval', DB::table('coins_history')->where('symbol', $d->symbol)->where('entry_datetime', '>=', $dateFrom)->orderBy('entry_datetime', 'ASC')->get(['score'])->pluck('score')->toArray())
             ];
         }
         $graphData = json_encode($graphDataArr);
