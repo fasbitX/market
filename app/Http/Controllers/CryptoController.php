@@ -8,6 +8,7 @@ use App\Coin;
 use App\coins_history;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Exception;
 
 session_start();
 class CryptoController extends Controller
@@ -67,21 +68,27 @@ class CryptoController extends Controller
 
     public function rankTop10(Request $request)
     {
-        $data = DB::table('coins')->orderBy('market_cap_rank')->limit(10)->get();
-        $title = DB::table('settings')->where('name', 'title')->first();
-        $meta_description = DB::table('settings')->where('name', 'meta_description')->first();
-        $meta_keyword = DB::table('settings')->where('name', 'meta_keyword')->first();
-        
-        $dateFrom = substr(Carbon::now()->subDays(1), 0, 16) . ':00';
-        $before24h = strtotime($dateFrom) * 1000;
-        $graphDataArr = [];
-        foreach ($data as $d) {
-            $graphDataArr[] = [
-                'name' => $d->symbol,
-                'data' => array_map('floatval', DB::table('coins_history')->where('symbol', $d->symbol)->where('entry_datetime', '>=', $dateFrom)->orderBy('entry_datetime', 'ASC')->get(['market_cap_rank'])->pluck('market_cap_rank')->toArray())
-            ];
+        DB::beginTransaction();
+        try {
+            $data = DB::table('coins')->orderBy('market_cap_rank')->limit(10)->get();
+            $title = DB::table('settings')->where('name', 'title')->first();
+            $meta_description = DB::table('settings')->where('name', 'meta_description')->first();
+            $meta_keyword = DB::table('settings')->where('name', 'meta_keyword')->first();
+            
+            $dateFrom = substr(Carbon::now()->subDays(1), 0, 16) . ':00';
+            $before24h = strtotime($dateFrom) * 1000;
+            $graphDataArr = [];
+            foreach ($data as $d) {
+                $graphDataArr[] = [
+                    'name' => $d->symbol,
+                    'data' => array_map('floatval', DB::table('coins_history')->where('symbol', $d->symbol)->where('entry_datetime', '>=', $dateFrom)->orderBy('entry_datetime', 'ASC')->get(['market_cap_rank'])->pluck('market_cap_rank')->toArray())
+                ];
+            }
+            $graphData = json_encode($graphDataArr);
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
         }
-        $graphData = json_encode($graphDataArr);
 
         return view('rank_top_10', ['data' => $data, 'title' => $title, 'meta_description' => $meta_description, 'meta_keyword' => $meta_keyword, 'before24h' => $before24h, 'graphData' => $graphData]);
     }
