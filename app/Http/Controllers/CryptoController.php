@@ -86,6 +86,36 @@ class CryptoController extends Controller
         return view('rank_top_10', ['data' => $data, 'title' => $title, 'meta_description' => $meta_description, 'meta_keyword' => $meta_keyword, 'before24h' => $before24h, 'graphData' => $graphData]);
     }
 
+    public function coinChart(Request $request, $coin)
+    {
+        $title = DB::table('settings')->where('name', 'title')->first();
+        $meta_description = DB::table('settings')->where('name', 'meta_description')->first();
+        $meta_keyword = DB::table('settings')->where('name', 'meta_keyword')->first();
+
+        $dateFrom = substr(Carbon::now()->subDays(1), 0, 16) . ':00';
+        $before24h = strtotime($dateFrom) * 1000;
+        $graphDataArr = [
+            [
+                'yAxis' => 0,
+                'name' => 'Price',
+                'data' => array_map('floatval', DB::table('coins_history')->where('symbol', $coin)->where('entry_datetime', '>=', $dateFrom)->orderBy('entry_datetime', 'ASC')->get(['price'])->pluck('price')->toArray())
+            ],
+            [
+                'yAxis' => 1,
+                'name' => 'Volume',
+                'data' => array_map('floatval', DB::table('coins_history')->where('symbol', $coin)->where('entry_datetime', '>=', $dateFrom)->orderBy('entry_datetime', 'ASC')->get(['volume_24h'])->pluck('volume_24h')->toArray())
+            ],
+            [
+                'yAxis' => 2,
+                'name' => 'Score',
+                'data' => array_map('floatval', DB::table('coins_history')->where('symbol', $coin)->where('entry_datetime', '>=', $dateFrom)->orderBy('entry_datetime', 'ASC')->get(['score'])->pluck('score')->toArray())
+            ]
+        ];
+        $graphData = json_encode($graphDataArr);
+
+        return view('coin_chart', ['coin' => $coin, 'title' => $title, 'meta_description' => $meta_description, 'meta_keyword' => $meta_keyword, 'before24h' => $before24h, 'graphData' => $graphData]);
+    }
+
     // public function dbData()
     // {
     //     if ($_SESSION['orderby'] == 'score') {

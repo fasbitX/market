@@ -664,7 +664,6 @@ button.ch-period{font-weight:600;font-size:11px;padding:2px 2px;white-space:nowr
 }
 .highcharts-label{z-index:-1;}
 .highcharts-tooltip{z-index:9999!important;}
-.clickable-coin-td{cursor:pointer!important;}
 .asterisk-style{font-size:.55em;position:relative;top:-5px;margin-left:2px;}
 .mediumliq-flag{color:#999;}
 .dark a{color:#2e7ad0;}

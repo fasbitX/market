@@ -60,7 +60,7 @@
                                         $rank= ($index+1)
                                     @endphp
                                 @endif   
-                                <tr coin_id="{{$item->id}}" coin_href="/coin/{{$item->symbol}}/{{$rank}}" >
+                                <tr>
                                     <td rowspan="4" class="text-center">
                                         <div>
                                             <img class="tbl-icon" src="{{$item->image_url}}?width=30" alt="{{$item->name}} logo">
@@ -70,6 +70,9 @@
                                         </div>
                                         <div>
                                             <span id="symbol" class="tbl-coin-abbrev">[{{$item->symbol}}]</span>
+                                        </div>
+                                        <div>
+                                            <a class="badge badge-light" href="{{url('/coin-chart/' . $item->symbol)}}">Charts</a>
                                         </div>
                                     </td>
                                     <td>
@@ -203,7 +206,7 @@
                                         @endif
                                     </td>
                                 </tr>
-                                <tr coin_id="{{$item->id}}" coin_href="/coin/{{$item->symbol}}/{{$rank}}" >
+                                <tr>
                                     <td>
                                         Price
                                     </td>
@@ -303,7 +306,7 @@
                                         -
                                     </td>
                                 </tr>
-                                <tr coin_id="{{$item->id}}" coin_href="/coin/{{$item->symbol}}/{{$rank}}" >
+                                <tr>
                                     <td>
                                         Volume
                                     </td>
@@ -435,7 +438,7 @@
                                         @endif
                                     </td>
                                 </tr>
-                                <tr coin_id="{{$item->id}}" coin_href="/coin/{{$item->symbol}}/{{$rank}}" >
+                                <tr>
                                     <td>
                                         Score
                                     </td>
@@ -587,19 +590,9 @@
 
 
 @section('scripts')
-<script>
-$(document).ready(function(){
-    $('table tbody tr').click(function(){
-        window.location = $(this).attr('coin_href');
-        return false;
-    });
-});
-</script>
-<script type="text/javascript" src="{{ URL::asset("public/js/sort_table.js") }}"></script>
 <script type="text/javascript" src="{{ URL::asset("public/js/jquery-3.1.1.min.js") }}"></script>
 <script type="text/javascript" src='{{ URL::asset("public/js/highcharts.js") }}' ></script>
 <script type="text/javascript" src='{{ URL::asset("public/js/chart.1.js") }}' ></script>
-<!--<script type="text/javascript" async src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5afec5426d44f1e2"></script>-->
 
 <script>
     Highcharts.chart('rankTop10Chart', {
