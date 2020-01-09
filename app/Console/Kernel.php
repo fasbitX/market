@@ -19,7 +19,8 @@ class Kernel extends ConsoleKernel
         Commands\UpdateCoinsData::class,
         Commands\UpdateTopCoins::class,
         Commands\HistoricalData::class,
-        Commands\CoinsNewList::class
+        Commands\CoinsNewList::class,
+        Commands\TestCoinsData::class
     ];
 
     /**
@@ -36,6 +37,7 @@ class Kernel extends ConsoleKernel
         //$schedule->command('update:dailyprices')->daily();
         $schedule->command('coins:update')->everyMinute()->runInBackground();
         $schedule->command('coins:newlist')->weekly()->runInBackground();
+        $schedule->command('coins:testcoins')->everyMinute()->runInBackground();
         // $schedule->command('historical:data')->everyMinute();
         //$schedule->command('coins:top')->everyFiveMinutes();
 

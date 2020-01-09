@@ -794,4 +794,52 @@ class CoinController extends Controller
             }
         }); 
     }  
+
+    public static function coinMarketCapBTC()
+    {
+        $API_KEY = "3c5d8a7b-34b6-4d7b-9f83-165a2284f87e";
+        $entry_datetime = (substr(Carbon::now(),0,16) . ':00');
+
+        $url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest';
+        $parameters = [
+        'start' => '1',
+        'limit' => '1',
+        'sort_dir' => 'desc'
+        ];
+
+        $headers = [
+        'Accepts: application/json',
+        'X-CMC_PRO_API_KEY: ' . $API_KEY
+        ];
+        $qs = http_build_query($parameters); // query string encode the parameters
+        $request = "{$url}?{$qs}"; // create the request URL
+
+
+        $curl = curl_init(); // Get cURL resource
+        // Set cURL options
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => $request,            // set the request URL
+        CURLOPT_HTTPHEADER => $headers,     // set the headers 
+        CURLOPT_RETURNTRANSFER => 1         // ask for raw response instead of bool
+        ));
+
+        $response = curl_exec($curl); // Send the request, save the response
+        $result = json_decode($response, true); // print json decoded response
+
+        foreach ($result['data'] as $record) {
+            if (isset($record['quote'])) {
+                $symbol = $record['symbol'];
+                $quote = $record['quote'];
+                if (isset($quote['USD'])) {
+                    $price = $quote['USD']['price'] ?? 0;
+                    $volume_24h = $quote['USD']['volume_24h'] ?? 0;
+                    $market_cap = $quote['USD']['market_cap'] ?? 0;
+
+                    DB::insert("INSERT INTO `test_coins` (`symbol`, `price`, `volume_24h`, `market_cap`, `entry_datetime`) VALUES ('{$symbol}',{$price},{$volume_24h},{$market_cap},'{$entry_datetime}')");
+                }
+            }
+        }
+
+        curl_close($curl); // Close request
+    }
 }
