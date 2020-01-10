@@ -111,9 +111,8 @@ class CryptoController extends Controller
                 'data' => array_map('floatval', DB::table('coins_history')->where('symbol', $coin)->where('entry_datetime', '>=', $dateFrom)->orderBy('entry_datetime', 'ASC')->get(['score'])->pluck('score')->toArray())
             ]
         ];
-        $graphData = json_encode($graphDataArr);
 
-        return view('coin_chart', ['coin' => $coin, 'title' => $title, 'meta_description' => $meta_description, 'meta_keyword' => $meta_keyword, 'before24h' => $before24h, 'graphData' => $graphData]);
+        return view('coin_chart', ['coin' => $coin, 'title' => $title, 'meta_description' => $meta_description, 'meta_keyword' => $meta_keyword, 'before24h' => $before24h, 'graphDataArr' => $graphDataArr]);
     }
 
     public function testCoinChart(Request $request, $coin)
@@ -141,9 +140,8 @@ class CryptoController extends Controller
                 'data' => array_map('floatval', DB::table('test_coins')->where('symbol', $coin)->where('entry_datetime', '>=', $dateFrom)->orderBy('entry_datetime', 'ASC')->get(['market_cap'])->pluck('market_cap')->toArray())
             ]
         ];
-        $graphData = json_encode($graphDataArr);
 
-        return view('coin_chart', ['coin' => $coin, 'title' => $title, 'meta_description' => $meta_description, 'meta_keyword' => $meta_keyword, 'before24h' => $before24h, 'graphData' => $graphData]);
+        return view('coin_chart', ['coin' => $coin, 'title' => $title, 'meta_description' => $meta_description, 'meta_keyword' => $meta_keyword, 'before24h' => $before24h, 'graphDataArr' => $graphDataArr]);
     }
 
     // public function dbData()

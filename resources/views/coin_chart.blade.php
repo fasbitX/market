@@ -79,7 +79,7 @@ $(document).ready(function(){
         },
         yAxis: [{
             title: {
-                text: 'Price',
+                text: '{{$graphDataArr[0]["name"]}}',
                 style: {
                     color: '#FFF'
                 }
@@ -91,7 +91,7 @@ $(document).ready(function(){
             }
         }, {
             title: {
-                text: 'Volume',
+                text: '{{$graphDataArr[1]["name"]}}',
                 style: {
                     color: '#FFF'
                 }
@@ -103,7 +103,7 @@ $(document).ready(function(){
             }
         }, {
             title: {
-                text: 'Score',
+                text: '{{$graphDataArr[2]["name"]}}',
                 style: {
                     color: '#FFF'
                 }
@@ -133,7 +133,7 @@ $(document).ready(function(){
                 pointStart: {{$before24h}}
             }
         },
-        series: {!! $graphData !!},
+        series: {!! json_encode($graphDataArr) !!},
         legend: {
             itemStyle: {
                 color: '#FFF'
