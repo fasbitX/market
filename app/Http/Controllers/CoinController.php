@@ -802,29 +802,28 @@ class CoinController extends Controller
 
         $url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest';
         $parameters = [
-        'start' => '1',
-        'limit' => '1',
-        'sort_dir' => 'desc'
+            'start' => '1',
+            'limit' => '1',
+            'sort_dir' => 'desc'
         ];
 
         $headers = [
-        'Accepts: application/json',
-        'X-CMC_PRO_API_KEY: ' . $API_KEY
+            'Accepts: application/json',
+            'X-CMC_PRO_API_KEY: ' . $API_KEY
         ];
-        $qs = http_build_query($parameters); // query string encode the parameters
-        $request = "{$url}?{$qs}"; // create the request URL
+        $qs = http_build_query($parameters);
+        $request = "{$url}?{$qs}";
 
 
-        $curl = curl_init(); // Get cURL resource
-        // Set cURL options
+        $curl = curl_init();
         curl_setopt_array($curl, array(
-        CURLOPT_URL => $request,            // set the request URL
-        CURLOPT_HTTPHEADER => $headers,     // set the headers 
-        CURLOPT_RETURNTRANSFER => 1         // ask for raw response instead of bool
+            CURLOPT_URL => $request,
+            CURLOPT_HTTPHEADER => $headers,
+            CURLOPT_RETURNTRANSFER => 1
         ));
 
-        $response = curl_exec($curl); // Send the request, save the response
-        $result = json_decode($response, true); // print json decoded response
+        $response = curl_exec($curl);
+        $result = json_decode($response, true);
 
         foreach ($result['data'] as $record) {
             if (isset($record['quote'])) {
