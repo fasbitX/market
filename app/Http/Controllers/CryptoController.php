@@ -126,22 +126,27 @@ class CryptoController extends Controller
         $graphDataArr = [
             [
                 'yAxis' => 0,
-                'name' => 'Price',
+                'name' => 'Price (Coin Market Cap)',
                 'data' => array_map('floatval', DB::table('test_coins')->where('symbol', $coin)->where('entry_datetime', '>=', $dateFrom)->orderBy('entry_datetime', 'ASC')->get(['price'])->pluck('price')->toArray())
             ],
             [
                 'yAxis' => 1,
-                'name' => 'Volume',
+                'name' => 'Volume (Coin Market Cap)',
                 'data' => array_map('floatval', DB::table('test_coins')->where('symbol', $coin)->where('entry_datetime', '>=', $dateFrom)->orderBy('entry_datetime', 'ASC')->get(['volume_24h'])->pluck('volume_24h')->toArray())
             ],
             [
                 'yAxis' => 2,
-                'name' => 'Market Cap',
-                'data' => array_map('floatval', DB::table('test_coins')->where('symbol', $coin)->where('entry_datetime', '>=', $dateFrom)->orderBy('entry_datetime', 'ASC')->get(['market_cap'])->pluck('market_cap')->toArray())
+                'name' => 'Price (Nomics)',
+                'data' => array_map('floatval', DB::table('coins_history')->where('symbol', $coin)->where('entry_datetime', '>=', $dateFrom)->orderBy('entry_datetime', 'ASC')->get(['price'])->pluck('price')->toArray())
+            ],
+            [
+                'yAxis' => 3,
+                'name' => 'Volume (Nomics)',
+                'data' => array_map('floatval', DB::table('coins_history')->where('symbol', $coin)->where('entry_datetime', '>=', $dateFrom)->orderBy('entry_datetime', 'ASC')->get(['volume_24h'])->pluck('volume_24h')->toArray())
             ]
         ];
 
-        return view('coin_chart', ['coin' => $coin, 'title' => $title, 'meta_description' => $meta_description, 'meta_keyword' => $meta_keyword, 'before24h' => $before24h, 'graphDataArr' => $graphDataArr]);
+        return view('test_coin_chart', ['coin' => $coin, 'title' => $title, 'meta_description' => $meta_description, 'meta_keyword' => $meta_keyword, 'before24h' => $before24h, 'graphDataArr' => $graphDataArr]);
     }
 
     // public function dbData()
